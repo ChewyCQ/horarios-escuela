@@ -47,7 +47,21 @@ class Inicio extends CI_Controller {
 	}
 	public function especialidad()
 	{
-		$this->load->view('registrar/vista_especialidad');
+		$Especialidad=$this->input->get('esp', TRUE);
+		$data=array('titulo' =>'Actualiza provincia', 'esp' => $Especialidad);
+		$this->load->view('registrar/vista_especialidad',$data); //Mando data con el Nombre de la especialidad por si se quere editar
+	}
+
+	//vistas para editar los registros
+	public function edita_area()
+	{
+		$datos['areas']=$this->inicio_modelo->obtener_areas();
+		$this->load->view('editar/vista_edita_area',$datos);
+	}
+	public function edita_maestro()
+	{
+		$datos['maestros']=$this->inicio_modelo->obtener_maestros();
+		$this->load->view('editar/vista_edita_maestro',$datos);
 	}
 
 }

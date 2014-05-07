@@ -33,6 +33,24 @@
 				return $especialidades->result();
 			}
 		}
+		//Obtiene las especialidades/areas que estan actualmente en la tabla maestro_especialidad
+		public function obtener_areas()
+		{
+			$areas= $this->db->get('maestro_especialidad');
+			if($areas->num_rows()>0)
+			{
+				return $areas->result();
+			}
+		}
+		//Obtiene los maestros que estan actualmente en la tabla maestro
+		public function obtener_maestros()
+		{
+			$maestros= $this->db->get('maestro');
+			if($maestros->num_rows()>0)
+			{
+				return $maestros->result();
+			}
+		}
 
 		public function registrar_carrera($carrera)
 		{
@@ -58,6 +76,17 @@
 		{
             $this->db->insert('maestro', array('Nombre' => $nombre,'Nivel' => $nivel,'Fecha_ingreso' => $fecha,'Correo' => $correo,'Profordem' => $profordem,'idEspecialidad' => $especialidad)); 
 		}
+
+		///----------------------ACTUALIZACIONES A LA BASE DE DATOS DE LOS REGISTROS--------------------////
+		public function actualiza_area($especialidad,$id)
+		{
+            $data = array(
+               'Nombre' => $especialidad
+            );
+            $this->db->where('id', $id);
+			$this->db->update('maestro_especialidad', $data); 
+		}
+		
 	}
 
 ?>

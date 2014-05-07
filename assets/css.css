@@ -58,3 +58,8 @@
   width: 1000px;
   padding-top: 20px;
 }
+
+.table th
+{
+   text-align: center;   
+}
