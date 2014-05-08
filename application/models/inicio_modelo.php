@@ -117,7 +117,7 @@
 			$this->db->update('maestro_especialidad', $data); 
 		}
 		
-		//Consultas obtener datos.
+		//----------------------CONSULTAS PARA OBTENER LOS DATOS A MODIFICAR
 		public function consulta_especialidad($id)
 		{
 			$especialidad = $this->db->get_where('maestro_especialidad', array('idEspecialidad' => $id));
