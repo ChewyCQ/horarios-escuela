@@ -45,6 +45,20 @@ class Inicio extends CI_Controller {
 	{
 		$this->load->view('registrar/vista_carrera');
 	}
+	public function grupo()
+	{
+		$datos['semestres'] = $this->inicio_modelo->obtener_semestres();
+		$this->load->view('registrar/vista_grupo',$datos);
+	}
+	public function alumno()
+	{
+		$datos['grupos'] = $this->inicio_modelo->obtener_grupos();
+		$this->load->view('registrar/vista_alumno',$datos);
+	}
+	public function dependencia()
+	{
+		$this->load->view('registrar/vista_dependencia');
+	}
 	public function especialidad()
 	{
 		$idEspecialidad=$this->input->get('esp', TRUE);

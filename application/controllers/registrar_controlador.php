@@ -45,5 +45,21 @@ class Registrar_controlador extends CI_Controller {
 		$this->inicio_modelo->registrar_maestro($this->input->post('nombre'),$this->input->post('nivel'),$this->input->post('fecha_ingreso'),$this->input->post('email'),$this->input->post('profordem'),$this->input->post('id_especialidad'));
 		$this->index();
 	}
+	public function guarda_grupo()
+	{
+		$this->inicio_modelo->registrar_grupo($this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'));
+		$this->index();
+	}
+	public function guarda_alumno()
+	{
+		$this->inicio_modelo->registrar_alumno($this->input->post('nombre'),$this->input->post('email'),$this->input->post('id_grupo'));
+		$this->index();
+	}
+	public function guarda_dependencia()
+	{
+		$this->inicio_modelo->registrar_dependencia($this->input->post('nombre'),$this->input->post('cantidad'));
+		$this->index();
+	}
+
 
 }

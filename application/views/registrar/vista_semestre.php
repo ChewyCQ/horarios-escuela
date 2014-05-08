@@ -11,7 +11,7 @@
 	<div class="container">
   		<div class="form-group">
   			<form action="<?php echo site_url('registrar_controlador/guarda_semestre');?>" method="post">
-		    	<label for="nombre">Número del semestre</label>
+		    	<label for="numero">Número del semestre</label>
 				<input type="text" class="form-control" id="numero_semestre" placeholder="N° Semestre" name="numero_semestre" required pattern="([0-9]{1,2})$" oninput="check(this)">
 				<label for="plan">Plan</label>
 				<select class="form-control" name="id_plan">

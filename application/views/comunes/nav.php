@@ -22,6 +22,9 @@
                 <li><a href="<?php echo site_url('inicio/semestre'); ?>">Semestre</a></li>
                 <li><a href="<?php echo site_url('inicio/plan'); ?>">Plan</a></li>
                 <li><a href="<?php echo site_url('inicio/carrera'); ?>">Carrera</a></li>
+                <li><a href="<?php echo site_url('inicio/grupo'); ?>">Grupo</a></li>
+                <li><a href="<?php echo site_url('inicio/alumno'); ?>">Alumno</a></li>
+                <li><a href="<?php echo site_url('inicio/dependencia'); ?>">Dependencia (CC)</a></li>
               </ul>
             </li>
             <li class="dropdown">

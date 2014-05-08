@@ -51,6 +51,24 @@
 				return $maestros->result();
 			}
 		}
+		//Obtiene los semestres que estan actualmente en la tabla semestre
+		public function obtener_semestres()
+		{
+			$semestres= $this->db->get('semestre');
+			if($semestres->num_rows()>0)
+			{
+				return $semestres->result();
+			}
+		}
+		//Obtiene los grupos que estan actualmente en la tabla grupo
+		public function obtener_grupos()
+		{
+			$grupos= $this->db->get('grupo');
+			if($grupos->num_rows()>0)
+			{
+				return $grupos->result();
+			}
+		}
 
 		public function registrar_carrera($carrera)
 		{
@@ -75,6 +93,18 @@
 		public function registrar_maestro($nombre,$nivel,$fecha,$correo,$profordem,$especialidad)
 		{
             $this->db->insert('maestro', array('Nombre' => $nombre,'Nivel' => $nivel,'Fecha_ingreso' => $fecha,'Correo' => $correo,'Profordem' => $profordem,'idEspecialidad' => $especialidad)); 
+		}
+		public function registrar_grupo($generacion,$clave,$idSemestre)
+		{
+            $this->db->insert('grupo', array('Generacion' => $generacion,'Clave' => $clave, 'idSemestre' => $idSemestre)); 
+		}
+		public function registrar_alumno($nombre,$email,$idGrupo)
+		{
+            $this->db->insert('alumno', array('Nombre' => $nombre,'Correo' => $email, 'idGrupo' => $idGrupo)); 
+		}
+		public function registrar_dependencia($nombre,$cantidad)
+		{
+            $this->db->insert('dependencia', array('Nombre' => $nombre,'CantidadMaxAlumnos' => $cantidad)); 
 		}
 
 		///----------------------ACTUALIZACIONES A LA BASE DE DATOS DE LOS REGISTROS--------------------////
