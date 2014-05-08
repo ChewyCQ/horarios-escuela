@@ -83,10 +83,19 @@
             $data = array(
                'Nombre' => $especialidad
             );
-            $this->db->where('id', $id);
+            $this->db->where('idEspecialidad', $id);
 			$this->db->update('maestro_especialidad', $data); 
 		}
 		
+		//Consultas obtener datos.
+		public function consulta_especialidad($id)
+		{
+			$especialidad = $this->db->get_where('maestro_especialidad', array('idEspecialidad' => $id));
+			if($especialidad->num_rows()>0)
+			{
+				return $especialidad->result();
+			}
+		}
 	}
 
 ?>

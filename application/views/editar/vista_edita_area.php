@@ -29,7 +29,7 @@
 							<?php
 								foreach ($areas as $areas) {//Lo que tenemos en la variable prueba
 									?>
-									<form action="<?php echo site_url('inicio/especialidad');?>?esp=<?php echo $areas->Nombre?>" method="post"> <!--Envía el id del dato que se modificará-->
+									<form action="<?php echo site_url('inicio/especialidad');?>?esp=<?php echo $areas->idEspecialidad?>" method="post"> <!--Envía el id del dato que se modificará-->
 									<?php
 									echo "<tr>";
 									echo "<td class='success' height='100%'>".$areas->Nombre ."</td>"; //Inserta una celda con el valor de áreas

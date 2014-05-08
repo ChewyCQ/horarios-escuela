@@ -14,10 +14,10 @@ class Actualizar_controlador extends CI_Controller {
 	{
 		
 	}
-	public function actualiza_area()
+	public function actualiza_especialidad()
 	{
-		echo "Hola";
-		$this->inicio_modelo->actualiza_area($this->input->post('nombre_especialidad'));
-		$this->index();
+		$idEspecialidad=$this->input->get('id', TRUE);
+		$this->inicio_modelo->actualiza_area($this->input->post('nombre_especialidad'),$idEspecialidad);
+		$this->load->view('prueba');
 	}
 }
