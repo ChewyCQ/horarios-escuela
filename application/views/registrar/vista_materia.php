@@ -13,7 +13,7 @@
   			<form action="<?php echo site_url('registrar_controlador/guarda_materia');?>" method="post">
 	  			<label for="nombre">Nombre de la materia</label>
 				<input type="text" class="form-control" id="nombre_materia" placeholder="Nombre materia" 
-				required pattern="([áéíóúÁÉÍÓÚñÑa-zA-Z.-\s])*$" oninput="check(this)" name="nombre_materia">
+				required pattern="<?php echo PATRON_NOMBRE; ?>" oninput="check(this)" name="nombre_materia">
 				<label for="tipo_materia">Tipo de materia</label>
 				<select class="form-control" name="tipo_materia">
 				  <option value="0">Núcleo de Formación Básica</option>
