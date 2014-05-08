@@ -17,6 +17,10 @@ define('FILE_READ_MODE', 0644);
 define('FILE_WRITE_MODE', 0666);
 define('DIR_READ_MODE', 0755);
 define('DIR_WRITE_MODE', 0777);
+
+// Definidos
+define('PATRON_NOMBRE', "[áéíóúÁÉÍÓÚñÑa-zA-Z0-9-._- ]{1,70}");
+define('PATRON_NOMBRE_PERSONA', "[áéíóúÁÉÍÓÚñÑa-zA-Z-. ]{1,70}");
 define('BOOTSTRAP_CSS', "assets/bootstrap/css/bootstrap.css");
 define('BOOTSTRAP_JS', "assets/bootstrap/js/bootstrap.js");
 define('FPDF', "assets/fpdf/fpdf.php");

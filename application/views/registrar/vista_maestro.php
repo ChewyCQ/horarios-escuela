@@ -18,10 +18,10 @@
   		<div class="form-group">	
   			<form action="<?php echo site_url('registrar_controlador/guarda_maestro');?>" method="post">		    
 		    	<label for="nombre">Nombre del maestro</label>
-				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre" name="nombre" required pattern="([áéíóúÁÉÍÓÚñÑa-zA-Z\s])*$" oninput="check(this)">
+				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre" name="nombre" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)">
 			
 				<label for="nivel">Nivel del maestro</label>
-				<input type="text" class="form-control" id="nivel_maestro" placeholder="Nivel de estudios" name="nivel" required pattern="([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+[.-])*$" oninput="check(this)"> 
+				<input type="text" class="form-control" id="nivel_maestro" placeholder="Nivel de estudios" name="nivel" required pattern="<?php echo PATRON_NOMBRE; ?>" oninput="check(this)"> 
 			
 				<label for="fecha">Fecha de ingreso</label>
 				</br>
