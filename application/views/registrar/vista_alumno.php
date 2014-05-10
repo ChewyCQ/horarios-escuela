@@ -12,7 +12,7 @@
   		<div class="form-group">
   			<form action="<?php echo site_url('registrar_controlador/guarda_alumno');?>" method="post">
 		    	<label for="nombre">Nombre del Alumno</label>
-				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre" name="nombre" required pattern="([áéíóúÁÉÍÓÚñÑa-zA-Z\s])*$" oninput="check(this)">
+				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre" name="nombre" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)">
 				<label for="email">Email</label>
 			    <input type="email" class="form-control" id="email" placeholder="Introduce tu email" name="email" required pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$">
 				<label for="clave">Clave del grupo</label>

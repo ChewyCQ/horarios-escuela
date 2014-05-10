@@ -72,7 +72,10 @@
 
 		public function registrar_carrera($carrera)
 		{
-            $this->db->insert('carrera', array('Nombre_carrera' => $carrera)); 
+			//La función preg_replace elimina todos los espacios en blanco si estos son mayores a 1 entre cada texto 
+			$carrera=preg_replace('/\s+/', ' ', $carrera);  
+			//La función trim elimina todos los espaciosn en blanco al inicio y al final del texto
+            $this->db->insert('carrera', array('Nombre_carrera' => trim($carrera))); 
 		}
 		public function registrar_materia($materia,$tipo_materia)
 		{

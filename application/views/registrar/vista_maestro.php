@@ -21,7 +21,7 @@
 				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre" name="nombre" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)">
 			
 				<label for="nivel">Nivel del maestro</label>
-				<input type="text" class="form-control" id="nivel_maestro" placeholder="Nivel de estudios" name="nivel" required pattern="<?php echo PATRON_NOMBRE; ?>" oninput="check(this)"> 
+				<input type="text" class="form-control" id="nivel_maestro" placeholder="Nivel de estudios" name="nivel" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)"> 
 			
 				<label for="fecha">Fecha de ingreso</label>
 				</br>

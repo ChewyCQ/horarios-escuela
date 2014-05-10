@@ -17,7 +17,7 @@
 	  				?>
 	  				<form action="<?php echo site_url('actualizar_controlador/actualiza_especialidad');?>?id=<?php echo $especialidades->idEspecialidad?>" method="post">
 	  				<label for="nombre">Nombre de la especialidad / área de formación</label>
-	  				<input type="text" class="form-control" value="<?php echo $especialidades->Nombre ?>" id="nombre_especialidad" placeholder="Nombre de la especialidad" required pattern="([áéíóúÁÉÍÓÚñÑa-zA-Z\s]{2,70})*$" oninput="check(this)" name="nombre_especialidad">
+	  				<input type="text" class="form-control" value="<?php echo $especialidades->Nombre ?>" id="nombre_especialidad" placeholder="Nombre de la especialidad" required pattern="<?php echo PATRON_TEXTO_GUIONES; ?>" oninput="check(this)" name="nombre_especialidad">
 	  				<?php
 
 				}

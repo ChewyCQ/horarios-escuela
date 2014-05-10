@@ -19,8 +19,9 @@ define('DIR_READ_MODE', 0755);
 define('DIR_WRITE_MODE', 0777);
 
 // Definidos
-define('PATRON_NOMBRE', "[áéíóúÁÉÍÓÚñÑa-zA-Z0-9-._- ]{1,70}");
-define('PATRON_NOMBRE_PERSONA', "[áéíóúÁÉÍÓÚñÑa-zA-Z-. ]{1,70}");
+define('PATRON_TEXTO_GUIONES', "^([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+)(\-?)[áéíóúÁÉÍÓÚñÑa-zA-Z\s+]$"); //Esta validación acepta texto con guiones
+define('PATRON_TEXTO_GUIONES_NUMEROS', "^([áéíóúÁÉÍÓÚñÑa-zA-Z0-9\s]+)(\-?)[áéíóúÁÉÍÓÚñÑa-zA-Z0-9\s+]$"); //Esta validación acepta texto con guiones y números
+define('PATRON_NOMBRE_PERSONA', "[áéíóúÁÉÍÓÚñÑa-zA-Z\s]+");
 define('BOOTSTRAP_CSS', "assets/bootstrap/css/bootstrap.css");
 define('BOOTSTRAP_JS', "assets/bootstrap/js/bootstrap.js");
 define('FPDF', "assets/fpdf/fpdf.php");

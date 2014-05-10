@@ -12,7 +12,7 @@
   		<div class="form-group">
   			<form action="<?php echo site_url('registrar_controlador/guarda_plan');?>" method="post">
 	  			<label for="nombre">Nombre del plan</label>
-				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre del plan" name="nombre_plan" required pattern="<?php echo PATRON_NOMBRE; ?>" oninput="check(this)">
+				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre del plan" name="nombre_plan" required pattern="<?php echo PATRON_TEXTO_GUIONES_NUMEROS; ?>" oninput="check(this)">
 				<label for="tipo_materia">Carrera</label>
 				<select class="form-control" name="id_carrera">
 					<?php
