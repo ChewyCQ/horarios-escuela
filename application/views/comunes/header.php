@@ -7,7 +7,7 @@
 	<meta name="author" content="David Cuadra, Marlene Torres">
 	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-	<!-- <title><?php echo $title; ?></title>  -->
+	
 
 	<link href="<?php echo base_url().BOOTSTRAP_CSS?>" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo base_url().CSS ?>">

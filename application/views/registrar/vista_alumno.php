@@ -10,7 +10,7 @@
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
   		<div class="form-group">
-  			<form action="<?php echo site_url('registrar_controlador/guarda_alumno');?>" method="post">
+  			<form action="<?php echo site_url('controlador_registrar/guarda_alumno');?>" method="post">
 		    	<label for="nombre">Nombre del Alumno</label>
 				<input type="text" class="form-control" id="nombre_maestro" placeholder="Nombre" name="nombre" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)">
 				<label for="email">Email</label>

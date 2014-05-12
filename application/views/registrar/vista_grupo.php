@@ -10,7 +10,7 @@
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
   		<div class="form-group">
-  			<form action="<?php echo site_url('registrar_controlador/guarda_grupo');?>" method="post">
+  			<form action="<?php echo site_url('controlador_registrar/guarda_grupo');?>" method="post">
 		    	<label for="generacion">Generación</label>
 				<input type="text" class="form-control" id="generacion" placeholder="N° de la generación" name="generacion" required pattern="([0-9]{1,4})$" oninput="check(this)">
 				<label for="generacion">Clave</label>
