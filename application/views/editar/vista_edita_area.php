@@ -21,6 +21,7 @@
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
 		<div class="form-group"> 
+		<div class="table-responsive">
   				<table id="tabla" class="display" cellspacing="0" width="100%">
   					<thead>
 	  					<tr>
@@ -31,20 +32,25 @@
 					<tbody>
 						<?php
 							foreach ($areas as $areas) {
+								
+								echo "<tr>";
+								echo "<td class='success' height='100%'>".$areas->Nombre."</td>";
+								echo "<td class='success' align='center' height='100%'>";
 								?>
 								<form action="<?php echo site_url('controlador_inicio/especialidad');?>?id=<?php echo $areas->idEspecialidad?>" method="post"> <!--Envía el id del dato que se modificará-->
 								<?php
-								echo "<tr>";
-								echo "<td class='success' height='100%'>".$areas->Nombre ."</td>";
-								echo "<td class='success' align='center' height='100%'><button type='input' class='btn btn-primary btn-sm' title='Editar registro'><span class='glyphicon glyphicon-ok'></span></button></td>"; 
-								echo "</tr>";
+								echo "<button type='input' class='btn btn-primary btn-sm' title='Editar registro'><span class='glyphicon glyphicon-ok'></span></button>"; 
 								?>
 								</form>		
 		                    	<?php
+								echo "</td>";
+								echo "</tr>";
+								
 		                	}
 	                	?>
 	                </tbody>
   				</table>
+  			</div>
   			</div>
 	</div>
 	<script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>  
