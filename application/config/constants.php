@@ -27,7 +27,7 @@ define('BOOTSTRAP_JS', "assets/bootstrap/js/bootstrap.js");
 define('FPDF', "assets/fpdf/fpdf.php");
 define('CSS', "assets/css.css");
 define('JQUERY', "assets/jquery.js");
-define('JQUERY_BOOTSTRAP', "https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
+define('JQUERY_BOOTSTRAP', "assets/bootstrap/js/jquery.min.js");
 
 /*
 |--------------------------------------------------------------------------
