@@ -8,6 +8,7 @@ class Controlador_actualizar extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->database('default');
 		$this->load->model('modelo_actualizar');
+		include('/assets/fecha.php'); //Librerías que convierte la fecha a número y a letra	
 	}
 
 	public function index()
@@ -31,6 +32,32 @@ class Controlador_actualizar extends CI_Controller {
 	{
 		$idSemestre=$this->input->get('id', TRUE);
 		$this->modelo_actualizar->actualiza_semestre($this->input->post('numero_semestre'),$this->input->post('id_plan'),$idSemestre);
+		$this->index();
+	}
+	public function actualiza_maestro()
+	{	
+		//Colocar nuevo formato a la fecha para guardar en la base como date
+		$fecha=$this->input->post('fecha_ingreso');
+		$fecha_separada = explode(" ", $fecha);
+		$dia=$fecha_separada[0];
+		$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
+		$anio=$fecha_separada[2];
+		$fecha_date=$anio.'-'.$mes.'-'.$dia;
+
+		$idMaestro=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_maestro($idMaestro,$this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$this->input->post('id_especialidad'),$this->input->post('activo'));
+		$this->index();
+	}
+	public function actualiza_carrera()
+	{
+		$idCarrera=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_carrera($idCarrera,$this->input->post('nombre_carrera'));
+		$this->index();
+	}
+	public function actualiza_plan()
+	{
+		$idPlan=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_plan($idPlan,$this->input->post('nombre_plan'),$this->input->post('id_carrera'));
 		$this->index();
 	}
 }

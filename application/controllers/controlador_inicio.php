@@ -11,6 +11,7 @@ class Controlador_inicio extends CI_Controller {
 		$this->load->model('modelo_inicio');
 		$this->load->model('modelo_consultas');
 		$this->load->database('default');
+		include('/assets/fecha.php'); //Librerías que convierte la fecha a número y a letra	
 	}
 
 	public function index()
@@ -18,15 +19,33 @@ class Controlador_inicio extends CI_Controller {
 		$data = array('title' => "Ejemplo");
 		$this->load->view('prueba', $data /*FALSE*/);
 	}
-	public function area()
-	{
-		$this->load->view('registrar/vista_area_formacion');
-	}
 	public function maestro()
 	{
 		$idMaestro=$this->input->get('id', TRUE);
-		$datos['especialidades'] = $this->modelo_inicio->obtener_especialidades(); //Asignamos a un array el resultado de la consulta
-		$this->load->view('registrar/vista_maestro');
+		$consulta=$this->modelo_consultas->consulta_maestro($idMaestro);		
+		if($consulta != FALSE)
+		{
+			//Convertir fecha a texto
+			$fecha_separada = explode("-",$consulta->Fecha_ingreso);
+			$anio=$fecha_separada[0];
+			$mes_texto= mes_letra($fecha_separada[1]); //Utilizo el método mes de la librería de fecha para convertirlo a letra
+			$dia=$fecha_separada[2];
+			$fecha_texto=$dia.' '.$mes_texto.' '.$anio;
+
+			$data = array('idMaestro'=>$consulta->idMaestro,'Clave' => $consulta->Clave,'Nombre' => $consulta->Nombre,
+				'Nivel' => $consulta->Nivel,'Fecha_ingreso' => $fecha_texto,'horas' => $consulta->horas,
+				'Correo' => $consulta->Correo,'Profordem' => $consulta->Profordem,'idEspecialidad' => $consulta->idEspecialidad,
+				'activo' => $consulta->activo,'especialidades' => $this->modelo_inicio->obtener_especialidades());
+		} 
+		else
+		{
+			$data = array('idMaestro'=>'','Clave' => '','Nombre' => '',
+				'Nivel' => '','Fecha_ingreso' => '','horas' => '',
+				'Correo' => '','Profordem' => '','idEspecialidad' => '',
+				'activo' => '','especialidades' => $this->modelo_inicio->obtener_especialidades());
+		}	
+		$this->load->view('registrar/vista_maestro',$data);
+
 	}
 	public function materia()
 	{
@@ -60,13 +79,34 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function plan()
 	{
-		$datos['carreras'] = $this->modelo_inicio->obtener_carreras(); //Asignamos a un array el resultado de la consulta
-		$this->load->view('registrar/vista_plan',$datos);
+		$idPlan=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_plan($idPlan);
+		
+		if($consulta != FALSE)
+		{
+			$data = array('idPlan' => $consulta->idPlan,'Nombre_plan' => $consulta->Nombre_plan,'idCarrera' => $consulta->idCarrera,'carreras' => $this->modelo_inicio->obtener_carreras());
+		} 
+		else
+		{
+			$data = array('idPlan' => '','Nombre_plan' => '','idCarrera' => '','carreras' => $this->modelo_inicio->obtener_carreras());
+		}	
+		$this->load->view('registrar/vista_plan',$data);
 
 	}
 	public function carrera()
 	{
-		$this->load->view('registrar/vista_carrera');
+		$idCarrera=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_carrera($idCarrera);
+		
+		if($consulta != FALSE)
+		{
+			$data = array('idCarrera' => $consulta->idCarrera,'Nombre_carrera' => $consulta->Nombre_carrera);
+		} 
+		else
+		{
+			$data = array('idCarrera' => '','Nombre_carrera' => '');
+		}	
+		$this->load->view('registrar/vista_carrera',$data);	
 	}
 	public function grupo()
 	{
@@ -126,7 +166,8 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function edita_carrera()
 	{
-		$this->load->view('editar/datatable');
+		$datos['carreras']=$this->modelo_inicio->obtener_carreras();
+		$this->load->view('editar/vista_edita_carrera',$datos);
 	}
 
 }

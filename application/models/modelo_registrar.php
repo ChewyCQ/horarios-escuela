@@ -29,9 +29,9 @@
 		{
             $this->db->insert('maestro_especialidad', array('Nombre' => $especialidad)); 
 		}
-		public function registrar_maestro($nombre,$nivel,$fecha,$correo,$profordem,$especialidad)
+		public function registrar_maestro($clave,$nombre,$nivel,$fecha,$horas,$correo,$profordem,$especialidad,$activo)
 		{
-            $this->db->insert('maestro', array('Nombre' => $nombre,'Nivel' => $nivel,'Fecha_ingreso' => $fecha,'Correo' => $correo,'Profordem' => $profordem,'idEspecialidad' => $especialidad)); 
+            $this->db->insert('maestro', array('Clave' => $clave,'Nombre' => $nombre,'Nivel' => $nivel,'Fecha_ingreso' => $fecha,'horas' => $horas,'Correo' => $correo,'Profordem' => $profordem,'idEspecialidad' => $especialidad,'activo' => $activo)); 
 		}
 		public function registrar_grupo($generacion,$clave,$idSemestre)
 		{

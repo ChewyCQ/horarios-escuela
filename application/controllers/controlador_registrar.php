@@ -8,6 +8,7 @@ class Controlador_registrar extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('modelo_registrar');
 		$this->load->database('default');
+		include('/assets/fecha.php'); //Librerías que convierte la fecha a número y a letra	
 	}
 
 	public function index()
@@ -42,7 +43,15 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_maestro()
 	{
-		$this->modelo_registrar->registrar_maestro($this->input->post('nombre'),$this->input->post('nivel'),$this->input->post('fecha_ingreso'),$this->input->post('email'),$this->input->post('profordem'),$this->input->post('id_especialidad'));
+		//Colocar nuevo formato a la fecha para guardar en la base como date
+		$fecha=$this->input->post('fecha_ingreso');
+		$fecha_separada = explode(" ", $fecha);
+		$dia=$fecha_separada[0];
+		$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
+		$anio=$fecha_separada[2];
+		$fecha_date=$anio.'-'.$mes.'-'.$dia;
+
+		$this->modelo_registrar->registrar_maestro($this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$this->input->post('id_especialidad'),$this->input->post('activo'));
 		$this->index();
 	}
 	public function guarda_grupo()

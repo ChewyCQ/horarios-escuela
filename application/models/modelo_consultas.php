@@ -21,10 +21,10 @@
 		}
 		public function consulta_maestro($id)
 		{
-			$especialidad = $this->db->get_where('maestro_especialidad', array('idEspecialidad' => $id));
-			if($especialidad->num_rows()>0)
+			$maestro = $this->db->get_where('maestro', array('idMaestro' => $id));
+			if($maestro->num_rows()>0)
 			{
-				return $especialidad->row(); //Con el row solo se obtiene una fila de resultados
+				return $maestro->row(); //Con el row solo se obtiene una fila de resultados
 			}
 			else
 			{
@@ -77,6 +77,30 @@
 			if($planes->num_rows()>0)
 			{
 				return $planes->result();
+			}
+		}
+		public function consulta_carrera($id)
+		{
+			$carrera = $this->db->get_where('carrera', array('idCarrera' => $id));
+			if($carrera->num_rows()>0)
+			{
+				return $carrera->row(); //Con el row solo se obtiene una fila de resultados
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		public function consulta_plan($id)
+		{
+			$plan = $this->db->get_where('plan', array('idPlan' => $id));
+			if($plan->num_rows()>0)
+			{
+				return $plan->row(); //Con el row solo se obtiene una fila de resultados
+			}
+			else
+			{
+				return FALSE;
 			}
 		}
 	}
