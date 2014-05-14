@@ -41,6 +41,9 @@
                 <li><a href="<?php echo site_url('controlador_inicio/edita_semestre'); ?>">Semestre</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_plan'); ?>">Plan</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_carrera'); ?>">Carrera</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/edita_grupo'); ?>">Grupo</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/edita_alumno'); ?>">Alumno</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/edita_dependencia'); ?>">Dependencias (CC)</a></li>
               </ul>
             </li>
             <li class="dropdown">

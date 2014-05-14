@@ -67,6 +67,35 @@
             $this->db->where('idPlan', $id);
             $this->db->update('plan', $data); 
       }
+      public function actualiza_grupo($id,$generacion,$clave,$idSemestre)
+      {
+            $data = array(
+               'Generacion' => $generacion,
+               'Clave' => $clave,
+               'idSemestre' =>$idSemestre
+            );
+            $this->db->where('idGrupo', $id);
+            $this->db->update('grupo', $data); 
+      }
+      public function actualiza_alumno($id,$nombre,$correo,$idGrupo)
+      {
+            $data = array(
+               'Nombre' => $nombre,
+               'Correo' => $correo,
+               'idGrupo' =>$idGrupo
+            );
+            $this->db->where('idAlumno', $id);
+            $this->db->update('alumno', $data); 
+      }
+       public function actualiza_dependencia($id,$nombre,$cantidad)
+      {
+            $data = array(
+               'Nombre' => $nombre,
+               'CantidadMaxAlumnos' => $cantidad
+            );
+            $this->db->where('idDependencia', $id);
+            $this->db->update('dependencia', $data); 
+      }
 	}
 
 ?>

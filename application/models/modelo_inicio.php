@@ -78,5 +78,14 @@
 				return $materias->result();
 			}
 		}
+		//Obtiene las dependencias que estan actualmente en la tabla dependencia
+		public function obtener_dependencias()
+		{
+			$dependencias= $this->db->get('dependencia');
+			if($dependencias->num_rows()>0)
+			{
+				return $dependencias->result();
+			}
+		}
 	}
 ?>

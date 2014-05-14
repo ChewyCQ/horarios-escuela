@@ -38,14 +38,25 @@ class Controlador_actualizar extends CI_Controller {
 	{	
 		//Colocar nuevo formato a la fecha para guardar en la base como date
 		$fecha=$this->input->post('fecha_ingreso');
-		$fecha_separada = explode(" ", $fecha);
-		$dia=$fecha_separada[0];
-		$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
-		$anio=$fecha_separada[2];
-		$fecha_date=$anio.'-'.$mes.'-'.$dia;
+		if($fecha!=null)
+		{
+			$fecha_separada = explode(" ", $fecha);
+			$dia=$fecha_separada[0];
+			$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
+			$anio=$fecha_separada[2];
+			$fecha_date=$anio.'-'.$mes.'-'.$dia;
+		}
+		else{
+			$fecha_date=$fecha;
+		}
 
+		$idEspecialidad=$this->input->post('id_especialidad');
+		if($idEspecialidad=='NULL')
+		{
+			$idEspecialidad=null;
+		}
 		$idMaestro=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_maestro($idMaestro,$this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$this->input->post('id_especialidad'),$this->input->post('activo'));
+		$this->modelo_actualizar->actualiza_maestro($idMaestro,$this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$idEspecialidad,$this->input->post('activo'));
 		$this->index();
 	}
 	public function actualiza_carrera()
@@ -58,6 +69,24 @@ class Controlador_actualizar extends CI_Controller {
 	{
 		$idPlan=$this->input->get('id', TRUE);
 		$this->modelo_actualizar->actualiza_plan($idPlan,$this->input->post('nombre_plan'),$this->input->post('id_carrera'));
+		$this->index();
+	}
+	public function actualiza_grupo()
+	{
+		$idGrupo=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_grupo($idGrupo,$this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'));
+		$this->index();
+	}
+	public function actualiza_alumno()
+	{
+		$idAlumno=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_alumno($idAlumno,$this->input->post('nombre'),$this->input->post('email'),$this->input->post('id_grupo'));
+		$this->index();
+	}
+	public function actualiza_dependencia()
+	{
+		$idDependencia=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_dependencia($idDependencia,$this->input->post('nombre'),$this->input->post('cantidad'));
 		$this->index();
 	}
 }

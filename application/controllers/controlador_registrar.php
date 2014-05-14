@@ -45,13 +45,24 @@ class Controlador_registrar extends CI_Controller {
 	{
 		//Colocar nuevo formato a la fecha para guardar en la base como date
 		$fecha=$this->input->post('fecha_ingreso');
-		$fecha_separada = explode(" ", $fecha);
-		$dia=$fecha_separada[0];
-		$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
-		$anio=$fecha_separada[2];
-		$fecha_date=$anio.'-'.$mes.'-'.$dia;
+		if($fecha!=null)
+		{
+			$fecha_separada = explode(" ", $fecha);
+			$dia=$fecha_separada[0];
+			$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
+			$anio=$fecha_separada[2];
+			$fecha_date=$anio.'-'.$mes.'-'.$dia;
+		}
+		else{
+			$fecha_date='0000-00-00';
+		}
 
-		$this->modelo_registrar->registrar_maestro($this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$this->input->post('id_especialidad'),$this->input->post('activo'));
+		$idEspecialidad=$this->input->post('id_especialidad');
+		if($idEspecialidad=='NULL')
+		{
+			$idEspecialidad=null;
+		}
+		$this->modelo_registrar->registrar_maestro($this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$idEspecialidad,$this->input->post('activo'));
 		$this->index();
 	}
 	public function guarda_grupo()

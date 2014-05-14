@@ -42,6 +42,7 @@
 				$sel0 = "";
 				$sel1 = "";
 				$sel2 = "";
+				$sel3 = "";
 				if($Nivel == 'PB'){
 				    $sel0 = "selected";
 				}
@@ -51,11 +52,15 @@
 				if($Nivel == 'TA'){
 					$sel2 = "selected";
 				}
+				if($Nivel == 'PA'){
+					$sel3 = "selected";
+				}
 			?>
 			<select class="form-control" name="nivel">
 			  <option <?php echo $sel0;?> >PB</option>
 			  <option <?php echo $sel1;?> >PC</option>
 			  <option <?php echo $sel2;?> >TA</option>
+			  <option <?php echo $sel3;?> >PA</option>
 			</select>
 		
 			<label for="fecha">Fecha de ingreso</label>
@@ -67,10 +72,10 @@
 			</div>
 
 			<label for="horas">Horas</label>
-			<input type="text" class="form-control" id="horas_maestro" value="<?php echo $horas ?>" placeholder="Horas asignadas" name="horas" required pattern="<?php echo PATRON_NUMEROS; ?>" oninput="check(this)">		    
+			<input type="text" class="form-control" id="horas_maestro" value="<?php echo $horas ?>" placeholder="Horas asignadas" name="horas" pattern="<?php echo PATRON_NUMEROS; ?>" oninput="check(this)">		    
 		
 		    <label for="email">Email</label>
-		    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email" required pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$">
+		    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email" pattern="<?php echo PATRON_CORREO; ?>">
 			<!--Verifica que este seleccionado el checkbox, si es así establece la variable para seleccionarlo-->
 			<?php
 				$selecciona_profordem = "";
@@ -82,6 +87,7 @@
 			</br>
 			<label for="especialidad">Especialidad</label>
 			<select class="form-control" name="id_especialidad">
+				<option value="NULL" selected>Ninguna</option>;
 				<?php
 				foreach ($especialidades as $i => $especialidad)
 					if($idEspecialidad==$especialidad->idEspecialidad)

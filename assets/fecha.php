@@ -2,6 +2,7 @@
 
 //Para cambiar los meses a números
 function mes_numero($mes){
+	$mesnumero='';
 	switch ($mes) {
 		case 'enero':
 			$mesnumero='01';
@@ -45,6 +46,7 @@ function mes_numero($mes){
 
 //Para cambiar los meses a letras
 function mes_letra($mes){
+	$mesletra="";
 	switch ($mes) {
 		case '01':
 			$mesletra='Enero';

@@ -26,11 +26,19 @@ class Controlador_inicio extends CI_Controller {
 		if($consulta != FALSE)
 		{
 			//Convertir fecha a texto
-			$fecha_separada = explode("-",$consulta->Fecha_ingreso);
-			$anio=$fecha_separada[0];
-			$mes_texto= mes_letra($fecha_separada[1]); //Utilizo el método mes de la librería de fecha para convertirlo a letra
-			$dia=$fecha_separada[2];
-			$fecha_texto=$dia.' '.$mes_texto.' '.$anio;
+			
+			if($consulta->Fecha_ingreso=='0000-00-00')
+			{
+				$fecha_texto='';
+			}
+			else
+			{
+				$fecha_separada = explode("-",$consulta->Fecha_ingreso);
+				$anio=$fecha_separada[0];
+				$mes_texto= mes_letra($fecha_separada[1]); //Utilizo el método mes de la librería de fecha para convertirlo a letra
+				$dia=$fecha_separada[2];
+				$fecha_texto=$dia.' '.$mes_texto.' '.$anio;
+			}
 
 			$data = array('idMaestro'=>$consulta->idMaestro,'Clave' => $consulta->Clave,'Nombre' => $consulta->Nombre,
 				'Nivel' => $consulta->Nivel,'Fecha_ingreso' => $fecha_texto,'horas' => $consulta->horas,
@@ -110,17 +118,48 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function grupo()
 	{
-		$datos['semestres'] = $this->modelo_inicio->obtener_semestres();
-		$this->load->view('registrar/vista_grupo',$datos);
+		$idGrupo=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_grupo($idGrupo);
+		
+		if($consulta != FALSE)
+		{
+			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'idSemestre'=>$consulta->idSemestre,'semestres'=>$this->modelo_inicio->obtener_semestres());
+		} 
+		else
+		{
+			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','semestres'=>$this->modelo_inicio->obtener_semestres());
+		}		
+		$this->load->view('registrar/vista_grupo',$data);
 	}
 	public function alumno()
 	{
-		$datos['grupos'] = $this->modelo_inicio->obtener_grupos();
-		$this->load->view('registrar/vista_alumno',$datos);
+		$idAlumno=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_alumno($idAlumno);
+		
+		if($consulta != FALSE)
+		{
+			$data = array('idAlumno' => $consulta->idAlumno,'Nombre' => $consulta->Nombre,'Correo'=>$consulta->Correo,'idGrupo'=>$consulta->idGrupo,'grupos'=>$this->modelo_inicio->obtener_grupos());
+		} 
+		else
+		{
+			$data = array('idAlumno' => '','Nombre' => '','Correo'=>'','idGrupo'=>'','grupos'=>$this->modelo_inicio->obtener_grupos());
+		}
+		$this->load->view('registrar/vista_alumno',$data);
 	}
 	public function dependencia()
 	{
-		$this->load->view('registrar/vista_dependencia');
+		$idDependencia=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_dependencia($idDependencia);
+		
+		if($consulta != FALSE)
+		{
+			$data = array('idDependencia' => $consulta->idDependencia, 'Nombre' => $consulta->Nombre,'CantidadMaxAlumnos' => $consulta->CantidadMaxAlumnos);
+		} 
+		else
+		{
+			$data = array('idDependencia' => '', 'Nombre' => '','CantidadMaxAlumnos' => '');
+		}
+		$this->load->view('registrar/vista_dependencia',$data);
 	}
 	public function especialidad()
 	{
@@ -168,6 +207,21 @@ class Controlador_inicio extends CI_Controller {
 	{
 		$datos['carreras']=$this->modelo_inicio->obtener_carreras();
 		$this->load->view('editar/vista_edita_carrera',$datos);
+	}
+	public function edita_grupo()
+	{
+		$datos['grupos']=$this->modelo_consultas->consulta_grupos_semestre();
+		$this->load->view('editar/vista_edita_grupo',$datos);
+	}
+	public function edita_alumno()
+	{
+		$datos['alumnos']=$this->modelo_consultas->consulta_alumno_grupo();
+		$this->load->view('editar/vista_edita_alumno',$datos);
+	}
+	public function edita_dependencia()
+	{
+		$datos['dependencias']=$this->modelo_inicio->obtener_dependencias();
+		$this->load->view('editar/vista_edita_dependencia',$datos);
 	}
 
 }

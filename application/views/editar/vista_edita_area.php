@@ -42,7 +42,7 @@
 								?>
 								<form action="<?php echo site_url('controlador_inicio/especialidad');?>?id=<?php echo $areas->idEspecialidad?>" method="post"> <!--Envía el id del dato que se modificará-->
 								<?php
-								echo "<button type='input' class='btn btn-primary btn-default' title='Editar registro'><span class='glyphicon glyphicon-edit'></span></button>"; 
+								echo "<button type='input' class='btn btn-primary btn-sm' title='Editar registro'><span class='glyphicon glyphicon-edit'></span></button>"; 
 								?>
 								</form>		
 		                    	<?php

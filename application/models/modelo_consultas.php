@@ -103,5 +103,63 @@
 				return FALSE;
 			}
 		}
+		public function consulta_grupos_semestre()
+		{
+			$this->db->select('*');
+			$this->db->from('grupo');
+			$this->db->join('semestre', 'semestre.idSemestre = grupo.idSemestre', 'left');
+			$grupos= $this->db->get();
+			if($grupos->num_rows()>0)
+			{
+				return $grupos->result();
+			}
+		}
+		public function consulta_grupo($id)
+		{
+			$grupo = $this->db->get_where('grupo', array('idGrupo' => $id));
+			if($grupo->num_rows()>0)
+			{
+				return $grupo->row(); //Con el row solo se obtiene una fila de resultados
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		public function consulta_alumno_grupo()
+		{
+			$this->db->select('*');
+			$this->db->from('alumno');
+			$this->db->join('grupo', 'grupo.idGrupo = alumno.idGrupo', 'left');
+			$alumnos= $this->db->get();
+			if($alumnos->num_rows()>0)
+			{
+				return $alumnos->result();
+			}
+		}
+		public function consulta_alumno($id)
+		{
+			$alumno = $this->db->get_where('alumno', array('idAlumno' => $id));
+			if($alumno->num_rows()>0)
+			{
+				return $alumno->row(); //Con el row solo se obtiene una fila de resultados
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		public function consulta_dependencia($id)
+		{
+			$dependencia = $this->db->get_where('dependencia', array('idDependencia' => $id));
+			if($dependencia->num_rows()>0)
+			{
+				return $dependencia->row(); //Con el row solo se obtiene una fila de resultados
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
 	}
 ?>
