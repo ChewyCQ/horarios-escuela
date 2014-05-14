@@ -27,36 +27,33 @@ class Csv extends CI_Controller {
         $config['upload_path'] = './subidos/';
         $config['allowed_types'] = 'csv';
         $config['file_name']    = 'maestros';
-            $config['max_size']     = '0'; //sin limite de tamano
+        $config['max_size']     = '0'; //sin limite de tamano
 
-            $this->load->library('upload', $config);
-            if(file_exists('./subidos/maestros.csv'))
-            {
-                unlink('./subidos/maestros.csv');
-            }
-
-            if ( ! $this->upload->do_upload())
-            {
-                $error = array('error' => $this->upload->display_errors());
-                $data = array(
-                    'title' => "Subir CSV de los Maestros",
-                    'error' => $error
-                    );
-                $this->load->view('registrar/vista_csv_maestros', $error);
-            }
-            else //Si se subio correctamente
-            {
-                    // $data = array('upload_data' => $this->upload->data());
-                $data['title'] = 'Datos extraidos del CSV'; 
-                $data['maestros'] = $this->leer_csv('./subidos/maestros.csv');
-                $data['maestros'] = $this->asegurar_arreglo_maestros($data['maestros']);
-                $data['maestros'] = $this->texto_a_utf8($data['maestros']);
-                    // echo "<pre>";
-                    // var_dump($data);
-                    // echo "</pre>";
-                $this->load->view('registrar/vista_csv_maestros_subidos', $data);
-            }
+        $this->load->library('upload', $config);
+        if(file_exists('./subidos/maestros.csv'))
+        {
+            unlink('./subidos/maestros.csv');
         }
+
+        if ( ! $this->upload->do_upload())
+        {
+            $error = array('error' => $this->upload->display_errors());
+            $data = array(
+                'title' => "Subir CSV de los Maestros",
+                'error' => $error
+                );
+            $this->load->view('registrar/vista_csv_maestros', $error);
+        }
+        else //Si se subio correctamente
+        {
+            // $data = array('upload_data' => $this->upload->data());
+            $data['title'] = 'Datos extraidos del CSV'; 
+            $data['maestros'] = $this->leer_csv('./subidos/maestros.csv');
+            $data['maestros'] = $this->asegurar_arreglo_maestros($data['maestros'],FALSE);
+            $data['maestros'] = $this->texto_a_utf8($data['maestros']);
+            $this->load->view('registrar/vista_csv_maestros_subidos', $data);
+        }
+    }
     /**
      * Retorna un arreglo con los datos extraidos de un csv.
      * @param  String $value Direccion al archivo csv
@@ -86,40 +83,83 @@ class Csv extends CI_Controller {
         }
         return $variable;
     }
-    function asegurar_arreglo_maestros($maestros)
+    function asegurar_arreglo_maestros($maestros,$base)
     {
+        $this->load->library('fechas');
+        $nuevo = array();
         foreach ($maestros as $key => $value) {
+            $temp = array();
             if( ! isset($maestros[$key]['clave']))
             {
-                $maestros[$key]['clave'] = '';
+                $temp['clave'] = '';
+            }
+            else{
+                $temp['clave'] = $maestros[$key]['clave'];
             }
             if( ! isset($maestros[$key]['nombre']))
             {
-                $maestros[$key]['nombre'] = '';
+                $temp['nombre'] = '';
+            }
+            else{
+                $temp['nombre'] = $maestros[$key]['nombre'];
             }
             if( ! isset($maestros[$key]['nivel']))
             {
-                $maestros[$key]['nivel'] = '';
+                $temp['nivel'] = '';
+            }
+            else{
+                $temp['nivel'] = $maestros[$key]['nivel'];
             }
             if( ! isset($maestros[$key]['fecha de ingreso']))
             {
-                $maestros[$key]['fecha de ingreso'] = '';
+                $temp['fecha de ingreso'] = '';
+            }
+            else{
+                if($base)
+                {
+                    $temp['fecha de ingreso'] = $this->fechas->fecha_dd_mm_aaaa($maestros[$key]['fecha de ingreso']);
+                }
+                else
+                {
+                    $temp['fecha de ingreso'] = $maestros[$key]['fecha de ingreso'];
+                }
             }
             if( ! isset($maestros[$key]['correo']))
             {
-                $maestros[$key]['correo'] = '';
+                $temp['correo'] = '';
+            }
+            else{
+                $temp['correo'] = $maestros[$key]['correo'];
             }
             if( ! isset($maestros[$key]['profordem']))
             {
-                $maestros[$key]['profordem'] = '';
+                $temp['profordem'] = '';
             }
+            else{
+                if($base)
+                {
+                    if ( strcmp( strtolower( $maestros[$key]['profordem']),'no') ) 
+                    {
+                        $temp['profordem'] = 1;
+                    }
+                    else
+                    {
+                        $temp['profordem'] = 0;
+                    }
+                }
+                else
+                {
+                    $temp['profordem'] = $maestros[$key]['profordem'];
+                }
+            }
+            array_push($nuevo, $temp);
         }
-        return $maestros;
+        return $nuevo;
     }
     public function guardar_maestros()
     {
         $maestros = $this->leer_csv('./subidos/maestros.csv');
-        $maestros = $this->asegurar_arreglo_maestros($maestros);
+        $maestros = $this->asegurar_arreglo_maestros($maestros,TRUE);
         $maestros = $this->texto_a_utf8($maestros);
         delete_files("./subidos/");
         $this->load->model('csv_modelo');
