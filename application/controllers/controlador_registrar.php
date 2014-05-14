@@ -9,6 +9,8 @@ class Controlador_registrar extends CI_Controller {
 		$this->load->model('modelo_registrar');
 		$this->load->database('default');
 		include('/assets/fecha.php'); //Librerías que convierte la fecha a número y a letra	
+		$this->load->library('fechas');
+		$this->load->library('csvimport');
 	}
 
 	public function index()
@@ -43,15 +45,12 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_maestro()
 	{
+		$this->load->library('fechas');
 		//Colocar nuevo formato a la fecha para guardar en la base como date
 		$fecha=$this->input->post('fecha_ingreso');
 		if($fecha!=null)
 		{
-			$fecha_separada = explode(" ", $fecha);
-			$dia=$fecha_separada[0];
-			$mes= mes_numero(strtolower($fecha_separada[1])); //Utilizo el método mes de la librería de fecha para convertirlo a número
-			$anio=$fecha_separada[2];
-			$fecha_date=$anio.'-'.$mes.'-'.$dia;
+			$fecha_date=fecha_dd_mes_aaaa($fecha);
 		}
 		else{
 			$fecha_date='0000-00-00';
