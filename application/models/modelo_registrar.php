@@ -17,6 +17,18 @@
 		{
 			$this->db->insert('materia', array('Nombre_materia' => $materia,'Tipo_materia' => $tipo_materia)); 
 		}
+		public function registrar_materia_semestre($idMateria,$semestres,$horas)
+		{
+			for($i=0; $i<count($semestres);$i++)
+			{
+				$data = array(
+				'idMateria' => $idMateria,
+				'idSemestre' => $semestres[$i],
+				'Horas_por_semana' => $horas
+				);
+				$this->db->insert('materia_semestre',$data); 
+			}
+		}
 		public function registrar_plan($plan,$idCarrera)
 		{
 			$this->db->insert('plan', array('Nombre_plan' => $plan,'idCarrera' => $idCarrera)); 

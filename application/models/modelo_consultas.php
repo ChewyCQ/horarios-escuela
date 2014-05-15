@@ -161,5 +161,35 @@
 				return FALSE;
 			}
 		}
+
+		//Obtiene los semestres que estan actualmente en la tabla semestre
+		public function obtener_semestre_carrera_plan()
+		{
+			$this->db->select('*');
+			$this->db->from('carrera');
+			$this->db->join('plan', 'plan.idCarrera = carrera.idCarrera', 'INNER');
+			$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
+			$resultado= $this->db->get_where('',array('Numero_semestre' => '3'));
+
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+		}
+
+		//Obtiene los semestres que estan actualmente en la tabla semestre
+		public function carrera_semestre($idCarrera)
+		{
+			$this->db->select('*');
+			$this->db->from('carrera');
+			$this->db->join('plan', 'plan.idCarrera = carrera.idCarrera', 'INNER');
+			$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
+			$resultado= $this->db->get_where('',array('idCarrera' => $idCarrera));
+
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+		}
 	}
 ?>

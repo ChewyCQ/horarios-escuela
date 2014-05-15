@@ -5,12 +5,9 @@ class Controlador_registrar extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('url');
+		$this->load->helper(array('form','file','url'));
 		$this->load->model('modelo_registrar');
 		$this->load->database('default');
-		include('/assets/fecha.php'); //Librerías que convierte la fecha a número y a letra	
-		$this->load->library('fechas');
-		$this->load->library('csvimport');
 	}
 
 	public function index()
@@ -25,7 +22,12 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_materia()
 	{
-		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'));
+		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post("semestres"));
+		$this->index();
+	}
+	public function guarda_materia_semestre()
+	{
+		$this->modelo_registrar->registrar_materia_semestre($this->input->post('id_materia'),$this->input->post('semestres'),$this->input->post('horas'));
 		$this->index();
 	}
 	public function guarda_plan()
@@ -50,7 +52,7 @@ class Controlador_registrar extends CI_Controller {
 		$fecha=$this->input->post('fecha_ingreso');
 		if($fecha!=null)
 		{
-			$fecha_date=fecha_dd_mes_aaaa($fecha);
+			$fecha_date=$this->fechas->fecha_dd_mes_aaaa($fecha);
 		}
 		else{
 			$fecha_date='0000-00-00';

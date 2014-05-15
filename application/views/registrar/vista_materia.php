@@ -24,6 +24,7 @@
 	  				<?php
 	  			}		
 	  		?>
+	  		<h4 class="text-center"><strong>DATOS GENERALES</strong></h4>
 	  		<label for="nombre">Nombre de la materia</label>
 			<input type="text" class="form-control" id="nombre_materia" placeholder="Nombre materia" 
 			required pattern="<?php echo PATRON_TEXTO_GUIONES; ?>" oninput="check(this)" name="nombre_materia"  value="<?php echo $Nombre_materia ?>">
@@ -53,11 +54,11 @@
 			  <option value="2" <?php echo $sel2;?> >Trayectos Técnicos</option>
 			  <option value="3" <?php echo $sel3;?> >Trayectos Propedéuticos</option>
 			</select>
-			<br/>
+			</br>
 			<button type="submit" class="btn btn-default">Enviar</button>
+			</form>
 		</div>
 	</div>
-
 	<?php $this->load->view('comunes/footer'); ?>    
 </body>
 </html>

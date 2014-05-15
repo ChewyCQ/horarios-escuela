@@ -51,6 +51,7 @@
               <ul class="dropdown-menu">
                 <li><a href="#">Area de formación-Materia</a></li>
                 <li><a href="#">Maestro-Materia</a></li>
+                <li><a href="<?php echo site_url('controlador_asignar/materia_semestre'); ?>">Materia-Semestre</a></li>
               </ul>
             </li>
             <li><a href="#"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>

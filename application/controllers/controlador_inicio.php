@@ -11,7 +11,6 @@ class Controlador_inicio extends CI_Controller {
 		$this->load->model('modelo_inicio');
 		$this->load->model('modelo_consultas');
 		$this->load->database('default');
-		include('/assets/fecha.php'); //Librerías que convierte la fecha a número y a letra	
 	}
 
 	public function index()
@@ -123,11 +122,11 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'idSemestre'=>$consulta->idSemestre,'semestres'=>$this->modelo_inicio->obtener_semestres());
+			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'idSemestre'=>$consulta->idSemestre,'semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
 		} 
 		else
 		{
-			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','semestres'=>$this->modelo_inicio->obtener_semestres());
+			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
 		}		
 		$this->load->view('registrar/vista_grupo',$data);
 	}
@@ -222,6 +221,14 @@ class Controlador_inicio extends CI_Controller {
 	{
 		$datos['dependencias']=$this->modelo_inicio->obtener_dependencias();
 		$this->load->view('editar/vista_edita_dependencia',$datos);
+	}
+
+	public function consulta_carrera_semestre()
+	{
+		echo "Hola";
+		$idCarrera=$this->input->post('idCarrera');
+		$datos['semestres']=$this->modelo_consultas->carrera_semestre($idCarrera);
+		return $datos;
 	}
 
 }
