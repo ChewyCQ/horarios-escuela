@@ -12,7 +12,7 @@
 			var opcion_seleccionada = $('#especialidad option:selected').text();
 			var id = $('#especialidad').val();
 			var i=('td').length;
-		    var cad="<tr><td><input name='especialidades[]' value='"+id+"' type='hidden'>"+opcion_seleccionada+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Editar registro'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+		    var cad="<tr><td><input name='especialidades[]' value='"+id+"' type='hidden'>"+opcion_seleccionada+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
 		    $('#tabla').append(cad);
 		}
 		// Evento que selecciona la fila y la elimina 
