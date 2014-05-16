@@ -5,6 +5,22 @@
     <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Registra materia</title>
+	<script type="text/javascript"></script>
+	<script>
+		function agrega_fila()
+		{
+			var opcion_seleccionada = $('#especialidad option:selected').text();
+			var id = $('#especialidad').val();
+			var i=('td').length;
+		    var cad="<tr><td><input name='especialidades[]' value='"+id+"' type='hidden'>"+opcion_seleccionada+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Editar registro'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
+		    $('#tabla').append(cad);
+		}
+		// Evento que selecciona la fila y la elimina 
+ 		function elimina_fila(boton)
+  		{
+    		$(boton).parent().parent().remove();
+  		}
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -54,6 +70,32 @@
 			  <option value="2" <?php echo $sel2;?> >Trayectos Técnicos</option>
 			  <option value="3" <?php echo $sel3;?> >Trayectos Propedéuticos</option>
 			</select>
+
+			</br>
+			<table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
+			    <!-- <caption>Ejemplo de tabla</caption> -->
+			</table>
+
+			<label for="especialidad">Especialidad</label>
+			<div class="row">
+				<div class="col-lg-10">
+					<select class="form-control" id="especialidad">
+						<?php
+						foreach ($especialidades as $i => $especialidad)
+							if($idEspecialidad==$especialidad->idEspecialidad)
+							{
+								echo '<option value="'.$especialidad->idEspecialidad.'" selected>'.$especialidad->Nombre.'</option>';
+							}
+							else{
+								echo '<option value="'.$especialidad->idEspecialidad.'">'.$especialidad->Nombre.'</option>';
+							}	
+						?>
+					  </select>
+				</div>
+				<div class="col-lg-2">
+					<input type="button" class="btn btn-default" value="Agregar Especialidad" onclick="agrega_fila();">
+				 </div>
+			</div>			
 			</br>
 			<button type="submit" class="btn btn-default">Enviar</button>
 			</form>

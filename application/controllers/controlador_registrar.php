@@ -22,7 +22,7 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_materia()
 	{
-		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post("semestres"));
+		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
 		$this->index();
 	}
 	public function guarda_materia_semestre()

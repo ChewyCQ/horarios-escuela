@@ -20,25 +20,20 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function maestro()
 	{
+		$this->load->library('fechas');
 		$idMaestro=$this->input->get('id', TRUE);
 		$consulta=$this->modelo_consultas->consulta_maestro($idMaestro);		
 		if($consulta != FALSE)
 		{
-			//Convertir fecha a texto
-			
+			//Convertir fecha a texto			
 			if($consulta->Fecha_ingreso=='0000-00-00')
 			{
 				$fecha_texto='';
 			}
 			else
 			{
-				$fecha_separada = explode("-",$consulta->Fecha_ingreso);
-				$anio=$fecha_separada[0];
-				$mes_texto= mes_letra($fecha_separada[1]); //Utilizo el método mes de la librería de fecha para convertirlo a letra
-				$dia=$fecha_separada[2];
-				$fecha_texto=$dia.' '.$mes_texto.' '.$anio;
+				$fecha_texto=$this->fechas->fecha_dd_mes_aaaa_edita($consulta->Fecha_ingreso);
 			}
-
 			$data = array('idMaestro'=>$consulta->idMaestro,'Clave' => $consulta->Clave,'Nombre' => $consulta->Nombre,
 				'Nivel' => $consulta->Nivel,'Fecha_ingreso' => $fecha_texto,'horas' => $consulta->horas,
 				'Correo' => $consulta->Correo,'Profordem' => $consulta->Profordem,'idEspecialidad' => $consulta->idEspecialidad,
@@ -52,7 +47,6 @@ class Controlador_inicio extends CI_Controller {
 				'activo' => '','especialidades' => $this->modelo_inicio->obtener_especialidades());
 		}	
 		$this->load->view('registrar/vista_maestro',$data);
-
 	}
 	public function materia()
 	{
@@ -61,11 +55,11 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,'idMateria'=>$consulta->idMateria);
+			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,'idMateria'=>$consulta->idMateria,'especialidades' => $this->modelo_inicio->obtener_especialidades());
 		} 
 		else
 		{
-			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'');
+			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'','especialidades' => $this->modelo_inicio->obtener_especialidades());
 		}	
 		$this->load->view('registrar/vista_materia',$data);
 	}
@@ -223,14 +217,10 @@ class Controlador_inicio extends CI_Controller {
 		$this->load->view('editar/vista_edita_dependencia',$datos);
 	}
 
-	public function consulta_carrera_semestre()
+	public function consulta_carrera_semestre($idCarrera)
 	{
-		echo "Hola";
-		$idCarrera=$this->input->post('idCarrera');
-		$datos['semestres']=$this->modelo_consultas->carrera_semestre($idCarrera);
-		return $datos;
-	}
-
+		echo json_encode($this->modelo_consultas->carrera_semestre($idCarrera)); //Codifica el resultado de la consulta a formato de json
+    }
 }
 
 /* End of file inicio.php */

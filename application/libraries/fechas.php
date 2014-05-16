@@ -24,6 +24,15 @@ class Fechas
         $fecha_date = $anio.'-'.$mes.'-'.$dia;
         return $fecha_date;
     }
+    public function fecha_dd_mes_aaaa_edita($string_fecha)
+    {
+        $fecha_separada = explode("-",$string_fecha);
+        $anio=$fecha_separada[0];
+        $mes_texto=$this->mes_letra($fecha_separada[1]); //Utilizo el método mes de la librería de fecha para convertirlo a letra
+        $dia=$fecha_separada[2];
+        $fecha_texto=$dia.' '.$mes_texto.' '.$anio;
+        return $fecha_texto;
+    }
     //Para cambiar los meses a números
     function mes_numero($mes){
         switch ($mes) {

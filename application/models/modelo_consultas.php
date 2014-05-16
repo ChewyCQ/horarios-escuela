@@ -169,7 +169,10 @@
 			$this->db->from('carrera');
 			$this->db->join('plan', 'plan.idCarrera = carrera.idCarrera', 'INNER');
 			$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
-			$resultado= $this->db->get_where('',array('Numero_semestre' => '3'));
+			$this->db->order_by("Numero_semestre", "asc"); 
+			$resultado=$this->db->get();
+			
+			//$resultado= $this->db->get_where('',array('Numero_semestre' => '3'));
 
 			if($resultado->num_rows()>0)
 			{
@@ -180,15 +183,19 @@
 		//Obtiene los semestres que estan actualmente en la tabla semestre
 		public function carrera_semestre($idCarrera)
 		{
-			$this->db->select('*');
+			$this->db->select('semestre.idSemestre,semestre.Numero_semestre');
 			$this->db->from('carrera');
 			$this->db->join('plan', 'plan.idCarrera = carrera.idCarrera', 'INNER');
 			$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
-			$resultado= $this->db->get_where('',array('idCarrera' => $idCarrera));
-
+			$this->db->where(array('carrera.idCarrera' => $idCarrera));
+			$resultado=$this->db->get();
 			if($resultado->num_rows()>0)
 			{
 				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
 			}
 		}
 	}

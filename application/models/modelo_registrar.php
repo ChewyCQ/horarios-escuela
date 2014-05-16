@@ -13,9 +13,21 @@
 			//La función trim elimina todos los espaciosn en blanco al inicio y al final del texto
             $this->db->insert('carrera', array('Nombre_carrera' => trim($carrera))); 
 		}
-		public function registrar_materia($materia,$tipo_materia)
+		public function registrar_materia($materia,$tipo_materia,$especialidades)
 		{
 			$this->db->insert('materia', array('Nombre_materia' => $materia,'Tipo_materia' => $tipo_materia)); 
+			$ultimo_id=$this->db->insert_id();
+			if($especialidades!=null)
+			{
+				for($i=0; $i<count($especialidades);$i++)
+				{
+					$data = array(
+					'idMateria' => $ultimo_id,
+					'idEspecialidad' => $especialidades[$i],
+					);
+					$this->db->insert('especialidad_materia',$data); 
+				}
+			}
 		}
 		public function registrar_materia_semestre($idMateria,$semestres,$horas)
 		{

@@ -4,23 +4,7 @@
 <html lang="es">
     <?php $this->load->view('comunes/header'); ?>
 <head>
-	<title>Registra materia</title>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/jquery1.3.2.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){ 
-			//Checkbox
-			$("input[name=checktodos]").change(function(){
-				$('input[type=checkbox]').each( function() {			
-					if($("input[name=checktodos]:checked").length == 1){
-						this.checked = true;
-					} else {
-						this.checked = false;
-					}
-				});
-			});
-		 
-		});
-	</script>
+	<title>Asignar meterias-semestres</title>	
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -39,28 +23,32 @@
 				<div class="row">
 					</br>
 					<div class="col-xs-12">
-						<table id="tabla" class="table table-condensed table-hover table-bordered">
-							<tr>
-		  						<th><center>Semestre</center></th>
+						<table class="table table-striped table-bordered table-responsive table-condensed table-hover">
+							<thead>
+							<tr>		  						
 		  						<th><center>Plan</center></th>
 		  						<th><center>Carrera</center></th>
-								<th width="40px"><input name="checktodos" type="checkbox" /></th>
+		  						<th><center>Semestre</center></th>
+								<th width="40px"></th>
 							</tr>
+							</thead>
+							<tbody>
 							<?php 
 								if (count($semestres)>0)
 								{
 									foreach ($semestres as $semestres)
 									{								
-										echo "<tr>";
-										echo "<td class='success' height='100%'>".$semestres->Numero_semestre."</td>";
-										echo "<td class='success' height='100%'>".$semestres->Nombre_plan."</td>";
-										echo "<td class='success' height='100%'>".$semestres->Nombre_carrera."</td>";
-										echo "<td class='success' align='center' height='100%'>";
+										echo "<tr>";										
+										echo "<td class='text-center'>".$semestres->Nombre_plan."</td>";
+										echo "<td class='text-center'>".$semestres->Nombre_carrera."</td>";
+										echo "<td class='text-center'>".$semestres->Numero_semestre."</td>";
+										echo "<td class='text-center'>";
 										echo "<input type='checkbox' value=".$semestres->idSemestre." name='semestres[]' class='grupo'>"; 
 										echo "</td></tr>";							
 				                	}
 							 	} 							
 			                ?>
+			                </tbody>
 	  					</table>
 
 					</div>

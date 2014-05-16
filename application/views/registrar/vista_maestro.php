@@ -5,7 +5,7 @@
     <?php $this->load->view('comunes/header'); ?>
     <!--Para poder usar el calendario, importar las librerias-->
     <link href="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.min.css" rel="stylesheet">
-	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.min.js"></script>
+	<!--<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.min.js"></script>-->
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/jquery-1.8.3.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
