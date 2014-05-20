@@ -30,7 +30,7 @@
 			); ?>
 			
 			<?php echo form_open_multipart('csv/validar_csv_maestros', $atributos_forma);?>
-			<label class="control-label" for="filebutton">Seleccionar archivo con extensión csv con la información de los maestros.</label>
+			<label class="control-label" for="filebutton">Seleccionar archivo con extensión csv con la información de los maestros. Las columnas deben llamarse "nombre", "clave", "nivel", "fecha de ingreso" y "profordem" sin comillas.</label>
 			<?php echo form_input($seleccionar); ?>
 			<br />
 			<?php echo form_input($subir); ?> 

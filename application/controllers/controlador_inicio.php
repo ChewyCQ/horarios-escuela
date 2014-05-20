@@ -169,6 +169,51 @@ class Controlador_inicio extends CI_Controller {
 		}	
 		$this->load->view('registrar/vista_especialidad',$data);
 	}
+	public function datos_escuela()
+	{
+		$this->load->helper('form');
+		$this->load->model('modelo_registrar');
+		$nombre_escuela = $this->modelo_registrar->get_nombre_escuela();
+		$data = array(
+			'error' => '',
+			'nombre_escuela' => $nombre_escuela
+			);
+		$this->load->view('registrar/vista_escuela', $data);
+	}
+	public function ciclo()
+	{
+		$this->load->helper('form');
+		$data = array('error' => '');
+		$this->load->view('registrar/vista_periodo', $data);
+	}
+	public function validar_ciclo()
+	{
+		$periodo['Anio'] = $this->input->post('anio');
+		$periodo['semestre'] = $this->input->post('semestre');
+		$periodo['Periodo'] = $this->input->post('clave');
+		$this->load->model('modelo_registrar');
+		$this->modelo_registrar->registrar_periodo($periodo);
+		redirect('controlador_inicio');
+	}
+	/**
+	 * Datos de la escuela (horarios)
+	 * @return [type] [description]
+	 */
+	public function datos()
+	{
+		$idMateria=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_materia($idMateria);
+		
+		if($consulta != FALSE)
+		{
+			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,'idMateria'=>$consulta->idMateria,'especialidades' => $this->modelo_inicio->obtener_especialidades());
+		} 
+		else
+		{
+			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'','especialidades' => $this->modelo_inicio->obtener_especialidades());
+		}	
+		$this->load->view('registrar/vista_materia',$data);
+	}
 
 	//Vistas para editar los registros
 	public function edita_area()

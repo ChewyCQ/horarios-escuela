@@ -20,6 +20,18 @@ class Csv extends CI_Controller {
             );
         $this->load->view('registrar/vista_csv_maestros', $data);
     }
+    public function subir_csv_alumnos()
+    {
+        if(file_exists('./subidos/alumnos.csv'))
+        {
+            unlink('./subidos/alumnos.csv');
+        }
+        $data = array(
+            'title' => "Subir CSV de los Alumnos",
+            'error' => ""
+            );
+        $this->load->view('registrar/vista_csv_alumnos', $data);
+    }
     function validar_csv_maestros()
     {
         $this->load->helper(array('form', 'url','file'));
