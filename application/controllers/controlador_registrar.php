@@ -66,14 +66,14 @@ class Controlador_registrar extends CI_Controller {
 		$this->load->library('fechas');
 		//Colocar nuevo formato a la fecha para guardar en la base como date
 		$fecha=$this->input->post('fecha_ingreso');
+		$fecha_date="";
 		if($fecha!=null)
 		{
 			$fecha_date=$this->fechas->fecha_dd_mes_aaaa($fecha);
 		}
 		else{
-			$fecha_date='0000-00-00';
+			$fecha_date='NULL';
 		}
-
 		$idEspecialidad=$this->input->post('id_especialidad');
 		if($idEspecialidad=='NULL')
 		{

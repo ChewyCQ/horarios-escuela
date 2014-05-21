@@ -33,15 +33,15 @@
 				},
 				messages:{
 					clave: {
-						required: "<font color='red'>Campo obligatorio.</font>",
-						minlength: "<font color='red'>La clave debe de tener 10 digitos.</font>",
-						maxlength: "<font color='red'>La clave debe de tener 10 digitos.</font>",
-						digits: "<font color='red'>La clave debe tener solo digitos.</font><label></label>"
+						required: "<font color='red'>Campo obligatorio</font>",
+						minlength: "<font color='red'>La clave debe de tener 10 digitos</font>",
+						maxlength: "<font color='red'>La clave debe de tener 10 digitos</font>",
+						digits: "<font color='red'>La clave debe tener solo números</font><label></label>"
 					},
 					nombre: {
-						required: "<font color='red'>Campo obligatorio.</font>",
-						maxlength: "<font color='red'>El nombre del maestro debe tener máximo 150 caracteres.</font>",
-						nombre_persona: "<font color='red'>El nombre debe tener solo texto y máximo un punto</font><label></label>"
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>El nombre del maestro debe tener máximo 150 caracteres</font>",
+						nombre_persona: "<font color='red'>El nombre debe tener solo letras y máximo un punto (No punto al final)</font>"
 					}
 				},
 

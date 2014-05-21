@@ -12,17 +12,15 @@
 				rules:{
 					nombre_carrera: {
 						required: true,
-						minlength: 2,
 						maxlength: 70,
-						letterswithbasicpunc:true
+						nombre_guion:true
 					}
 				},
 				messages:{
 					nombre_carrera: {
-						required: "<font color='red'>Debe ingresar una carrera.</font>",
-						minlength: "<font color='red'>El nombre de la carrera debe tener un minimo de 2 caracteres.</font>",
-						maxlength: "<font color='red'>El nombre de la carrera debe tener un máximo de 70 caracteres.</font>",
-						letterswithbasicpunc: "<font color='red'>Solo se aceptan letras y caracteres como: -.,()' \"</font>"
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>El nombre de la carrera debe tener un máximo de 70 caracteres</font>",
+						nombre_guion: "<font color='red'>Solo se aceptan letras, un guion medio (No guion medio al final)</font>"
 					}
 				},
 

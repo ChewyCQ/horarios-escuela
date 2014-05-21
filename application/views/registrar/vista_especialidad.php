@@ -12,17 +12,15 @@
 				rules:{
 					nombre_especialidad: {
 						required: true,
-						minlength: 2,
 						maxlength: 70,
 						solo_letras:true
 					}
 				},
 				messages:{
 					nombre_especialidad: {
-						required: "<font color='red'>Campo obligatorio.</font>",
-						minlength: "<font color='red'>El nombre de la especialidad debe tener un minimo de 2 caracteres.</font>",
-						maxlength: "<font color='red'>El nombre de la especialidad debe tener un máximo de 70 caracteres.</font>",
-						solo_letras: "<font color='red'>Solo se aceptan letras.</font>"
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>El nombre de la especialidad debe tener un máximo de 70 caracteres</font>",
+						solo_letras: "<font color='red'>Solo se aceptan letras</font>"
 					}
 				},
 

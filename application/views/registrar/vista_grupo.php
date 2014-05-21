@@ -6,6 +6,7 @@
 <head>
 	<title>Registra grupo</title>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/jquery.min.js"></script>
+	<!--Uso de los select asociados-->
 	<script>
 		$(document).on('ready',function(){
 			//getPlanes(); //Al iniciar la carga de la vista muestra los resultados dependiendo del que este seleccionado		   
@@ -76,6 +77,55 @@
 			});
 		}
 	</script>
+
+	<!--Validaciones-->
+	<?php $this->load->view('comunes/validaciones'); ?>
+	<script type="text/javascript">
+		$(function(){
+			$('#form').validate({
+				rules:{
+					generacion: {
+						required: true,
+						minlength: 4,
+						maxlength: 4,
+						digits:true
+					},
+					clave: {
+						required: true,
+						maxlength: 20,
+						digits: true
+					},
+					id_carrera: {
+						min: 1
+					},
+					id_plan: {
+						min: 1
+					}				
+				},
+				messages:{
+					generacion: {
+						required: "<font color='red'>Campo obligatorio</font>",
+						minlength: "<font color='red'>El número de la generación debe tener cuatro dígitos</font>",
+						maxlength: "<font color='red'>El número de la generación debe tener cuatro dígitos</font>",
+						digits: "<font color='red'>Solo se aceptan números</font>"
+					},
+					clave: {
+						required: "<font color='red'>Campo obligatorio</font>",						
+						maxlength: "<font color='red'>La clave debe tener máximo 20 dígitos</font>",
+						digits: "<font color='red'>Solo se aceptan números</font>"
+					},
+					id_carrera: {
+						min: "<font color='red'>Seleccione una carrera</font>"
+					},
+					id_plan: {
+						min: "<font color='red'>Seleccione una plan</font>"
+					}
+				},
+
+			});
+		});
+	</script>
+
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -85,23 +135,24 @@
   				if($idGrupo!=null)
 	  			{
 	  				?>
-	  				<form action="<?php echo site_url('controlador_actualizar/actualiza_grupo');?>?id=<?php echo $idGrupo?>" method="post">
+	  				<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_grupo');?>?id=<?php echo $idGrupo?>" method="post">
 	  				<?php
 				}
 				else
 				{
 					?>
-					<form action="<?php echo site_url('controlador_registrar/guarda_grupo');?>" method="post">
+					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_grupo');?>" method="post">
 	  				<?php
 	  			}		
 	  		?>  			
 		    	<label for="generacion">Generación</label>
-				<input type="text" class="form-control" id="generacion" value="<?php echo $Generacion ?>" placeholder="N° de la generación" name="generacion" required pattern="([0-9]{1,4})$" oninput="check(this)">
+				<input type="text" class="form-control" id="generacion" value="<?php echo $Generacion ?>" placeholder="N° de la generación" name="generacion">
+				</br>
 				<label for="generacion">Clave</label>
-				<input type="text" class="form-control" id="clave" value="<?php echo $Clave ?>" placeholder="Clave del grupo" name="clave" required pattern="([áéíóúÁÉÍÓÚñÑa-zA-Z0-9\s]{1,20})*$" oninput="check(this)">
-				
+				<input type="text" class="form-control required" id="clave" value="<?php echo $Clave ?>" placeholder="Clave del grupo" name="clave">
+				</br>
 				<label for="carrera">Carreras</label>
-				<select class="form-control" id="carreras" onchange="getPlanes();" name="id_carrera">
+				<select class="form-control required" id="carreras" onchange="getPlanes();" name="id_carrera">
 					<option value="0" selected="selected">Seleccione una opción</option>
 					<?php
 					foreach ($carreras as $i => $carreras)
@@ -109,12 +160,15 @@
 					?>
 				</select>
 
+				</br>
 				<label for="planes">Planes</label>
-				<select class="form-control" id="planes" onchange="getSemestres();" name="id_plan"></select>
+				<select class="form-control required" id="planes" onchange="getSemestres();" name="id_plan"></select>
 
+				</br>
 				<label for="semestres">Semestres</label>
 				<select class="form-control" id="semestres" name="id_semestre"></select>
 
+				</br>
 				<label for="carrera">Turno</label>
 				<select class="form-control" id="turno" name="turno">
 					<option value="1">Matutino</option>
@@ -126,6 +180,6 @@
 			</form>
 		</div>
 	</div>
-  <?php $this->load->view('comunes/footer'); ?>    
+  <script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>     
 </body>
 </html>

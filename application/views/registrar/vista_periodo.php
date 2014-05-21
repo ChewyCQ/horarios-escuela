@@ -5,6 +5,31 @@
     <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Nuevo ciclo escolar</title>
+  <?php $this->load->view('comunes/validaciones'); ?>
+  <script type="text/javascript">
+    $(function(){
+      $('#form').validate({
+        rules:{
+          clave: {
+            required: true,
+            minlength: 2,
+            maxlength: 70,
+            nombre_semestre:true
+          }
+        },
+        messages:{
+          clave: {
+            required: "<font color='red'>Campo obligatorio</font>",
+            minlength: "<font color='red'>El nombre del grupo debe tener un máximo de 2 caracteres</font>",
+            maxlength: "<font color='red'>El nombre del grupo debe tener un máximo de 70 caracteres</font>",
+            nombre_semestre: "<font color='red'>Solo se aceptan letras, numeros y caracteres (. _ - #)</font>"
+          }
+        },
+
+      });
+    });
+  </script>
+
 </head>
 <body>
     <?php $this->load->view('comunes/nav'); ?>
@@ -13,10 +38,11 @@
     <!-- Form Name -->
     <legend>Nuevo ciclo escolar</legend>
     <div class="form-group">
-      <?php echo form_open('controlador_inicio/validar_ciclo'); ?>
+    <form id="form" action="<?php echo site_url('controlador_registrar/validar_ciclo');?>" method="post">
+    <!--<?php echo form_open('controlador_inicio/validar_ciclo'); ?>-->
 
 		<label for="clave">Clave o nombre del semestre</label>
-    <input type="text" class="form-control" id="clave" required value="" placeholder="nombre de referencia para el semestre" name="clave" pattern="<?php echo PATRON_TEXTO_CASI_LIBRE; ?>" title="<?php echo TITLE_TEXTO_CASI_LIBRE ?>">
+    <input type="text" class="form-control required" id="clave" value="" placeholder="nombre de referencia para el semestre" name="clave">
     <br/>
 
     <label for="anio">Año</label>
@@ -36,7 +62,7 @@
 		<button type="submit" class="btn btn-default btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></button>
 		</form>
 
-  	<?php $this->load->view('comunes/footer'); ?>
+  	<script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>     
     </div> <!-- form-group -->
   </div> <!-- container -->
 

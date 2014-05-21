@@ -5,6 +5,34 @@
     <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Registra alumno</title>
+	<?php $this->load->view('comunes/validaciones'); ?>
+	<script type="text/javascript">
+		$(function(){
+			$('#form').validate({
+				rules:{
+					nombre: {
+						required: true,
+						maxlength: 150,
+						nombre_persona: true
+					},
+					email: {
+						email: true
+					}
+				},
+				messages:{
+					nombre: {
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>El nombre del alumno debe tener máximo 150 caracteres</font>",
+						nombre_persona: "<font color='red'>El nombre debe tener solo letras y máximo un punto (No punto al final)</font>"
+					},
+					email: {
+						email: "<font color='red'>Ingrese un email correcto</font>"
+					}
+				},
+
+			});
+		});
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -14,20 +42,22 @@
   				if($idAlumno!=null)
 	  			{
 	  				?>
-	  				<form action="<?php echo site_url('controlador_actualizar/actualiza_alumno');?>?id=<?php echo $idAlumno?>" method="post">
+	  				<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_alumno');?>?id=<?php echo $idAlumno?>" method="post">
 	  				<?php
 				}
 				else
 				{
 					?>
-					<form action="<?php echo site_url('controlador_registrar/guarda_alumno');?>" method="post">
+					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_alumno');?>" method="post">
 	  				<?php
 	  			}		
 	  		?>
 	  			<label for="nombre">Nombre del Alumno</label>
-				<input type="text" class="form-control" id="nombre_maestro" value="<?php echo $Nombre ?>" placeholder="Nombre" name="nombre" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)">
+				<input type="text" class="form-control required" id="nombre_alumno" value="<?php echo $Nombre ?>" placeholder="Nombre" name="nombre">
+				</br>
 				<label for="email">Email</label>
-			    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email" required pattern="<?php echo PATRON_CORREO; ?>">
+			    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email">
+				</br>
 				<label for="clave">Clave del grupo</label>
 				<select class="form-control" name="id_grupo">
 					<?php
@@ -47,7 +77,6 @@
 			</form>
 		</div>
 	</div>
-
-	<?php $this->load->view('comunes/footer'); ?>    
+	<script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>   
 </body>
 </html>

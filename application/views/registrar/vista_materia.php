@@ -5,7 +5,29 @@
     <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Registra materia</title>
-	<script type="text/javascript"></script>
+	<?php $this->load->view('comunes/validaciones'); ?>
+	<script type="text/javascript">
+		$(function(){
+			$('#form').validate({
+				rules:{
+					nombre_materia: {
+						required: true,
+						maxlength: 150,
+						solo_letras:true
+					}
+				},
+				messages:{
+					nombre_materia: {
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>El nombre de la materia debe tener un máximo de 150 caracteres</font>",
+						solo_letras: "<font color='red'>Solo se aceptan letras</font>"
+					}
+				},
+
+			});
+		});
+	</script>
+
 	<script>
 		function agrega_fila()
 		{
@@ -30,20 +52,21 @@
   				if($idMateria!=null)
 	  			{
 	  				?>
-	  				<form action="<?php echo site_url('controlador_actualizar/actualiza_materia');?>?id=<?php echo $idMateria?>" method="post">
+	  				<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_materia');?>?id=<?php echo $idMateria?>" method="post">
 	  				<?php
 				}
 				else
 				{
 					?>
-					<form action="<?php echo site_url('controlador_registrar/guarda_materia');?>" method="post">
+					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_materia');?>" method="post">
 	  				<?php
 	  			}		
 	  		?>
 	  		<h4 class="text-center"><strong>DATOS GENERALES</strong></h4>
 	  		<label for="nombre">Nombre de la materia</label>
-			<input type="text" class="form-control" id="nombre_materia" placeholder="Nombre materia" 
-			required pattern="<?php echo PATRON_TEXTO_GUIONES; ?>" oninput="check(this)" name="nombre_materia"  value="<?php echo $Nombre_materia ?>">
+			<input type="text" class="form-control required" id="nombre_materia" placeholder="Nombre materia" 
+			name="nombre_materia"  value="<?php echo $Nombre_materia ?>">
+			</br>
 			<label for="tipo_materia">Tipo de materia</label>
 			<!--Código para verificar cual dato del combo esta seleccionado-->
 			<?php
@@ -101,6 +124,6 @@
 			</form>
 		</div>
 	</div>
-	<?php $this->load->view('comunes/footer'); ?>    
+	<script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>     
 </body>
 </html>

@@ -12,17 +12,15 @@
 				rules:{
 					numero_semestre: {
 						required: true,
-						minlength: 1,
 						maxlength: 1,
 						digits: true
 					}
 				},
 				messages:{
 					numero_semestre: {
-						required: "<font color='red'>Debe ingresar un semestre.</font>",
-						minlength: "<font color='red'>Minimo 1 digito.</font>",
-						maxlength: "<font color='red'>Máximo 1 digito.</font>",
-						digits: "<font color='red'>Solo se aceptan digitos</font>"
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>Máximo 1 dígito</font>",
+						digits: "<font color='red'>Solo se aceptan números</font>"
 					}
 				},
 

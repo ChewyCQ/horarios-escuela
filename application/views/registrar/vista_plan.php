@@ -12,17 +12,15 @@
 				rules:{
 					nombre_plan: {
 						required: true,
-						minlength: 1,
 						maxlength: 70,
-						letras_espacios: true
+						letras_numeros: true
 					}
 				},
 				messages:{
 					nombre_plan: {
-						required: "<font color='red'>Debe ingresar un nombre.</font>",
-						minlength: "<font color='red'>Minimo 1 digito.</font>",
-						maxlength: "<font color='red'>Máximo 1 digito.</font>",
-						letras_espacios: "<font color='red'>Solo letras y números. (No números al inicio)</font>"
+						required: "<font color='red'>Campo obligato</font>",
+						maxlength: "<font color='red'>Máximo 70 caracteres</font>",
+						letras_numeros: "<font color='red'>Solo letras y números. (No números al inicio)</font>"
 					}
 				},
 
