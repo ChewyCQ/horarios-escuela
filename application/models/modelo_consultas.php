@@ -180,14 +180,46 @@
 			}
 		}
 
-		//Obtiene los semestres que estan actualmente en la tabla semestre
-		public function carrera_semestre($idCarrera)
+		//Obtiene las materias que estan actualmente en la tabla materia
+		public function obtener_materias_semestre()
 		{
-			$this->db->select('semestre.idSemestre,semestre.Numero_semestre');
+			//La consulta muestra todas las materias que no esten actualmente ligadas a ningun semestre, que no esten en la tabla materia_semestre
+			$materias=$this->db->query("select * from materia where not exists (select 1 from materia_semestre where materia_semestre.idMateria = materia.idMateria)");
+			if($materias->num_rows()>0)
+			{
+				return $materias->result();
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		//Obtiene los semestres que estan actualmente en la tabla semestre
+		public function carrera_plan($idCarrera)
+		{
+			$this->db->select('plan.idPlan,plan.Nombre_plan');
 			$this->db->from('carrera');
 			$this->db->join('plan', 'plan.idCarrera = carrera.idCarrera', 'INNER');
-			$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
+			//$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
 			$this->db->where(array('carrera.idCarrera' => $idCarrera));
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		//Obtiene los semestres que estan actualmente en la tabla semestre
+		public function carrera_semestre($idPlan)
+		{
+			$this->db->select('semestre.idSemestre,semestre.Numero_semestre');
+			$this->db->from('plan');
+			$this->db->join('semestre', 'semestre.idPlan = plan.idPlan', 'INNER');
+			$this->db->where(array('plan.idPlan' => $idPlan));
 			$resultado=$this->db->get();
 			if($resultado->num_rows()>0)
 			{

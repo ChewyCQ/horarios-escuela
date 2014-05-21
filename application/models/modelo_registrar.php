@@ -29,14 +29,15 @@
 				}
 			}
 		}
-		public function registrar_materia_semestre($idMateria,$semestres,$horas)
+		public function registrar_materia_semestre($idMateria,$semestres,$horas_escuela,$horas_campo)
 		{
 			for($i=0; $i<count($semestres);$i++)
 			{
 				$data = array(
 				'idMateria' => $idMateria,
 				'idSemestre' => $semestres[$i],
-				'Horas_por_semana' => $horas
+				'Horas_semana_escuela' => $horas_escuela,
+				'Horas_semana_campo_clinico' => $horas_campo
 				);
 				$this->db->insert('materia_semestre',$data); 
 			}
@@ -57,9 +58,9 @@
 		{
             $this->db->insert('maestro', array('Clave' => $clave,'Nombre' => $nombre,'Nivel' => $nivel,'Fecha_ingreso' => $fecha,'horas' => $horas,'Correo' => $correo,'Profordem' => $profordem,'idEspecialidad' => $especialidad,'activo' => $activo)); 
 		}
-		public function registrar_grupo($generacion,$clave,$idSemestre)
+		public function registrar_grupo($generacion,$clave,$idSemestre,$turno)
 		{
-            $this->db->insert('grupo', array('Generacion' => $generacion,'Clave' => $clave, 'idSemestre' => $idSemestre)); 
+            $this->db->insert('grupo', array('Generacion' => $generacion,'Clave' => $clave, 'idSemestre' => $idSemestre, 'turno' => $turno)); 
 		}
 		public function registrar_alumno($nombre,$email,$idGrupo)
 		{

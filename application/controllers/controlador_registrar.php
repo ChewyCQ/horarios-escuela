@@ -8,6 +8,7 @@ class Controlador_registrar extends CI_Controller {
 		$this->load->helper(array('form','file','url'));
 		$this->load->model('modelo_registrar');
 		$this->load->database('default');
+		$this->load->library('form_validation'); //Limpia el formulario de inyecciones y sirve para las validaciones
 	}
 
 	public function index()
@@ -17,8 +18,23 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_carrera()
 	{
-		$this->modelo_registrar->registrar_carrera($this->input->post('nombre_carrera'));
-		$this->index();
+		$this->form_validation->set_rules('nombre_carrera','Carrera','trim|required|min_length[5]|max_length[70]');
+
+		//Mensaje que muestra si encuenrra algún error de los previstos en las validaciones
+		$this->form_validation->set_message('required','El campo %s es obligatorio');
+		$this->form_validation->set_message('max_length', 'El Campo %s debe tener un Maximo de %d Caracteres');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			//echo "Posibles errores: ".validation_errors();  //Imprime los errores
+			echo "Posibles errores: ".validation_errors();  //Imprime los errores			
+			redirect('/controlador_inicio/carrera','refresh'); //redirigir a las vista de los maestros subidos
+		}
+		else{
+			echo "No hay errores";			
+		}
+		//$this->modelo_registrar->registrar_carrera($this->input->post('nombre_carrera'));
+		//$this->index();
 	}
 	public function guarda_materia()
 	{
@@ -27,7 +43,7 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_materia_semestre()
 	{
-		$this->modelo_registrar->registrar_materia_semestre($this->input->post('id_materia'),$this->input->post('semestres'),$this->input->post('horas'));
+		$this->modelo_registrar->registrar_materia_semestre($this->input->post('id_materia'),$this->input->post('semestres'),$this->input->post('horas_escuela'),$this->input->post('horas_campo'));
 		$this->index();
 	}
 	public function guarda_plan()
@@ -68,7 +84,7 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_grupo()
 	{
-		$this->modelo_registrar->registrar_grupo($this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'));
+		$this->modelo_registrar->registrar_grupo($this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'),$this->input->post('turno'));
 		$this->index();
 	}
 	public function guarda_alumno()

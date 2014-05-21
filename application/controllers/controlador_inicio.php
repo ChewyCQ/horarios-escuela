@@ -217,9 +217,13 @@ class Controlador_inicio extends CI_Controller {
 		$this->load->view('editar/vista_edita_dependencia',$datos);
 	}
 
-	public function consulta_carrera_semestre($idCarrera)
+	public function consulta_carrera_plan($idCarrera)
 	{
-		echo json_encode($this->modelo_consultas->carrera_semestre($idCarrera)); //Codifica el resultado de la consulta a formato de json
+		echo json_encode($this->modelo_consultas->carrera_plan($idCarrera)); //Codifica el resultado de la consulta a formato de json
+    }
+    public function consulta_carrera_semestre($idPlan)
+	{
+		echo json_encode($this->modelo_consultas->carrera_semestre($idPlan)); //Codifica el resultado de la consulta a formato de json
     }
 }
 

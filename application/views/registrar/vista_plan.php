@@ -5,6 +5,30 @@
     <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Registra plan</title>
+	<?php $this->load->view('comunes/validaciones'); ?>
+	<script type="text/javascript">
+		$(function(){
+			$('#form').validate({
+				rules:{
+					nombre_plan: {
+						required: true,
+						minlength: 1,
+						maxlength: 70,
+						letras_espacios: true
+					}
+				},
+				messages:{
+					nombre_plan: {
+						required: "<font color='red'>Debe ingresar un nombre.</font>",
+						minlength: "<font color='red'>Minimo 1 digito.</font>",
+						maxlength: "<font color='red'>Máximo 1 digito.</font>",
+						letras_espacios: "<font color='red'>Solo letras y números. (No números al inicio)</font>"
+					}
+				},
+
+			});
+		});
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -14,18 +38,19 @@
   				if($idPlan!=null)
 	  			{
 	  				?>
-	  				<form action="<?php echo site_url('controlador_actualizar/actualiza_plan');?>?id=<?php echo $idPlan?>" method="post">
+	  				<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_plan');?>?id=<?php echo $idPlan?>" method="post">
 	  				<?php
 				}
 				else
 				{
 					?>
-					<form action="<?php echo site_url('controlador_registrar/guarda_plan');?>" method="post">
+					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_plan');?>" method="post">
 	  				<?php
 	  			}		
 	  		?>
   				<label for="nombre">Nombre del plan</label>
-				<input type="text" class="form-control" id="nombre_plan" value="<?php echo $Nombre_plan ?>" placeholder="Nombre del plan" name="nombre_plan" required pattern="<?php echo PATRON_TEXTO_GUIONES_NUMEROS; ?>" oninput="check(this)">
+				<input type="text" class="form-control required" id="nombre_plan" name="nombre_plan" value="<?php echo $Nombre_plan ?>" placeholder="Nombre del plan" name="nombre_plan">
+				</br>
 				<label for="tipo_materia">Carrera</label>
 				<select class="form-control" name="id_carrera">
 					<?php
@@ -45,6 +70,6 @@
 		</div>
 	</div>
 
-	<?php $this->load->view('comunes/footer'); ?>    
+	<script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>  
 </body>
 </html>

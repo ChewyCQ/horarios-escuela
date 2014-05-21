@@ -6,13 +6,36 @@
 <head>
 	<title>Editar áreas</title>
 
+	<!--DataTable-->
 	<link href="<?php echo base_url()?>assets/datatable/css/jquery.dataTables.css" rel="stylesheet">
 	<script type="text/javascript" src="<?php echo base_url()?>assets/datatable/js/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/datatable/js/jquery.dataTables.js"></script>
+	<!--Para los botones de exportar-->
+	<link href="<?php echo base_url()?>assets/TableTools/css/dataTables.tableTools.css" rel="stylesheet">	
+	<script type="text/javascript" src="<?php echo base_url()?>assets/TableTools/js/dataTables.tableTools.js"></script>
 
 	<script type="text/javascript" language="javascript" class="init">
 		$(document).ready(function() {
-			$('#tabla').dataTable({"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}]});
+			$('#tabla').DataTable({
+				"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}],
+				dom: 'T<"clear">lfrtip',
+				tableTools: {
+					"sSwfPath": "<?php echo base_url()?>assets/TableTools/swf/copy_csv_xls_pdf.swf",
+					"aButtons": 
+					[
+		                {
+		                    "sExtends": "xls",
+		                    "sButtonText": "<img src='<?php echo base_url()?>assets/TableTools/images/excel.png'  width='32' height='32' border=0 />",
+		                    "mColumns": [0]
+		                },
+		                {
+		                    "sExtends": "pdf",
+		                    "sButtonText": "<img src='<?php echo base_url()?>assets/TableTools/images/pdf2.png'  width='32' height='32' border=0 />",
+		                   	"mColumns": [0]
+		                }
+		            ]
+				}			
+			});
 		} );
 		//{"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}]} Desactiva el descendente o ascendente en la columna especificada
 	</script>

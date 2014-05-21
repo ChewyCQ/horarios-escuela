@@ -5,12 +5,49 @@
     <?php $this->load->view('comunes/header'); ?>
     <!--Para poder usar el calendario, importar las librerias-->
     <link href="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.min.css" rel="stylesheet">
-	<!--<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.min.js"></script>-->
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/jquery-1.8.3.min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
+
+	<!--Para usar las validaciones-->
+	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/Jqueryvalidation.js"></script>
+	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/additional-methods.js"></script>
+	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/nuevas-funciones.js"></script>
 <head>
 	<title>Registra maestro</title>
+	<script type="text/javascript">
+		$(function(){
+			$('#form').validate({
+				rules:{
+					clave: {
+						required: true,
+						minlength: 10,
+						maxlength: 10,
+						digits:true
+					},
+					nombre: {
+						required: true,
+						maxlength: 150,
+						nombre_persona: true
+					}
+				},
+				messages:{
+					clave: {
+						required: "<font color='red'>Campo obligatorio.</font>",
+						minlength: "<font color='red'>La clave debe de tener 10 digitos.</font>",
+						maxlength: "<font color='red'>La clave debe de tener 10 digitos.</font>",
+						digits: "<font color='red'>La clave debe tener solo digitos.</font><label></label>"
+					},
+					nombre: {
+						required: "<font color='red'>Campo obligatorio.</font>",
+						maxlength: "<font color='red'>El nombre del maestro debe tener máximo 150 caracteres.</font>",
+						nombre_persona: "<font color='red'>El nombre debe tener solo texto y máximo un punto</font><label></label>"
+					}
+				},
+
+			});
+		});
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -20,22 +57,24 @@
   				if($idMaestro!=null)
 	  			{
 	  				?>
-	  				<form action="<?php echo site_url('controlador_actualizar/actualiza_maestro');?>?id=<?php echo $idMaestro ?>" method="post">
+	  				<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_maestro');?>?id=<?php echo $idMaestro ?>" method="post">
 	  				<?php
 				}
 				else
 				{
 					?>
-					<form action="<?php echo site_url('controlador_registrar/guarda_maestro');?>" method="post">
+					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_maestro');?>" method="post">
 	  				<?php
 	  			}		
 	  		?>
 	  		<label for="clave">Clave</label>
-			<input type="text" class="form-control" id="clave_maestro" value="<?php echo $Clave ?>" placeholder="Clave del maestro" name="clave" required pattern="<?php echo PATRON_NUMEROS; ?>" oninput="check(this)">		    
+			<input type="text" class="form-control required" id="clave_maestro" value="<?php echo $Clave ?>" placeholder="Clave del maestro" name="clave">		    
 		    	
+	    	</br>
 	    	<label for="nombre">Nombre del maestro</label>
-			<input type="text" class="form-control" id="nombre_maestro" value="<?php echo $Nombre ?>" placeholder="Nombre" name="nombre" required pattern="<?php echo PATRON_NOMBRE_PERSONA; ?>" oninput="check(this)">
-		
+			<input type="text" class="form-control required" id="nombre_maestro" value="<?php echo $Nombre ?>" placeholder="Nombre" name="nombre">
+			
+			</br>
 			<label for="nivel">Nivel del maestro</label>
 			<!--Código para verificar cual dato del combo esta seleccionado-->
 			<?php
@@ -63,17 +102,19 @@
 			  <option <?php echo $sel3;?> >PA</option>
 			</select>
 		
-			<label for="fecha">Fecha de ingreso</label>
 			</br>
+			<label for="fecha">Fecha de ingreso</label>
 			<div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
 			  <input class="form-control" size="16" type="text" value="<?php echo $Fecha_ingreso ?>" readonly name="fecha_ingreso">
 			  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 			  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 			</div>
 
+			</br>
 			<label for="horas">Horas</label>
 			<input type="text" class="form-control" id="horas_maestro" value="<?php echo $horas ?>" placeholder="Horas asignadas" name="horas" pattern="<?php echo PATRON_NUMEROS; ?>" oninput="check(this)">		    
-		
+			
+			</br>
 		    <label for="email">Email</label>
 		    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email" pattern="<?php echo PATRON_CORREO; ?>">
 			<!--Verifica que este seleccionado el checkbox, si es así establece la variable para seleccionarlo-->
@@ -83,8 +124,9 @@
 				    $selecciona_profordem = "checked";
 				}
 			?>	
-			<label><input type="checkbox" value="1" name="profordem" <?php echo $selecciona_profordem;?> > Cuenta con PROFORDEMS</label>
 			</br>
+			<label><input type="checkbox" value="1" name="profordem" <?php echo $selecciona_profordem;?> > Cuenta con PROFORDEMS</label>
+			</br></br>
 			<label for="especialidad">Especialidad</label>
 			<select class="form-control" name="id_especialidad">
 				<option value="NULL" selected>Ninguna</option>;
@@ -106,7 +148,8 @@
 				if($activo == 1){
 				    $selecciona_activo = "checked";
 				}
-			?>			
+			?>	
+			</br>		
 			<label><input type="checkbox" value="1" name="activo" <?php echo $selecciona_activo;?> > Activo</label>
 			</br>
 			</br>

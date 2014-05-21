@@ -53,8 +53,10 @@
 
 					</div>
 				</div>
-				<label for="horas">Horas por semana</label>
-				<input type="text" class="form-control" id="horas" placeholder="Horas a la semana" name="horas" required pattern="([0-9]{1,2})$" oninput="check(this)">
+				<label for="horas">Horas a la semana en la escuela</label>
+				<input type="text" class="form-control" id="horas_escuela" placeholder="Horas en la escuela" name="horas_escuela" pattern="([0-9]{1,2})$" oninput="check(this)">
+				<label for="horas">Horas a la semana en campo clínico</label>
+				<input type="text" class="form-control" id="horas_campo" placeholder="Horas en campo" name="horas_campo" pattern="([0-9]{1,2})$" oninput="check(this)">
 				<br/>	
 				<button type="submit" class="btn btn-default">Enviar</button>	
 			</form>

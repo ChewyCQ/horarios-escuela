@@ -5,6 +5,30 @@
     <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Registra semestre</title>
+	<?php $this->load->view('comunes/validaciones'); ?>
+	<script type="text/javascript">
+		$(function(){
+			$('#form').validate({
+				rules:{
+					numero_semestre: {
+						required: true,
+						minlength: 1,
+						maxlength: 1,
+						digits: true
+					}
+				},
+				messages:{
+					numero_semestre: {
+						required: "<font color='red'>Debe ingresar un semestre.</font>",
+						minlength: "<font color='red'>Minimo 1 digito.</font>",
+						maxlength: "<font color='red'>Máximo 1 digito.</font>",
+						digits: "<font color='red'>Solo se aceptan digitos</font>"
+					}
+				},
+
+			});
+		});
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -14,18 +38,19 @@
 	  			if($idSemestre!=null)
 		  		{
 		  			?>
-		  			<form action="<?php echo site_url('controlador_actualizar/actualiza_semestre');?>?id=<?php echo $idSemestre?>" method="post">
+		  			<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_semestre');?>?id=<?php echo $idSemestre?>" method="post">
 		  			<?php
 				}
 				else
 				{
 					?>
-					<form action="<?php echo site_url('controlador_registrar/guarda_semestre');?>" method="post">
+					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_semestre');?>" method="post">
 		  			<?php
 		  		}		
 		  	?>
 		  	<label for="numero">Número del semestre</label>
-			<input type="text" class="form-control" id="numero_semestre" placeholder="N° Semestre" name="numero_semestre" required pattern="([0-9]{1,2})$" oninput="check(this)" value="<?php echo $Numero_semestre?>">
+			<input type="text" class="form-control required" id="numero_semestre" placeholder="N° Semestre" name="numero_semestre" value="<?php echo $Numero_semestre?>">
+			</br>
 			<label for="plan">Plan</label>
 			<select class="form-control" name="id_plan">
 				<?php
@@ -43,6 +68,6 @@
 			<button type="submit" class="btn btn-default">Enviar</button>
 		</div>
 	</div>
-	<?php $this->load->view('comunes/footer'); ?>    
+	<script src="<?php echo base_url().BOOTSTRAP_JS?>"></script>  
 </body>
 </html>
