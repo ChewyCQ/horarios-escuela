@@ -97,6 +97,13 @@ class Controlador_registrar extends CI_Controller {
 		$this->modelo_registrar->registrar_dependencia($this->input->post('nombre'),$this->input->post('cantidad'));
 		$this->index();
 	}
+	public function guardar_escuela()
+	{
+		$escuela['Nombre'] = $this->input->post('nombre_escuela');
+		$this->load->model('modelo_registrar');
+		$this->modelo_registrar->registrar_escuela($escuela);
+		redirect('controlador_inicio');
+	}
 
 
 }

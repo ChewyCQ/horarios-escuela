@@ -25,11 +25,13 @@
                 <li><a href="<?php echo site_url('controlador_inicio/grupo'); ?>">Grupo</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/alumno'); ?>">Alumno</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/dependencia'); ?>">Dependencia (CC)</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/ciclo'); ?>">Ciclo escolar</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/datos_escuela'); ?>">Datos de la escuela</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">CSVs</li>
                 <li><a href="<?php echo site_url('csv/subir_csv_maestros'); ?>">Maestros</a></li>
-                <li><a href="<?php echo site_url('csv/subir_csv_materias'); ?>">Materias</a></li>
-                <li><a href="<?php echo site_url('csv/subir_csv_alumnos'); ?>">Alumnos</a></li>
+                <!-- <li><a href="<?php #echo site_url('csv/subir_csv_materias'); ?>">Materias</a></li> -->
+                <!-- <li><a href="<?php #echo site_url('csv/subir_csv_alumnos'); ?>">Alumnos</a></li> -->
               </ul>
             </li>
             <li class="dropdown">

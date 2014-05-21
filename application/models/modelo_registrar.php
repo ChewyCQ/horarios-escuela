@@ -70,5 +70,38 @@
 		{
             $this->db->insert('dependencia', array('Nombre' => $nombre,'CantidadMaxAlumnos' => $cantidad)); 
 		}
+		public function registrar_periodo($periodo)
+		{
+            $this->db->insert('periodo', $periodo); 
+		}
+		/**
+		 * Inserta o actualiza el registro de la tabla escuela dependiendo si ya hay registros.
+		 * @param  Array $escuela datos a inertar/actualzar
+		 * @return [type]          [description]
+		 */
+		public function registrar_escuela($escuela)
+		{
+			$query = $this->db->get('escuela');
+			if($query->num_rows() >= 1){
+				$this->db->update('escuela',$escuela);
+			}
+			else
+			{
+	            $this->db->insert('escuela', $escuela); 
+			}
+		}
+		public function get_nombre_escuela()
+		{
+			$query = $this->db->get('escuela');
+			foreach ($query->result() as $row)
+			{
+			    $nombre = $row->Nombre;
+			}
+			if ( !isset($nombre) )
+			{
+				$nombre = '';
+			}
+			return $nombre;
+		}
 	}
 ?>

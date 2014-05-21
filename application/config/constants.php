@@ -22,6 +22,10 @@ define('DIR_WRITE_MODE', 0777);
 define('PATRON_TEXTO_GUIONES', "^([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+)(\-?)([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+)$"); //Esta validación acepta texto con guiones
 define('PATRON_TEXTO_GUIONES_NUMEROS', "^([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+)(\d*)([áéíóúÁÉÍÓÚñÑa-zA-Z0-9\s]+)$"); //Esta validación acepta texto con guiones y números
 define('PATRON_NOMBRE_PERSONA', "^([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+)(\.?)([áéíóúÁÉÍÓÚñÑa-zA-Z\s]+)$");
+
+define('PATRON_TEXTO_CASI_LIBRE', "^[áéíóúÁÉÍÓÚñÑAA-Z0-9a-z _ . /s - - # ]{2,70}$"); //_
+define('TITLE_TEXTO_CASI_LIBRE', "Acepta letras, numeros, espacios, guiones y # y puntos, de 2 hasta 70 caracteres");
+
 define('PATRON_NUMEROS', "^\d*$");
 define('PATRON_CORREO', "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
 define('BOOTSTRAP_CSS', "assets/bootstrap/css/bootstrap.css");
@@ -30,6 +34,7 @@ define('FPDF', "assets/fpdf/fpdf.php");
 define('CSS', "assets/css.css");
 define('JQUERY', "assets/jquery.js");
 define('JQUERY_BOOTSTRAP', "assets/bootstrap/js/jquery.min.js");
+define('SCRIPTS', "assets/scripts.js");
 
 /*
 |--------------------------------------------------------------------------
