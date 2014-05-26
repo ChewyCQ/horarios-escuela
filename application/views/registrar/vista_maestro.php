@@ -52,6 +52,7 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
+		<legend>Nuevo maestro</legend>
   		<div class="form-group">	
   			<?php
   				if($idMaestro!=null)
@@ -134,10 +135,10 @@
 				foreach ($especialidades as $i => $especialidad)
 					if($idEspecialidad==$especialidad->idEspecialidad)
 					{
-						echo '<option value="'.$especialidad->idEspecialidad.'" selected>'.$especialidad->Nombre.'</option>';
+						echo '<option value="'.$especialidad->idEspecialidad.'" selected>'.$especialidad->Nombre_especialidad.'</option>';
 					}
 					else{
-						echo '<option value="'.$especialidad->idEspecialidad.'">'.$especialidad->Nombre.'</option>';
+						echo '<option value="'.$especialidad->idEspecialidad.'">'.$especialidad->Nombre_especialidad.'</option>';
 					}	
 				?>
 			</select>

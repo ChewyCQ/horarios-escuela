@@ -9,7 +9,7 @@
 		//----------------------CONSULTAS PARA OBTENER LOS DATOS A MODIFICAR
 		public function consulta_especialidad($id)
 		{
-			$especialidad = $this->db->get_where('maestro_especialidad', array('idEspecialidad' => $id));
+			$especialidad = $this->db->get_where('especialidad', array('idEspecialidad' => $id));
 			if($especialidad->num_rows()>0)
 			{
 				return $especialidad->row(); //Con el row solo se obtiene una fila de resultados
@@ -116,15 +116,32 @@
 		}
 		public function consulta_grupo($id)
 		{
-			$grupo = $this->db->get_where('grupo', array('idGrupo' => $id));
-			if($grupo->num_rows()>0)
+			// $grupo = $this->db->get_where('grupo', array('idGrupo' => $id));
+			// if($grupo->num_rows()>0)
+			// {
+			// 	return $grupo->row(); //Con el row solo se obtiene una fila de resultados
+			// }
+			// else
+			// {
+			// 	return FALSE;
+			// }
+
+			$this->db->select('*');
+			$this->db->from('grupo');
+			$this->db->join('semestre', 'semestre.idSemestre = grupo.idSemestre', 'INNER');
+			$this->db->join('plan', 'plan.idPlan = semestre.idPlan', 'INNER');
+			$this->db->join('carrera', 'carrera.idCarrera = plan.idCarrera', 'INNER');
+			$this->db->where(array('grupo.idGrupo' => $id));
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
 			{
-				return $grupo->row(); //Con el row solo se obtiene una fila de resultados
+				return $resultado->row();
 			}
 			else
 			{
 				return FALSE;
 			}
+
 		}
 		public function consulta_alumno_grupo()
 		{
@@ -230,5 +247,91 @@
 				return FALSE;
 			}
 		}
+		//Obtiene los datos de los maestros y la especialidad
+		public function obtener_maestros_especialidad()
+		{
+			$this->db->select('*');
+			$this->db->from('maestro');
+			$this->db->join('especialidad', 'especialidad.idEspecialidad = maestro.idEspecialidad', 'INNER');
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		//Obtiene todas las especialidades que le corresponden a una materia
+		public function materia_especialidad($idMateria)
+		{
+			$this->db->select('especialidad_materia.idEspecialidad,especialidad.Nombre_especialidad');
+			$this->db->from('materia');
+			$this->db->join('especialidad_materia', 'especialidad_materia.idMateria = materia.idMateria', 'INNER');
+			$this->db->join('especialidad', 'especialidad.idEspecialidad= especialidad_materia.idEspecialidad', 'INNER');
+			$this->db->where(array('materia.idMateria' => $idMateria));
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		//Obtiene todas las especialidades excepto aquellas que ya esten asociadas con alguna materia
+		public function obtener_especialidades_filtro($idMateria)
+		{
+			$resultado=$this->db->query("select * from especialidad where not exists 
+										(select 1 from especialidad_materia where 
+										 especialidad_materia.idEspecialidad = especialidad.idEspecialidad 
+										 and especialidad_materia.idMateria=".$idMateria.")");
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		//Obtiene todos los maestros excepto aquellos que ya esten asociados con alguna dependencia
+		public function obtener_maestros_filtro($idDependencia)
+		{
+			$resultado=$this->db->query("select * from maestro where not exists 
+										(select 1 from maestro_campo_clinico where 
+										 maestro_campo_clinico.idMaestro = maestro.idMaestro
+										 and maestro_campo_clinico.idDependencia=".$idDependencia.") 
+										ORDER BY Nombre ASC");
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		//Obtiene todos los maestros que le corresponden a una dependencia
+		public function maestro_campo($idDependencia)
+		{
+			$this->db->select('maestro_campo_clinico.idMaestro,maestro.Nombre');
+			$this->db->from('dependencia');
+			$this->db->join('maestro_campo_clinico', 'maestro_campo_clinico.idDependencia= dependencia.idDependencia', 'INNER');
+			$this->db->join('maestro', 'maestro.idMaestro= maestro_campo_clinico.idMaestro', 'INNER');
+			$this->db->where(array('dependencia.idDependencia' => $idDependencia));
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+
 	}
 ?>

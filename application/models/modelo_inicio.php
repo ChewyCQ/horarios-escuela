@@ -24,19 +24,19 @@
 				return $planes->result();
 			}
 		}
-		//Obtiene las especialidades de la tabla maestro_especialidad
+		//Obtiene las especialidades de la tabla especialidad
 		public function obtener_especialidades()
 		{
-			$especialidades = $this->db->get('maestro_especialidad');
+			$especialidades = $this->db->get('especialidad');
 			if($especialidades->num_rows()>0)
 			{
 				return $especialidades->result();
 			}
 		}
-		//Obtiene las especialidades/areas que estan actualmente en la tabla maestro_especialidad
+		//Obtiene las especialidades/areas que estan actualmente en la tabla especialidad
 		public function obtener_areas()
 		{
-			$areas= $this->db->get('maestro_especialidad');
+			$areas= $this->db->get('especialidad');
 			if($areas->num_rows()>0)
 			{
 				return $areas->result();
@@ -45,7 +45,8 @@
 		//Obtiene los maestros que estan actualmente en la tabla maestro
 		public function obtener_maestros()
 		{
-			$maestros= $this->db->get('maestro');
+			//Obtiene los datos de los maestros y los ordena de manera ascendente a-z
+			$maestros=$this->db->query('select * from maestro ORDER BY Nombre ASC');
 			if($maestros->num_rows()>0)
 			{
 				return $maestros->result();

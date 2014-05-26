@@ -16,7 +16,7 @@
             $this->db->where('idEspecialidad', $id);
 			   $this->db->update('maestro_especialidad', $data); 
 		}
-		public function actualiza_materia($nombre,$tipo,$id)
+		public function actualiza_materia($nombre,$tipo,$especialidades,$materia_especialidad,$id)
 		{
             $data = array(
                'Nombre_materia' => $nombre,
@@ -24,6 +24,30 @@
             );
             $this->db->where('idMateria', $id);
 			   $this->db->update('materia', $data); 
+            //Si se van a agregar mas especialidades a esa materia, se ejecuta este comando de insercion
+            if($especialidades!=null)
+            {
+               for($i=0; $i<count($especialidades);$i++)
+               {
+                  $data = array(
+                  'idMateria' => $id,
+                  'idEspecialidad' => $especialidades[$i],
+                  );
+                  $this->db->insert('especialidad_materia',$data); 
+               }
+            }
+            //Si se van a eliminar especialidades asociadas a esa materia, se ejecuta este comando de eliminacion
+            if($materia_especialidad!=null)
+            {
+               for($j=0; $j<count($materia_especialidad);$j++)
+               {
+                  $data = array(
+                  'idMateria' => $id,
+                  'idEspecialidad' => $materia_especialidad[$j],
+                  );
+                  $this->db->delete('especialidad_materia',$data); 
+               }
+            }
 		}
 		public function actualiza_semestre($numero,$idPlan,$id)
 		{
@@ -67,12 +91,13 @@
             $this->db->where('idPlan', $id);
             $this->db->update('plan', $data); 
       }
-      public function actualiza_grupo($id,$generacion,$clave,$idSemestre)
+      public function actualiza_grupo($id,$generacion,$clave,$idSemestre,$turno)
       {
             $data = array(
                'Generacion' => $generacion,
                'Clave' => $clave,
-               'idSemestre' =>$idSemestre
+               'idSemestre' =>$idSemestre,
+               'turno' => $turno
             );
             $this->db->where('idGrupo', $id);
             $this->db->update('grupo', $data); 
@@ -87,7 +112,7 @@
             $this->db->where('idAlumno', $id);
             $this->db->update('alumno', $data); 
       }
-       public function actualiza_dependencia($id,$nombre,$cantidad)
+      public function actualiza_dependencia($id,$nombre,$cantidad,$maestros,$maestro_campo)
       {
             $data = array(
                'Nombre' => $nombre,
@@ -95,6 +120,30 @@
             );
             $this->db->where('idDependencia', $id);
             $this->db->update('dependencia', $data); 
+            //Si se van a agregar mas maestros a esa dependencia, se ejecuta este comando de insercion
+            if($maestros!=null)
+            {
+               for($i=0; $i<count($maestros);$i++)
+               {
+                  $data = array(
+                  'idMaestro' => $maestros[$i],
+                  'idDependencia' => $id
+                  );
+                  $this->db->insert('maestro_campo_clinico',$data); 
+               }
+            }
+            //Si se van a eliminar maestros asociados a esa dependencia, se ejecuta este comando de eliminacion
+            if($maestro_campo!=null)
+            {
+               for($j=0; $j<count($maestro_campo);$j++)
+               {
+                  $data = array(
+                  'idMaestro' => $maestro_campo[$j],
+                  'idDependencia' => $id,
+                  );
+                  $this->db->delete('maestro_campo_clinico',$data); 
+               }
+            }
       }
 	}
 

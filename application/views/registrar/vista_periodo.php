@@ -54,8 +54,8 @@
 
     <label for="semestre">Semestre</label>
     <select id="semestre" name="semestre" class="form-control">
-      <option value="0">enero - junio</option>
-      <option value="1">agosto - diciembre</option>
+      <option value="0">ENERO - JUNIO</option>
+      <option value="1">AGOSTO - DICIEMBRE</option>
     </select>
     <br/>
 

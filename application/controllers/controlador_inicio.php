@@ -55,11 +55,15 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,'idMateria'=>$consulta->idMateria,'especialidades' => $this->modelo_inicio->obtener_especialidades());
+			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,
+						  'idMateria'=>$consulta->idMateria,
+						  'especialidades' => $this->modelo_consultas->obtener_especialidades_filtro($idMateria),
+						  'materiaEspecialidad' => $this->modelo_consultas->materia_especialidad($idMateria));
 		} 
 		else
 		{
-			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'','especialidades' => $this->modelo_inicio->obtener_especialidades());
+			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'',
+						  'especialidades' => $this->modelo_inicio->obtener_especialidades(),'materia_especialidad'=>'');
 		}	
 		$this->load->view('registrar/vista_materia',$data);
 	}
@@ -116,11 +120,11 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'idSemestre'=>$consulta->idSemestre,'semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
+			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'idSemestre'=>$consulta->idSemestre,'turno'=>$consulta->turno,'idCarrera'=>$consulta->idCarrera,'idPlan'=>$consulta->idPlan,'idSemestre'=>$consulta->idSemestre,'semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
 		} 
 		else
 		{
-			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
+			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','turno'=>'','idCarrera'=>'','idPlan'=>'','idSemestre'=>'','semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
 		}		
 		$this->load->view('registrar/vista_grupo',$data);
 	}
@@ -146,11 +150,16 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('idDependencia' => $consulta->idDependencia, 'Nombre' => $consulta->Nombre,'CantidadMaxAlumnos' => $consulta->CantidadMaxAlumnos);
+			$data = array('idDependencia' => $consulta->idDependencia, 'Nombre' => $consulta->Nombre,
+						  'CantidadMaxAlumnos' => $consulta->CantidadMaxAlumnos,
+						  'maestros' => $this->modelo_consultas->obtener_maestros_filtro($idDependencia),
+						  'maestro_campo' => $this->modelo_consultas->maestro_campo($idDependencia));
 		} 
 		else
 		{
-			$data = array('idDependencia' => '', 'Nombre' => '','CantidadMaxAlumnos' => '');
+			$data = array('idDependencia' => '', 'Nombre' => '','CantidadMaxAlumnos' => '',
+						  'maestros' => $this->modelo_inicio->obtener_maestros(),
+						  'maestro_campo' =>'');
 		}
 		$this->load->view('registrar/vista_dependencia',$data);
 	}

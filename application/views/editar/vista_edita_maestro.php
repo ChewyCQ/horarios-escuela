@@ -28,6 +28,7 @@
 	  					<tr>
 	  						<th><center>Clave del maestro</center></th>
 	  						<th><center>Nombre del maestro</center></th>
+	  						<!--<th><center>Especialidad</center></th>-->
 							<th width="40px">Opción</th>
 						</tr>
 					</thead>
@@ -40,6 +41,7 @@
 								echo "<tr>";
 								echo "<td class='success' height='100%'>".$maestros->Clave."</td>";
 								echo "<td class='success' height='100%'>".$maestros->Nombre."</td>";
+								//echo "<td class='success' height='100%'>".$maestros->Nombre_especialidad."</td>";
 								echo "<td class='success' align='center' height='100%'>";
 								?>
 								<form action="<?php echo site_url('controlador_inicio/maestro');?>?id=<?php echo $maestros->idMaestro?>" method="post"> <!--Envía el id del dato que se modificará-->

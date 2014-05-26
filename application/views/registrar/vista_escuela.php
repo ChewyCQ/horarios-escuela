@@ -10,6 +10,7 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
+		<legend>Datos de la escuela</legend>
   		<div class="form-group">
   			<?php 
   				$nombre_escuela = array(

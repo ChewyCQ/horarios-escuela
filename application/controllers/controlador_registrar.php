@@ -8,7 +8,7 @@ class Controlador_registrar extends CI_Controller {
 		$this->load->helper(array('form','file','url'));
 		$this->load->model('modelo_registrar');
 		$this->load->database('default');
-		$this->load->library('form_validation'); //Limpia el formulario de inyecciones y sirve para las validaciones
+		$this->load->library('form_validation','session'); //Limpia el formulario de inyecciones y sirve para las validaciones
 	}
 
 	public function index()
@@ -38,8 +38,17 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_materia()
 	{
-		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
-		$this->index();
+		$registra=$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
+		if($registra==TRUE)
+		{
+			$this->index();
+		}
+		else
+		{
+			 echo '<script>alert("Registro existente")</script>'; 
+			 redirect('/controlador_inicio/materia','refresh'); //redirigir a las vista de los maestros subidos
+		}
+		
 	}
 	public function guarda_materia_semestre()
 	{
@@ -94,7 +103,7 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_dependencia()
 	{
-		$this->modelo_registrar->registrar_dependencia($this->input->post('nombre'),$this->input->post('cantidad'));
+		$this->modelo_registrar->registrar_dependencia($this->input->post('nombre'),$this->input->post('cantidad'),$this->input->post('maestros'));
 		$this->index();
 	}
 	public function guardar_escuela()

@@ -15,19 +15,30 @@
 		}
 		public function registrar_materia($materia,$tipo_materia,$especialidades)
 		{
-			$this->db->insert('materia', array('Nombre_materia' => $materia,'Tipo_materia' => $tipo_materia)); 
-			$ultimo_id=$this->db->insert_id();
-			if($especialidades!=null)
+			//$cadena = str_replace(' ', '', $materia);//Quita todos los espacios en blanco de la cadena
+			$consulta= $this->db->get_where('materia', array('Nombre_materia' => $materia));
+			if($consulta->num_rows()>0)
 			{
-				for($i=0; $i<count($especialidades);$i++)
-				{
-					$data = array(
-					'idMateria' => $ultimo_id,
-					'idEspecialidad' => $especialidades[$i],
-					);
-					$this->db->insert('especialidad_materia',$data); 
-				}
+				return FALSE;
 			}
+			else
+			{
+				$this->db->insert('materia', array('Nombre_materia' => strtoupper($materia),'Tipo_materia' => $tipo_materia)); 
+				$ultimo_id=$this->db->insert_id();
+				if($especialidades!=null)
+				{
+					for($i=0; $i<count($especialidades);$i++)
+					{
+						$data = array(
+						'idMateria' => $ultimo_id,
+						'idEspecialidad' => $especialidades[$i],
+						);
+						$this->db->insert('especialidad_materia',$data); 
+					}
+				}
+				return TRUE;
+			}
+			
 		}
 		public function registrar_materia_semestre($idMateria,$semestres,$horas_escuela,$horas_campo)
 		{
@@ -52,7 +63,7 @@
 		}
 		public function registrar_especialidad($especialidad)
 		{
-            $this->db->insert('maestro_especialidad', array('Nombre' => $especialidad)); 
+            $this->db->insert('especialidad', array('Nombre_especialidad' => $especialidad)); 
 		}
 		public function registrar_maestro($clave,$nombre,$nivel,$fecha,$horas,$correo,$profordem,$especialidad,$activo)
 		{
@@ -66,9 +77,22 @@
 		{
             $this->db->insert('alumno', array('Nombre' => $nombre,'Correo' => $email, 'idGrupo' => $idGrupo)); 
 		}
-		public function registrar_dependencia($nombre,$cantidad)
+		public function registrar_dependencia($nombre,$cantidad,$maestros)
 		{
             $this->db->insert('dependencia', array('Nombre' => $nombre,'CantidadMaxAlumnos' => $cantidad)); 
+            $ultimo_id=$this->db->insert_id();
+			if($maestros!=null)
+			{
+				for($i=0; $i<count($maestros);$i++)
+				{
+					$data = array(
+					'idMaestro' => $maestros[$i],
+					'idDependencia' => $ultimo_id
+					);
+					$this->db->insert('maestro_campo_clinico',$data); 
+				}
+			}
+
 		}
 		public function registrar_periodo($periodo)
 		{

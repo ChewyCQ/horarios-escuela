@@ -37,6 +37,7 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
+		<legend>Nuevo alumno</legend>
   		<div class="form-group">
   			<?php
   				if($idAlumno!=null)

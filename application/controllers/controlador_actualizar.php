@@ -24,7 +24,7 @@ class Controlador_actualizar extends CI_Controller {
 	public function actualiza_materia()
 	{
 		$idMateria=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$idMateria);
+		$this->modelo_actualizar->actualiza_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'),$this->input->post('materia_especialidad'),$idMateria);
 		$this->index();
 	}
 	public function actualiza_semestre()
@@ -70,7 +70,7 @@ class Controlador_actualizar extends CI_Controller {
 	public function actualiza_grupo()
 	{
 		$idGrupo=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_grupo($idGrupo,$this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'));
+		$this->modelo_actualizar->actualiza_grupo($idGrupo,$this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'),$this->input->post('turno'));
 		$this->index();
 	}
 	public function actualiza_alumno()
@@ -82,7 +82,7 @@ class Controlador_actualizar extends CI_Controller {
 	public function actualiza_dependencia()
 	{
 		$idDependencia=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_dependencia($idDependencia,$this->input->post('nombre'),$this->input->post('cantidad'));
+		$this->modelo_actualizar->actualiza_dependencia($idDependencia,$this->input->post('nombre'),$this->input->post('cantidad'),$this->input->post('maestros'),$this->input->post('maestro_campo'));
 		$this->index();
 	}
 }

@@ -31,6 +31,7 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
+		<legend>Nueva área de formación/especialidad</legend>
   		<div class="form-group">
   			<?php
   				if($idEspecialidad!=null)

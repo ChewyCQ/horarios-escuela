@@ -60,7 +60,7 @@
 							foreach ($areas as $areas)
 							{								
 								echo "<tr>";
-								echo "<td class='success' height='100%'>".$areas->Nombre."</td>";
+								echo "<td class='success' height='100%'>".$areas->Nombre_especialidad."</td>";
 								echo "<td class='success' align='center' height='100%'>";
 								?>
 								<form action="<?php echo site_url('controlador_inicio/especialidad');?>?id=<?php echo $areas->idEspecialidad?>" method="post"> <!--Envía el id del dato que se modificará-->
