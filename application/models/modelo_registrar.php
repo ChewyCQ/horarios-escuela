@@ -56,6 +56,15 @@
 		public function registrar_plan($plan,$idCarrera)
 		{
 			$this->db->insert('plan', array('Nombre_plan' => $plan,'idCarrera' => $idCarrera)); 
+			$idPlan = $this->db->insert_id();
+			//Semestres del plan
+			for ($num_semestre=1; $num_semestre <= 6; $num_semestre++) { 
+				$this->db->insert('semestre', 
+					array(
+						'Numero_semestre' => $num_semestre, 
+						'idPlan' => $idPlan)
+					);
+			}
 		}
 		public function registrar_semestre($numero_semestre,$idPlan)
 		{

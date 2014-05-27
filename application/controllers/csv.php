@@ -113,14 +113,14 @@ class Csv extends CI_Controller {
                 $temp['nombre'] = '';
             }
             else{
-                $temp['nombre'] = $maestros[$key]['nombre'];
+                $temp['nombre'] = strtoupper($maestros[$key]['nombre']);
             }
             if( ! isset($maestros[$key]['nivel']))
             {
                 $temp['nivel'] = '';
             }
             else{
-                $temp['nivel'] = $maestros[$key]['nivel'];
+                $temp['nivel'] = strtoupper($maestros[$key]['nivel']);
             }
             if( ! isset($maestros[$key]['fecha de ingreso']))
             {
@@ -141,7 +141,7 @@ class Csv extends CI_Controller {
                 $temp['correo'] = '';
             }
             else{
-                $temp['correo'] = $maestros[$key]['correo'];
+                $temp['correo'] = strtolower($maestros[$key]['correo']);
             }
             if( ! isset($maestros[$key]['profordem']))
             {

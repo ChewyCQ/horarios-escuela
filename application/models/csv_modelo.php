@@ -11,7 +11,17 @@ class Csv_modelo extends CI_Model {
 	public function insertar_maestros($maestros)
 	{
 		foreach ($maestros as $maestro) {
-			$this->db->insert('maestro', array('Clave' => $maestro['clave'],'Nombre' => $maestro['nombre'],'Nivel' => $maestro['nivel'],'Fecha_ingreso' => $maestro['fecha de ingreso'],'Correo' => $maestro['correo'],'Profordem' => $maestro['profordem']) );
+			$this->db->insert(
+				'maestro', 
+				array(
+					'Clave' => $maestro['clave'],
+					'Nombre' => strtoupper($maestro['nombre']),
+					'Nivel' => $maestro['nivel'],
+					'Fecha_ingreso' => $maestro['fecha de ingreso'],
+					'Correo' => $maestro['correo'],
+					'Profordem' => $maestro['profordem']
+					) 
+			);
 		}
 	}
 

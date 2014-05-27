@@ -19,7 +19,7 @@
                 <li><a href="<?php echo site_url('controlador_inicio/especialidad'); ?>">Área de formación</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/maestro'); ?>">Maestro</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/materia'); ?>">Materia</a></li>
-                <li><a href="<?php echo site_url('controlador_inicio/semestre'); ?>">Semestre</a></li>
+                <!-- <li><a href="<?php #echo site_url('controlador_inicio/semestre'); ?>">Semestre</a></li> -->
                 <li><a href="<?php echo site_url('controlador_inicio/plan'); ?>">Plan</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/carrera'); ?>">Carrera</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/grupo'); ?>">Grupo</a></li>
@@ -40,7 +40,7 @@
                 <li><a href="<?php echo site_url('controlador_inicio/edita_area'); ?>">Área de formación</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_maestro'); ?>">Maestro</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_materia'); ?>">Materia</a></li>
-                <li><a href="<?php echo site_url('controlador_inicio/edita_semestre'); ?>">Semestre</a></li>
+                <!-- <li><a href="<?php #echo site_url('controlador_inicio/edita_semestre'); ?>">Semestre</a></li> -->
                 <li><a href="<?php echo site_url('controlador_inicio/edita_plan'); ?>">Plan</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_carrera'); ?>">Carrera</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_grupo'); ?>">Grupo</a></li>
