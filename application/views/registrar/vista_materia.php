@@ -75,6 +75,7 @@
 				$sel1 = "";
 				$sel2 = "";
 				$sel3 = "";
+				$sel4 = "";
 				if($Tipo_materia == 0){
 				    $sel0 = "selected";
 				}
@@ -87,12 +88,16 @@
 				if($Tipo_materia == 3){
 					$sel3 = "selected";
 				}
+				if($Tipo_materia == 4){
+					$sel4 = "selected";
+				}
 			?>
 			<select class="form-control" name="tipo_materia">
 			  <option value="0" <?php echo $sel0;?> >Núcleo de Formación Básica</option>
 			  <option value="1" <?php echo $sel1;?> >Núcleo de Formación Profesional</option>
 			  <option value="2" <?php echo $sel2;?> >Trayectos Técnicos</option>
 			  <option value="3" <?php echo $sel3;?> >Trayectos Propedéuticos</option>
+			  <option value="4" <?php echo $sel4;?> >Otro</option>
 			</select>
 			</br>
 

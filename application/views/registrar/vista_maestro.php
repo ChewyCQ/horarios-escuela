@@ -118,16 +118,32 @@
 			</br>
 		    <label for="email">Email</label>
 		    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email" pattern="<?php echo PATRON_CORREO; ?>">
-			<!--Verifica que este seleccionado el checkbox, si es así establece la variable para seleccionarlo-->
+			
+			<!--Código para verificar cual dato del combo esta seleccionado-->
 			<?php
-				$selecciona_profordem = "";
-				if($Profordem == 1){
-				    $selecciona_profordem = "checked";
+				$sel0 = "";
+				$sel1 = "";
+				$sel2 = "";
+				$sel3 = "";
+				if($Profordem == 0){
+				    $sel0 = "selected";
 				}
-			?>	
+				if($Profordem == 1){
+				    $sel1 = "selected";
+				}
+				if($Profordem == 2){
+					$sel2 = "selected";
+				}
+			?>
 			</br>
-			<label><input type="checkbox" value="1" name="profordem" <?php echo $selecciona_profordem;?> > Cuenta con PROFORDEMS</label>
-			</br></br>
+			<label for="certificacion">Certificación</label>
+			<select class="form-control" name="tipo_materia">
+			  <option value="0" <?php echo $sel0;?> >No tiene</option>
+			  <option value="1" <?php echo $sel1;?> >Profordem</option>
+			  <option value="2" <?php echo $sel2;?> >Certidem</option>
+			</select>
+			</br>
+
 			<label for="especialidad">Especialidad</label>
 			<select class="form-control" name="id_especialidad">
 				<option value="NULL" selected>Ninguna</option>;

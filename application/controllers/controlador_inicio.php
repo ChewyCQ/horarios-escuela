@@ -170,7 +170,7 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('Nombre' => $consulta->Nombre,'idEspecialidad'=>$consulta->idEspecialidad);
+			$data = array('Nombre' => $consulta->Nombre_especialidad,'idEspecialidad'=>$consulta->idEspecialidad);
 		} 
 		else
 		{
