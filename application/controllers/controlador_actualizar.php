@@ -52,7 +52,7 @@ class Controlador_actualizar extends CI_Controller {
 			$idEspecialidad=null;
 		}
 		$idMaestro=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_maestro($idMaestro,$this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('profordem'),$idEspecialidad,$this->input->post('activo'));
+		$this->modelo_actualizar->actualiza_maestro($idMaestro,$this->input->post('clave'),$this->input->post('nombre'),$this->input->post('nivel'),$fecha_date,$this->input->post('horas'),$this->input->post('email'),$this->input->post('certificacion'),$idEspecialidad,$this->input->post('activo'));
 		$this->index();
 	}
 	public function actualiza_carrera()

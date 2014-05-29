@@ -3,9 +3,12 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php $this->load->view('comunes/header'); ?>
+     <!--Para usar el autocompletar-->
+    <?php $this->load->view('comunes/autocompletar'); ?>
+    <!--Para usar las validaciones-->
+    <?php $this->load->view('comunes/validaciones'); ?>
 <head>
 	<title>Registra grupo</title>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/jquery.min.js"></script>
 	<!--Uso de los select asociados-->
 	<script>
 		$(document).on('ready',function(){
@@ -108,9 +111,7 @@
 			});
 		}
 	</script>
-
 	<!--Validaciones-->
-	<?php $this->load->view('comunes/validaciones'); ?>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -156,7 +157,14 @@
 			});
 		});
 	</script>
-
+	<!--Autocompletado-->
+	<script type="text/javascript">
+		$(function(){
+		  $("#clave").autocomplete({
+		    source: "<?php echo site_url('controlador_buscar/get_grupos');?>"
+		  });
+		});
+	</script>	
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>

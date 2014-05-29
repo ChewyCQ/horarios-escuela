@@ -3,9 +3,12 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php $this->load->view('comunes/header'); ?>
+     <!--Para usar el autocompletar-->
+    <?php $this->load->view('comunes/autocompletar'); ?>
+    <!--Para usar las validaciones-->
+    <?php $this->load->view('comunes/validaciones'); ?>
 <head>
 	<title>Registra dependencia</title>
-	<?php $this->load->view('comunes/validaciones'); ?>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -52,7 +55,14 @@
     		$(boton).parent().parent().remove();
   		}
 	</script>
-
+	<!--Autocompletado-->
+	<script type="text/javascript">
+		$(function(){
+		  $("#nombre").autocomplete({
+		    source: "<?php echo site_url('controlador_buscar/get_dependencias');?>"
+		  });
+		});
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>

@@ -3,9 +3,12 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php $this->load->view('comunes/header'); ?>
+    <!--Para usar el autocompletar-->
+    <?php $this->load->view('comunes/autocompletar'); ?>
+    <!--Para usar las validaciones-->
+    <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra especialidad/área</title>
-	<?php $this->load->view('comunes/validaciones'); ?>
+	<title>Registra especialidad/área</title>	
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -27,6 +30,14 @@
 			});
 		});
 	</script>
+	<!--Autocompletado-->
+	<script type="text/javascript">
+		$(function(){
+		  $("#nombre_especialidad").autocomplete({
+		    source: "<?php echo site_url('controlador_buscar/get_especialidades');?>"
+		  });
+		});
+	</script>	
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>

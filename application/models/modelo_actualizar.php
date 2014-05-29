@@ -58,7 +58,7 @@
             $this->db->where('idSemestre', $id);
 			   $this->db->update('semestre', $data); 
 		}
-		public function actualiza_maestro($id,$clave,$nombre,$nivel,$fecha,$horas,$correo,$profordem,$especialidad,$activo)
+		public function actualiza_maestro($id,$clave,$nombre,$nivel,$fecha,$horas,$correo,$certificacion,$especialidad,$activo)
 		{
             $data = array(
                'Clave' => $clave,
@@ -67,7 +67,7 @@
                'Fecha_ingreso' => $fecha,
                'horas' => $horas,
                'Correo' => $correo,
-               'Profordem' => $profordem,
+               'Certificacion' => $certificacion,
                'idEspecialidad' => $especialidad,
                'activo' => $activo,
             );

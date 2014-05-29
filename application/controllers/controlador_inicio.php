@@ -36,7 +36,7 @@ class Controlador_inicio extends CI_Controller {
 			}
 			$data = array('idMaestro'=>$consulta->idMaestro,'Clave' => $consulta->Clave,'Nombre' => $consulta->Nombre,
 				'Nivel' => $consulta->Nivel,'Fecha_ingreso' => $fecha_texto,'horas' => $consulta->horas,
-				'Correo' => $consulta->Correo,'Profordem' => $consulta->Profordem,'idEspecialidad' => $consulta->idEspecialidad,
+				'Correo' => $consulta->Correo,'Profordem' => $consulta->Certificacion,'idEspecialidad' => $consulta->idEspecialidad,
 				'activo' => $consulta->activo,'especialidades' => $this->modelo_inicio->obtener_especialidades());
 		} 
 		else

@@ -10,11 +10,15 @@
 	<script type="text/javascript" src="<?php echo base_url()?>assets/calendar/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
 
 	<!--Para usar las validaciones-->
-	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/Jqueryvalidation.js"></script>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/additional-methods.js"></script>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/nuevas-funciones.js"></script>
+	<?php $this->load->view('comunes/validaciones'); ?>
+
+	<!--Para el campo autocompletar-->
+	<link href="<?php echo base_url()?>assets/autocompletar/css/jquery-ui-1.10.4.css" rel="stylesheet">
+	<script type="text/javascript" src="<?php echo base_url()?>assets/autocompletar/js/jquery-ui-1.10.4.js"></script>
 <head>
 	<title>Registra maestro</title>
+
+	<!--Validaciones-->
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -46,6 +50,14 @@
 				},
 
 			});
+		});
+	</script>
+	<!--Autocompletado-->
+	<script type="text/javascript">
+		$(function(){
+		  $("#nombre_maestro").autocomplete({
+		    source: "<?php echo site_url('controlador_buscar/get_maestros');?>"
+		  });
 		});
 	</script>
 </head>
@@ -137,7 +149,7 @@
 			?>
 			</br>
 			<label for="certificacion">Certificación</label>
-			<select class="form-control" name="tipo_materia">
+			<select class="form-control" name="certificacion">
 			  <option value="0" <?php echo $sel0;?> >No tiene</option>
 			  <option value="1" <?php echo $sel1;?> >Profordem</option>
 			  <option value="2" <?php echo $sel2;?> >Certidem</option>
