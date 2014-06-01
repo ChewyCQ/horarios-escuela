@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra dependencia</title>
+	<title>Dependencia</title>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -27,11 +27,11 @@
 					nombre: {
 						required: "<font color='red'>Campo obligatorio</font>",
 						maxlength: "<font color='red'>El nombre de la dependencia debe tener un máximo de 70 caracteres</font>",
-						solo_letras: "<font color='red'>Solo se aceptan letras</font>"
+						solo_letras: "<font color='red'>Sólo se aceptan letras</font>"
 					},
 					cantidad: {
 						required: "<font color='red'>Campo obligatorio</font>",
-						digits: "<font color='red'>Solo se aceptan números</font>"
+						digits: "<font color='red'>Sólo se aceptan números, sin espacios</font>"
 					}
 				},
 
@@ -67,7 +67,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nueva dependencia</legend>
+		<?php
+			if($idDependencia!=null)
+			{
+				?><legend>Editar dependencia</legend><?php
+			}
+			else
+			{
+				?><legend>Nueva dependencia</legend><?php
+			}
+		?>			
   		<div class="form-group">
   			<?php
   				if($idDependencia!=null)
@@ -151,12 +160,21 @@
 							?>
 						  </select>
 					</div>
-					<div class="col-lg-2" align="right">
-						<input type="button" class="btn btn-default" value="Agregar Maestro" onclick="agrega_fila();">
+					<div class="col-lg-2" align="right">						
+						<button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar maestro <span class='glyphicon glyphicon-plus-sign'></span></button>
 					 </div>
 				</div>
 				</br>
-				<button type="submit" class="btn btn-default">Guardar</button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idDependencia==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

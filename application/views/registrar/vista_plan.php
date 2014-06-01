@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra plan</title>
+	<title>Plan de estudio</title>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -42,7 +42,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nuevo plan</legend>
+		<?php
+			if($idPlan!=null)
+			{
+				?><legend>Editar plan</legend><?php
+			}
+			else
+			{
+				?><legend>Nuevo plan</legend><?php
+			}
+		?>			
   		<div class="form-group">
   			<?php
   				if($idPlan!=null)
@@ -75,7 +84,16 @@
 					?>
 				</select>
 				<br/>
-				<button type="submit" class="btn btn-default">Enviar</button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idPlan==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

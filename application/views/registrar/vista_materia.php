@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra materia</title>
+	<title>Materia</title>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -59,7 +59,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nueva materia</legend>
+		<?php
+			if($idMateria!=null)
+			{
+				?><legend>Editar materia</legend><?php
+			}
+			else
+			{
+				?><legend>Nueva materia</legend><?php
+			}
+		?>			
   		<div class="form-group">
   			<?php
   				if($idMateria!=null)
@@ -165,7 +174,7 @@
 			</div>
 			<label for="especialidad">Especialidad</label>
 			<div class="row">
-				<div class="col-lg-10">
+				<div class="col-lg-9">
 					<select class="form-control" id="especialidad">
 						<?php
 						foreach ($especialidades as $i => $especialidad)
@@ -173,13 +182,21 @@
 						?>
 					  </select>
 				</div>
-				<div class="col-lg-2" align="right">
-					<input type="button" class="btn btn-default" value="Agregar Especialidad" onclick="agrega_fila();">
+				<div class="col-lg-3" align="right">
+					<button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar especialidad <span class='glyphicon glyphicon-plus-sign'></span></button>
 				 </div>
 			</div>
 			</br>
-
-			<button type="submit" class="btn btn-default">Enviar</button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idMateria==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

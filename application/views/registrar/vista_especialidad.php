@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra especialidad/área</title>	
+	<title>Área de formación</title>	
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -42,7 +42,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nueva área de formación/especialidad</legend>
+		<?php
+			if($idEspecialidad!=null)
+			{
+				?><legend>Editar área de formación/especialidad</legend><?php
+			}
+			else
+			{
+				?><legend>Nueva área de formación/especialidad</legend><?php
+			}
+		?>			
   		<div class="form-group">
   			<?php
   				if($idEspecialidad!=null)
@@ -62,7 +71,16 @@
 	  		<label for="nombre">Nombre de la especialidad / área de formación</label>
 	  		<input type="text" class="form-control required" value="<?php echo $Nombre ?>" id="nombre_especialidad" placeholder="Nombre de la especialidad" name="nombre_especialidad">
 			<br/>	
-			<button type="submit" class="btn btn-default">Guardar</button>
+			<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idEspecialidad==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

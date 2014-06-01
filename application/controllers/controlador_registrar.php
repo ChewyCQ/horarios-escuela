@@ -18,37 +18,13 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_carrera()
 	{
-		$this->form_validation->set_rules('nombre_carrera','Carrera','trim|required|min_length[5]|max_length[70]');
-
-		//Mensaje que muestra si encuenrra algún error de los previstos en las validaciones
-		$this->form_validation->set_message('required','El campo %s es obligatorio');
-		$this->form_validation->set_message('max_length', 'El Campo %s debe tener un Maximo de %d Caracteres');
-
-		if ($this->form_validation->run() == FALSE)
-		{
-			//echo "Posibles errores: ".validation_errors();  //Imprime los errores
-			echo "Posibles errores: ".validation_errors();  //Imprime los errores			
-			redirect('/controlador_inicio/carrera','refresh'); //redirigir a las vista de los maestros subidos
-		}
-		else{
-			echo "No hay errores";			
-		}
-		//$this->modelo_registrar->registrar_carrera($this->input->post('nombre_carrera'));
-		//$this->index();
+		$this->modelo_registrar->registrar_carrera($this->input->post('nombre_carrera'));
+		$this->index();
 	}
 	public function guarda_materia()
 	{
-		$registra=$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
-		if($registra==TRUE)
-		{
-			$this->index();
-		}
-		else
-		{
-			 echo '<script>alert("Registro existente")</script>'; 
-			 redirect('/controlador_inicio/materia','refresh'); //redirigir a las vista de los maestros subidos
-		}
-		
+		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
+		$this->index();		
 	}
 	public function guarda_materia_semestre()
 	{
@@ -104,6 +80,11 @@ class Controlador_registrar extends CI_Controller {
 	public function guarda_dependencia()
 	{
 		$this->modelo_registrar->registrar_dependencia($this->input->post('nombre'),$this->input->post('cantidad'),$this->input->post('maestros'));
+		$this->index();
+	}
+	public function guarda_periodo()
+	{
+		$this->modelo_registrar->registrar_periodo($this->input->post('clave'),$this->input->post('anio'),$this->input->post('semestre'));
 		$this->index();
 	}
 	public function guardar_escuela()

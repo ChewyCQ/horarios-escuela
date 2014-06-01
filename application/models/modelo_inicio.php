@@ -88,5 +88,14 @@
 				return $dependencias->result();
 			}
 		}
+		//Obtiene los ciclos escolares que estan actualmente en la tabla periodo
+		public function obtener_ciclos()
+		{
+			$ciclos= $this->db->get('periodo');
+			if($ciclos->num_rows()>0)
+			{
+				return $ciclos->result();
+			}
+		}
 	}
 ?>

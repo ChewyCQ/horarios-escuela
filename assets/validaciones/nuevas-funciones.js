@@ -19,5 +19,5 @@ jQuery.validator.addMethod("letras_numeros", function(value, element) {
 }, "Sólo letras y numeros");
 
 jQuery.validator.addMethod("nombre_semestre", function(value, element) {
-    return this.optional(element) || /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s\-\_\.\#]*[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/.test(value);
-}, "Sólo letras y caracteres especiales (- _ . #)");
+    return this.optional(element) || /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$/.test(value);
+}, "Sólo letras, numeros y el caracter #");

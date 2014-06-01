@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra grupo</title>
+	<title>Grupo</title>
 	<!--Uso de los select asociados-->
 	<script>
 		$(document).on('ready',function(){
@@ -137,14 +137,14 @@
 				messages:{
 					generacion: {
 						required: "<font color='red'>Campo obligatorio</font>",
-						minlength: "<font color='red'>El número de la generación debe tener cuatro dígitos</font>",
-						maxlength: "<font color='red'>El número de la generación debe tener cuatro dígitos</font>",
-						digits: "<font color='red'>Solo se aceptan números</font>"
+						minlength: "<font color='red'>El número de la generación debe tener cuatro dígitos, sin espacios</font>",
+						maxlength: "<font color='red'>El número de la generación debe tener cuatro dígitos, sin espacios</font>",
+						digits: "<font color='red'>Solo se aceptan números, sin espacios</font>"
 					},
 					clave: {
 						required: "<font color='red'>Campo obligatorio</font>",						
-						maxlength: "<font color='red'>La clave debe tener máximo 20 dígitos</font>",
-						digits: "<font color='red'>Solo se aceptan números</font>"
+						maxlength: "<font color='red'>La clave debe tener máximo 20 dígitos, sin espacios</font>",
+						digits: "<font color='red'>Solo se aceptan números, sin espacios</font>"
 					},
 					id_carrera: {
 						min: "<font color='red'>Seleccione una carrera</font>"
@@ -169,7 +169,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nuevo grupo</legend>
+		<?php
+			if($idGrupo!=null)
+			{
+				?><legend>Editar grupo</legend><?php
+			}
+			else
+			{
+				?><legend>Nuevo grupo</legend><?php
+			}
+		?>		
   		<div class="form-group">
   			<?php
   				if($idGrupo!=null)
@@ -235,7 +244,16 @@
 				</select>
 
 				<br/>
-				<button type="submit" class="btn btn-default">Enviar</button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idGrupo==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

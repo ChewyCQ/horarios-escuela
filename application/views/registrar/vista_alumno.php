@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra alumno</title>
+	<title>Alumno</title>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -29,7 +29,7 @@
 						nombre_persona: "<font color='red'>El nombre debe tener solo letras y máximo un punto (No punto al final)</font>"
 					},
 					email: {
-						email: "<font color='red'>Ingrese un email correcto</font>"
+						email: "<font color='red'>Sólo se aceptan correos electrónicos, sin espacios</font>"
 					}
 				},
 
@@ -48,7 +48,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nuevo alumno</legend>
+		<?php
+			if($idAlumno!=null)
+			{
+				?><legend>Editar alumno</legend><?php
+			}
+			else
+			{
+				?><legend>Nuevo alumno</legend><?php
+			}
+		?>			
   		<div class="form-group">
   			<?php
   				if($idAlumno!=null)
@@ -84,8 +93,16 @@
 					?>
 				</select>
 				<br/>
-
-				<button type="submit" class="btn btn-default">Enviar</button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idAlumno==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

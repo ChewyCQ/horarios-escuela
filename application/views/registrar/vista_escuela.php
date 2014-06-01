@@ -34,7 +34,9 @@
 			<label>Nombre de la escuela</label>
 			<?php echo form_input($nombre_escuela); ?><br/>
 			</br>
-			<button type="submit" class="btn btn-default btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+			<div align="right">
+				<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+			</div>
 			<?php #echo form_input($subir); ?> 
 			<?php echo form_close(); ?>
 		</div>

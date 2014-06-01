@@ -16,7 +16,7 @@
 	<link href="<?php echo base_url()?>assets/autocompletar/css/jquery-ui-1.10.4.css" rel="stylesheet">
 	<script type="text/javascript" src="<?php echo base_url()?>assets/autocompletar/js/jquery-ui-1.10.4.js"></script>
 <head>
-	<title>Registra maestro</title>
+	<title>Maestro</title>
 
 	<!--Validaciones-->
 	<script type="text/javascript">
@@ -33,19 +33,31 @@
 						required: true,
 						maxlength: 150,
 						nombre_persona: true
+					},
+					horas: {
+						digits: true
+					},
+					email: {
+						email: true
 					}
 				},
 				messages:{
 					clave: {
 						required: "<font color='red'>Campo obligatorio</font>",
-						minlength: "<font color='red'>La clave debe de tener 10 digitos</font>",
-						maxlength: "<font color='red'>La clave debe de tener 10 digitos</font>",
+						minlength: "<font color='red'>La clave debe de tener 10 digitos, sin espacios</font>",
+						maxlength: "<font color='red'>La clave debe de tener 10 digitos, sin espacios</font>",
 						digits: "<font color='red'>La clave debe tener solo números</font><label></label>"
 					},
 					nombre: {
 						required: "<font color='red'>Campo obligatorio</font>",
 						maxlength: "<font color='red'>El nombre del maestro debe tener máximo 150 caracteres</font>",
 						nombre_persona: "<font color='red'>El nombre debe tener solo letras y máximo un punto (No punto al final)</font>"
+					},
+					horas: {
+						digits: "<font color='red'>Sólo se aceptan números, sin espacios</font><label></label>"
+					},
+					email: {
+						email: "<font color='red'>Sólo se aceptan correos electrónicos, sin espacios</font><label></label>"
 					}
 				},
 
@@ -64,7 +76,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nuevo maestro</legend>
+		<?php
+			if($idMaestro!=null)
+			{
+				?><legend>Editar maestro</legend><?php
+			}
+			else
+			{
+				?><legend>Nuevo maestro</legend><?php
+			}
+		?>		
   		<div class="form-group">	
   			<?php
   				if($idMaestro!=null)
@@ -125,11 +146,11 @@
 
 			</br>
 			<label for="horas">Horas</label>
-			<input type="text" class="form-control" id="horas_maestro" value="<?php echo $horas ?>" placeholder="Horas asignadas" name="horas" pattern="<?php echo PATRON_NUMEROS; ?>" oninput="check(this)">		    
+			<input type="text" class="form-control" id="horas_maestro" value="<?php echo $horas ?>" placeholder="Horas asignadas" name="horas">		    
 			
 			</br>
 		    <label for="email">Email</label>
-		    <input type="email" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email" pattern="<?php echo PATRON_CORREO; ?>">
+		    <input type="text" class="form-control" id="email" value="<?php echo $Correo ?>" placeholder="Introduce tu email" name="email">
 			
 			<!--Código para verificar cual dato del combo esta seleccionado-->
 			<?php
@@ -137,13 +158,13 @@
 				$sel1 = "";
 				$sel2 = "";
 				$sel3 = "";
-				if($Profordem == 0){
+				if($Certificacion == 0){
 				    $sel0 = "selected";
 				}
-				if($Profordem == 1){
+				if($Certificacion == 1){
 				    $sel1 = "selected";
 				}
-				if($Profordem == 2){
+				if($Certificacion == 2){
 					$sel2 = "selected";
 				}
 			?>
@@ -182,8 +203,16 @@
 			<label><input type="checkbox" value="1" name="activo" <?php echo $selecciona_activo;?> > Activo</label>
 			</br>
 			</br>
-			<button type="submit" class="btn btn-default btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
-			<button type="button" class="btn btn-default btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idMaestro==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

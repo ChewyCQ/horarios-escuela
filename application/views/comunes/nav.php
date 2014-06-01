@@ -46,6 +46,7 @@
                 <li><a href="<?php echo site_url('controlador_inicio/edita_grupo'); ?>">Grupo</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_alumno'); ?>">Alumno</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_dependencia'); ?>">Dependencias (CC)</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/edita_ciclo'); ?>">Ciclo escolar</a></li>
               </ul>
             </li>
             <li class="dropdown">

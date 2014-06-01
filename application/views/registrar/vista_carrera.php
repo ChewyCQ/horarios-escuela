@@ -8,7 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Registra carrera</title>
+	<title>Carrera</title>
 	<script type="text/javascript">
 		$(function(){
 			$('#form').validate({
@@ -42,7 +42,16 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Nueva carrera</legend>
+		<?php
+			if($idCarrera!=null)
+			{
+				?><legend>Editar carrera</legend><?php
+			}
+			else
+			{
+				?><legend>Nueva carrera</legend><?php
+			}
+		?>		
   		<div class="form-group">
   			<?php
   				if($idCarrera!=null)
@@ -61,7 +70,16 @@
 		  		<label for="nombre">Nombre de la carrera</label>
 				<input type="text" class="form-control required" id="nombre_carrera" value="<?php echo $Nombre_carrera ?>" placeholder="Nombre de la carrera" name="nombre_carrera">
 				<br/>
-				<button type="submit" class="btn btn-default">Guardar</button>
+				<div align="right">
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<?php
+						if($idCarrera==null)
+						{
+							?><button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button><?php
+						}
+					?>					
+					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
+				</div>
 			</form>
 		</div>
 	</div>

@@ -36,14 +36,14 @@ class Controlador_inicio extends CI_Controller {
 			}
 			$data = array('idMaestro'=>$consulta->idMaestro,'Clave' => $consulta->Clave,'Nombre' => $consulta->Nombre,
 				'Nivel' => $consulta->Nivel,'Fecha_ingreso' => $fecha_texto,'horas' => $consulta->horas,
-				'Correo' => $consulta->Correo,'Profordem' => $consulta->Certificacion,'idEspecialidad' => $consulta->idEspecialidad,
+				'Correo' => $consulta->Correo,'Certificacion' => $consulta->Certificacion,'idEspecialidad' => $consulta->idEspecialidad,
 				'activo' => $consulta->activo,'especialidades' => $this->modelo_inicio->obtener_especialidades());
 		} 
 		else
 		{
 			$data = array('idMaestro'=>'','Clave' => '','Nombre' => '',
 				'Nivel' => '','Fecha_ingreso' => '','horas' => '',
-				'Correo' => '','Profordem' => '','idEspecialidad' => '',
+				'Correo' => '','Certificacion' => '','idEspecialidad' => '',
 				'activo' => '','especialidades' => $this->modelo_inicio->obtener_especialidades());
 		}	
 		$this->load->view('registrar/vista_maestro',$data);
@@ -191,38 +191,48 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function ciclo()
 	{
-		$this->load->helper('form');
-		$data = array('error' => '');
-		$this->load->view('registrar/vista_periodo', $data);
+		// $this->load->helper('form');
+		// $data = array('error' => '');
+		$idPeriodo=$this->input->get('id', TRUE);
+		$consulta=$this->modelo_consultas->consulta_ciclo($idPeriodo);		
+		if($consulta != FALSE)
+		{
+			$data = array('Periodo' => $consulta->Periodo,'semestre'=>$consulta->semestre,'Anio'=>$consulta->Anio,'idPeriodo'=>$consulta->idPeriodo);
+		} 
+		else
+		{
+			$data = array('Periodo' => '','semestre'=>'','Anio'=>'','idPeriodo'=>'');
+		}	
+		$this->load->view('registrar/vista_periodo',$data);
 	}
-	public function validar_ciclo()
-	{
-		$periodo['Anio'] = $this->input->post('anio');
-		$periodo['semestre'] = $this->input->post('semestre');
-		$periodo['Periodo'] = $this->input->post('clave');
-		$this->load->model('modelo_registrar');
-		$this->modelo_registrar->registrar_periodo($periodo);
-		redirect('controlador_inicio');
-	}
+	// public function validar_ciclo()
+	// {
+	// 	$periodo['Anio'] = $this->input->post('anio');
+	// 	$periodo['semestre'] = $this->input->post('semestre');
+	// 	$periodo['Periodo'] = $this->input->post('clave');
+	// 	$this->load->model('modelo_registrar');
+	// 	$this->modelo_registrar->registrar_periodo($periodo);
+	// 	redirect('controlador_inicio');
+	// }
 	/**
 	 * Datos de la escuela (horarios)
 	 * @return [type] [description]
 	 */
-	public function datos()
-	{
-		$idMateria=$this->input->get('id', TRUE);
-		$consulta=$this->modelo_consultas->consulta_materia($idMateria);
+	// public function datos()
+	// {
+	// 	$idMateria=$this->input->get('id', TRUE);
+	// 	$consulta=$this->modelo_consultas->consulta_materia($idMateria);
 		
-		if($consulta != FALSE)
-		{
-			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,'idMateria'=>$consulta->idMateria,'especialidades' => $this->modelo_inicio->obtener_especialidades());
-		} 
-		else
-		{
-			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'','especialidades' => $this->modelo_inicio->obtener_especialidades());
-		}	
-		$this->load->view('registrar/vista_materia',$data);
-	}
+	// 	if($consulta != FALSE)
+	// 	{
+	// 		$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,'idMateria'=>$consulta->idMateria,'especialidades' => $this->modelo_inicio->obtener_especialidades());
+	// 	} 
+	// 	else
+	// 	{
+	// 		$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'','especialidades' => $this->modelo_inicio->obtener_especialidades());
+	// 	}	
+	// 	$this->load->view('registrar/vista_materia',$data);
+	// }
 
 	//Vistas para editar los registros
 	public function edita_area()
@@ -269,6 +279,11 @@ class Controlador_inicio extends CI_Controller {
 	{
 		$datos['dependencias']=$this->modelo_inicio->obtener_dependencias();
 		$this->load->view('editar/vista_edita_dependencia',$datos);
+	}
+	public function edita_ciclo()
+	{
+		$datos['ciclos']=$this->modelo_inicio->obtener_ciclos();
+		$this->load->view('editar/vista_edita_ciclo',$datos);
 	}
 
 	public function consulta_carrera_plan($idCarrera)

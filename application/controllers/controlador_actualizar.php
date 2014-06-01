@@ -85,4 +85,10 @@ class Controlador_actualizar extends CI_Controller {
 		$this->modelo_actualizar->actualiza_dependencia($idDependencia,$this->input->post('nombre'),$this->input->post('cantidad'),$this->input->post('maestros'),$this->input->post('maestro_campo'));
 		$this->index();
 	}
+	public function actualiza_ciclo()
+	{
+		$idPeriodo=$this->input->get('id', TRUE);
+		$this->modelo_actualizar->actualiza_ciclo($idPeriodo,$this->input->post('clave'),$this->input->post('anio'),$this->input->post('semestre'));
+		$this->index();
+	}
 }

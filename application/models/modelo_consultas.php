@@ -116,16 +116,6 @@
 		}
 		public function consulta_grupo($id)
 		{
-			// $grupo = $this->db->get_where('grupo', array('idGrupo' => $id));
-			// if($grupo->num_rows()>0)
-			// {
-			// 	return $grupo->row(); //Con el row solo se obtiene una fila de resultados
-			// }
-			// else
-			// {
-			// 	return FALSE;
-			// }
-
 			$this->db->select('*');
 			$this->db->from('grupo');
 			$this->db->join('semestre', 'semestre.idSemestre = grupo.idSemestre', 'INNER');
@@ -135,7 +125,7 @@
 			$resultado=$this->db->get();
 			if($resultado->num_rows()>0)
 			{
-				return $resultado->row();
+				return $resultado->row(); //Con el row solo se obtiene una fila de resultados
 			}
 			else
 			{
@@ -332,6 +322,20 @@
 				return FALSE;
 			}
 		}	
+
+		//Consulta en la tabla de periodo y obtiene los datos que correspondan al id recibido
+		public function consulta_ciclo($id)
+		{
+			$ciclo = $this->db->get_where('periodo', array('idPeriodo' => $id));
+			if($ciclo->num_rows()>0)
+			{
+				return $ciclo->row(); //Con el row solo se obtiene una fila de resultados
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
 
 	}
 ?>
