@@ -143,25 +143,32 @@ class Csv extends CI_Controller {
             else{
                 $temp['correo'] = strtolower($maestros[$key]['correo']);
             }
-            if( ! isset($maestros[$key]['profordem']))
+            if( ! isset($maestros[$key]['certificacion']))
             {
-                $temp['profordem'] = '';
+                $temp['certificacion'] = 'No';
             }
             else{
                 if($base)
                 {
-                    if ( strcmp( strtolower( $maestros[$key]['profordem']),'no') ) 
+                    // strcmp no sirve, ni idea de pq
+                    if ( $maestros[$key]['certificacion'] == 'profordem' ) 
                     {
-                        $temp['profordem'] = 1;
+                        $temp['certificacion'] = 1;
                     }
                     else
                     {
-                        $temp['profordem'] = 0;
+                        if ( $maestros[$key]['certificacion'] == 'certidem')  {
+                            $temp['certificacion'] = 2;
+                        }
+                        else
+                        {
+                            $temp['certificacion'] = 0;
+                        }
                     }
                 }
                 else
                 {
-                    $temp['profordem'] = $maestros[$key]['profordem'];
+                    $temp['certificacion'] = $maestros[$key]['certificacion'];
                 }
             }
             array_push($nuevo, $temp);

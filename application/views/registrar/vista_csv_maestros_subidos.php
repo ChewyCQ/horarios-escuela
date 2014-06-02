@@ -18,7 +18,7 @@
 					<th>Nivel<br/>(PA/PB/PC/TA)</th>
 					<th>Fecha ingreso<br/>(dd/mm/aa)</th>
 					<th>Correo</th>
-					<th>Profordem</th>
+					<th>Certificado</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,7 +29,7 @@
 					echo "<td class='text-center'>{$maestro['nivel']}</td>"; 
 					echo "<td class='text-center'>{$maestro['fecha de ingreso']}</td>";
 					echo "<td class='text-center'>{$maestro['correo']}</td>";
-					echo "<td class='text-center'>{$maestro['profordem']}</td>";
+					echo "<td class='text-center'>{$maestro['certificacion']}</td>";
 					echo "</tr>";
 				}; ?>
 			</tbody>

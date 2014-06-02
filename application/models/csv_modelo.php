@@ -19,7 +19,7 @@ class Csv_modelo extends CI_Model {
 					'Nivel' => $maestro['nivel'],
 					'Fecha_ingreso' => $maestro['fecha de ingreso'],
 					'Correo' => $maestro['correo'],
-					'Profordem' => $maestro['profordem']
+					'Certificacion' => $maestro['certificacion']
 					) 
 			);
 		}
