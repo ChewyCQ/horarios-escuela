@@ -102,14 +102,15 @@
          $this->db->where('idPlan', $id);
          $this->db->update('plan', $data); 
       }
-      public function actualiza_grupo($id,$generacion,$clave,$idSemestre,$turno)
+      public function actualiza_grupo($id,$generacion,$clave,$cantidad_alumnos,$turno,$id_plan)
       {
          $data = array(
             'Generacion' => $generacion,
             'Clave' => $clave,
-            'idSemestre' =>$idSemestre,
-            'turno' => $turno
-         );
+            'cantidad_alumnos' =>$cantidad_alumnos,
+            'turno' => $turno,
+            'idPlan' => $id_plan
+            );
          $this->db->where('idGrupo', $id);
          $this->db->update('grupo', $data); 
       }
@@ -171,6 +172,32 @@
          );
          $this->db->where('idPeriodo', $id);
          $this->db->update('periodo', $data); 
+      }
+
+      public function actualiza_materia_semestre($materia_semestre,$horas_escuela,$horas_campo,$id_materia)
+      {
+         //Si se van a eliminar relaciones de materia semestre
+         if($materia_semestre!=null)
+         {
+            for($j=0; $j<count($materia_semestre);$j++)
+            {
+               $separado=explode(",",$materia_semestre[$j]); //Separo los datos que recibo, porque estan unidos con una coma ejemplo 1,2           
+               $idMateria=$separado[0];
+               $idSemestre=$separado[1];
+
+               $data = array(
+               'idMateria' => $idMateria,
+               'idSemestre' => $idSemestre
+               );
+               $this->db->delete('materia_semestre',$data); 
+            }
+         }
+         $data = array(
+                     'Horas_semana_escuela' => $horas_escuela,
+                     'Horas_semana_campo_clinico' => $horas_campo
+                     );
+         $this->db->where('idMateria', $id_materia);
+         $this->db->update('materia_semestre', $data); 
       }
 	}
 

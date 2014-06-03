@@ -69,9 +69,33 @@ class Controlador_actualizar extends CI_Controller {
 	}
 	public function actualiza_grupo()
 	{
-		$idGrupo=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_grupo($idGrupo,$this->input->post('generacion'),$this->input->post('clave'),$this->input->post('id_semestre'),$this->input->post('turno'));
-		$this->index();
+		$this->load->model('modelo_buscar');
+		$this->load->model('modelo_inicio');
+		$resultado=$this->modelo_buscar->valida_grupo($this->input->post('clave')); //Consulta para verificar que no exista grupo con la misma clave
+		if($resultado==0) //Si retorna 0 significa que no hay registro con la misma clave de grupo
+		{
+			$idGrupo=$this->input->get('id', TRUE);
+			$this->modelo_actualizar->actualiza_grupo($idGrupo,$this->input->post('generacion'),$this->input->post('clave'),$this->input->post('cantidad_alumnos'),$this->input->post('turno'),$this->input->post('id_plan'));
+			$this->index();
+		}
+		else //Si retorna 1, significa ya hay un grupo con la misma clave, entonces, llamo el error y cargo los datos que ya había ingresado
+		{
+			$generacion=$this->input->post('generacion');
+			$cantidad_alumnos=$this->input->post('cantidad_alumnos');
+			$turno=$this->input->post('turno');
+			$idPlan=$this->input->post('id_plan');
+
+			$data = array('idGrupo' => '',
+						  'Generacion' => $generacion,
+						  'Clave'=>'',
+						  'cantidad_alumnos'=>$cantidad_alumnos,
+						  'turno'=>$turno,
+						  'idPlan'=>$idPlan,
+						  'planes'=>$this->modelo_inicio->obtener_plan(),
+						  'var' => 1
+						  );
+			$this->load->view('registrar/vista_grupo',$data);
+		}		
 	}
 	public function actualiza_alumno()
 	{
@@ -89,6 +113,11 @@ class Controlador_actualizar extends CI_Controller {
 	{
 		$idPeriodo=$this->input->get('id', TRUE);
 		$this->modelo_actualizar->actualiza_ciclo($idPeriodo,$this->input->post('clave'),$this->input->post('anio'),$this->input->post('semestre'));
+		$this->index();
+	}
+	public function actualiza_materia_semestre()
+	{
+		$this->modelo_actualizar->actualiza_materia_semestre($this->input->post('materia_semestre'),$this->input->post('horas_escuela'),$this->input->post('horas_campo'),$this->input->post('id_materia'));
 		$this->index();
 	}
 }

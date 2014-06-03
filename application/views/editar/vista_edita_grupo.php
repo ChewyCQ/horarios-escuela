@@ -28,7 +28,7 @@
 	  					<tr>
 	  						<th><center>Generación</center></th>
 	  						<th><center>Clave</center></th>
-	  						<th><center>Semestre</center></th>
+	  						<th><center>Cantidad de alumnos</center></th>
 							<th width="40px">Opción</th>
 						</tr>
 					</thead>
@@ -39,10 +39,10 @@
 							foreach ($grupos as $grupos)
 							{								
 								echo "<tr>";
-								echo "<td class='success' height='100%'>".$grupos->Generacion."</td>";
-								echo "<td class='success' height='100%'>".$grupos->Clave."</td>";
-								echo "<td class='success' height='100%'>".$grupos->Numero_semestre."</td>";
-								echo "<td class='success' align='center' height='100%'>";
+								echo "<td>".$grupos->Generacion."</td>";
+								echo "<td>".$grupos->Clave."</td>";
+								echo "<td><center>".$grupos->cantidad_alumnos."</center></td>";
+								echo "<td align='center' height='100%'>";
 								?>
 								<form action="<?php echo site_url('controlador_inicio/grupo');?>?id=<?php echo $grupos->idGrupo?>" method="post"> <!--Envía el id del dato que se modificará-->
 								<?php

@@ -46,7 +46,7 @@
 								echo "<tr>";
 								echo "<td class='success' height='100%'>".$ciclos->Periodo."</td>";
 								echo "<td class='success' height='100%'>".$semestre."</td>";
-								echo "<td class='success' height='100%'>".$ciclos->Anio."</td>";
+								echo "<td class='success' height='100%'><center>".$ciclos->Anio."</center></td>";
 								echo "<td class='success' align='center' height='100%'>";
 								?>
 								<form action="<?php echo site_url('controlador_inicio/ciclo');?>?id=<?php echo $ciclos->idPeriodo?>" method="post"> <!--Envía el id del dato que se modificará-->

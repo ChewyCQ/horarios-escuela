@@ -120,11 +120,11 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'idSemestre'=>$consulta->idSemestre,'turno'=>$consulta->turno,'idCarrera'=>$consulta->idCarrera,'idPlan'=>$consulta->idPlan,'idSemestre'=>$consulta->idSemestre,'semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
+			$data = array('idGrupo' => $consulta->idGrupo,'Generacion' => $consulta->Generacion,'Clave'=>$consulta->Clave,'cantidad_alumnos'=>$consulta->cantidad_alumnos,'turno'=>$consulta->turno,'idPlan'=>$consulta->idPlan,'planes'=>$this->modelo_inicio->obtener_plan(),'var' => 0);
 		} 
 		else
 		{
-			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','turno'=>'','idCarrera'=>'','idPlan'=>'','idSemestre'=>'','semestres'=>$this->modelo_inicio->obtener_semestres(),'carreras'=>$this->modelo_inicio->obtener_carreras());
+			$data = array('idGrupo' => '','Generacion' => '','Clave'=>'','idSemestre'=>'','turno'=>'','idCarrera'=>'','idPlan'=>'','cantidad_alumnos'=>'','idPlan' => '','planes'=>$this->modelo_inicio->obtener_plan(),'var' => 0);
 		}		
 		$this->load->view('registrar/vista_grupo',$data);
 	}
@@ -267,7 +267,7 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function edita_grupo()
 	{
-		$datos['grupos']=$this->modelo_consultas->consulta_grupos_semestre();
+		$datos['grupos']=$this->modelo_inicio->obtener_grupos();
 		$this->load->view('editar/vista_edita_grupo',$datos);
 	}
 	public function edita_alumno()
@@ -285,6 +285,11 @@ class Controlador_inicio extends CI_Controller {
 		$datos['ciclos']=$this->modelo_inicio->obtener_ciclos();
 		$this->load->view('editar/vista_edita_ciclo',$datos);
 	}
+	public function edita_materia_semestre()
+	{
+		$datos['materias']=$this->modelo_inicio->obtener_materias();
+		$this->load->view('editar/vista_edita_materia-semestre',$datos);
+	}
 
 	public function consulta_carrera_plan($idCarrera)
 	{
@@ -293,6 +298,10 @@ class Controlador_inicio extends CI_Controller {
     public function consulta_carrera_semestre($idPlan)
 	{
 		echo json_encode($this->modelo_consultas->carrera_semestre($idPlan)); //Codifica el resultado de la consulta a formato de json
+    }
+    public function consulta_materias_semestre($idMateria)
+	{
+		echo json_encode($this->modelo_consultas->materia_semestre($idMateria)); //Codifica el resultado de la consulta a formato de json
     }
 }
 

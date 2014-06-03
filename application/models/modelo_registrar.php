@@ -102,9 +102,15 @@
 							'activo' => $activo);
             $this->db->insert('maestro',$datos); 
 		}
-		public function registrar_grupo($generacion,$clave,$idSemestre,$turno)
+		public function registrar_grupo($generacion,$clave,$cantidad_alumnos,$turno,$id_plan)
 		{
-            $this->db->insert('grupo', array('Generacion' => $generacion,'Clave' => $clave, 'idSemestre' => $idSemestre, 'turno' => $turno)); 
+			$datos=array('Generacion' => $generacion,
+						 'Clave' => $clave, 
+						 'cantidad_alumnos' => $cantidad_alumnos, 
+						 'turno' => $turno,
+						 'idPlan' => $id_plan
+						 );
+            $this->db->insert('grupo', $datos); 
 		}
 		public function registrar_alumno($nombre,$email,$idGrupo)
 		{

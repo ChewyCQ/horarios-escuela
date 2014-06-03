@@ -23,7 +23,7 @@
                 <li><a href="<?php echo site_url('controlador_inicio/plan'); ?>">Plan</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/carrera'); ?>">Carrera</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/grupo'); ?>">Grupo</a></li>
-                <li><a href="<?php echo site_url('controlador_inicio/alumno'); ?>">Alumno</a></li>
+                <!-- <li><a href="<?php #echo site_url('controlador_inicio/alumno'); ?>">Alumno</a></li> -->
                 <li><a href="<?php echo site_url('controlador_inicio/dependencia'); ?>">Dependencia (CC)</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/ciclo'); ?>">Ciclo escolar</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/datos_escuela'); ?>">Datos de la escuela</a></li>
@@ -44,9 +44,10 @@
                 <li><a href="<?php echo site_url('controlador_inicio/edita_plan'); ?>">Plan</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_carrera'); ?>">Carrera</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_grupo'); ?>">Grupo</a></li>
-                <li><a href="<?php echo site_url('controlador_inicio/edita_alumno'); ?>">Alumno</a></li>
+                <!-- <li><a href="<?php #echo site_url('controlador_inicio/edita_alumno'); ?>">Alumno</a></li> -->
                 <li><a href="<?php echo site_url('controlador_inicio/edita_dependencia'); ?>">Dependencias (CC)</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_ciclo'); ?>">Ciclo escolar</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/edita_materia_semestre'); ?>">Matria-Semestre</a></li>
               </ul>
             </li>
             <li class="dropdown">

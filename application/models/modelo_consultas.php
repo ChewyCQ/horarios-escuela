@@ -103,24 +103,11 @@
 				return FALSE;
 			}
 		}
-		public function consulta_grupos_semestre()
-		{
-			$this->db->select('*');
-			$this->db->from('grupo');
-			$this->db->join('semestre', 'semestre.idSemestre = grupo.idSemestre', 'left');
-			$grupos= $this->db->get();
-			if($grupos->num_rows()>0)
-			{
-				return $grupos->result();
-			}
-		}
 		public function consulta_grupo($id)
 		{
 			$this->db->select('*');
 			$this->db->from('grupo');
-			$this->db->join('semestre', 'semestre.idSemestre = grupo.idSemestre', 'INNER');
-			$this->db->join('plan', 'plan.idPlan = semestre.idPlan', 'INNER');
-			$this->db->join('carrera', 'carrera.idCarrera = plan.idCarrera', 'INNER');
+			$this->db->join('plan', 'plan.idPlan = grupo.idPlan', 'INNER');
 			$this->db->where(array('grupo.idGrupo' => $id));
 			$resultado=$this->db->get();
 			if($resultado->num_rows()>0)
@@ -191,7 +178,8 @@
 		public function obtener_materias_semestre()
 		{
 			//La consulta muestra todas las materias que no esten actualmente ligadas a ningun semestre, que no esten en la tabla materia_semestre
-			$materias=$this->db->query("select * from materia where not exists (select 1 from materia_semestre where materia_semestre.idMateria = materia.idMateria)");
+			//$materias=$this->db->query("select * from materia where not exists (select 1 from materia_semestre where materia_semestre.idMateria = materia.idMateria)");
+			$materias = $this->db->get('materia');
 			if($materias->num_rows()>0)
 			{
 				return $materias->result();
@@ -335,6 +323,29 @@
 			{
 				return FALSE;
 			}
+		}
+
+		public function materia_semestre($idMateria)
+		{
+			$this->db->select('plan.Nombre_plan,carrera.Nombre_carrera,semestre.Numero_semestre,
+								materia_semestre.idMateria,materia_semestre.idSemestre,
+								materia_semestre.Horas_semana_escuela,
+								materia_semestre.Horas_semana_campo_clinico');
+			$this->db->from('materia_semestre');
+			$this->db->join('semestre', 'semestre.idSemestre=materia_semestre.idSemestre', 'INNER');
+			$this->db->join('plan', 'plan.idPlan=semestre.idPlan', 'INNER');
+			$this->db->join('carrera', 'carrera.idCarrera=plan.idCarrera', 'INNER');
+			$this->db->where(array('materia_semestre.idMateria' => $idMateria));
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+
 		}
 
 	}

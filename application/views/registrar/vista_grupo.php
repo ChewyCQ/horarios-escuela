@@ -8,109 +8,7 @@
     <!--Para usar las validaciones-->
     <?php $this->load->view('comunes/validaciones'); ?>
 <head>
-	<title>Grupo</title>
-	<!--Uso de los select asociados-->
-	<script>
-		$(document).on('ready',function(){
-			//getPlanes(); //Al iniciar la carga de la vista muestra los resultados dependiendo del que este seleccionado	
-			id_carrera=$('#carreras').val();
-			if(id_carrera==0)
-			{
-				$("#semestres").attr("disabled",true);
-		    	$("#planes").attr("disabled",true);
-		    }
-		    else
-		    {
-		    	idPlan='<?php echo $idPlan;?>';
-		    	getPlanes(idPlan);
-		    }
-		});
-		//Función para cargar el select de los planes, dependiedo de la carrera que se seleccione
-		function getPlanes(idPlan)
-		{
-			//alert(idPlan);
-			id_carrera=$('#carreras').val();
-			$("#planes").attr("disabled",false); //Habilito el combo	
-			$('#semestres').empty();//Limpia el select
-			$("#semestres").attr("disabled",true); //Desactivo el combo		
-			$.getJSON('<?php echo base_url()?>index.php/controlador_inicio/consulta_carrera_plan/'+id_carrera,function(respuesta_json)
-			{
-				if(respuesta_json!=false)
-				{
-					$('#planes').empty();//Limpia el select
-					cad="<option value='0' selected>Seleccione una opción</option>";
-					$('#planes').append(cad);
-					cad2="";
-					for (var i=0;i<respuesta_json.length;i++)
-					{
-						//Verifica si esta en la sección de editar carga los datos por defecto
-						if(idPlan==respuesta_json[i].idPlan)
-						{
-							cad2="<option value='"+respuesta_json[i].idPlan+"'selected>"+respuesta_json[i].Nombre_plan+"</option>";
-						}
-						else
-						{
-							cad2="<option value='"+respuesta_json[i].idPlan+"'>"+respuesta_json[i].Nombre_plan+"</option>";
-						}
-						$('#planes').append(cad2);
-					}	
-					//Si es la sección de editar grupo y idPlan!=null, mando llamar a el método getSemestre 
-					if(idPlan!=null)
-					{
-						idSemestre='<?php echo $idSemestre;?>';
-						getSemestres(idSemestre);
-					}
-				}
-				else
-				{	
-					$("#planes").attr("disabled",true); //Desactivo el combo
-					$("#semestres").attr("disabled",true); //Desactivo el combo
-					$('#planes').empty();//Limpia el select	
-					$('#semestres').empty();//Limpia el select
-					cad1="<option value='0'>No hay planes asociados</option>";
-					$('#planes').append(cad1);
-					cad2="<option value='0'>No hay semestres asociados</option>";
-					$('#semestres').append(cad2);
-				}
-				
-			});
-		}
-		//Función para cargar el select de los semestres, dependiedo del plan que se seleccione
-		function getSemestres(idSemestre)
-		{
-			id_plan=$('#planes').val();
-			$("#semestres").attr("disabled",false);
-			$.getJSON('<?php echo base_url()?>index.php/controlador_inicio/consulta_carrera_semestre/'+id_plan,function(respuesta_json)
-			{
-				if(respuesta_json!=false)
-				{
-					$('#semestres').empty();//Limpia el select	
-					cad="";
-					for (var i=0;i<respuesta_json.length;i++)
-					{
-						//Verifica si esta en la sección de editar carga los datos por defecto
-						if(idSemestre==respuesta_json[i].idSemestre)
-						{
-							cad="<option value='"+respuesta_json[i].idSemestre+"'selected>"+respuesta_json[i].Numero_semestre+"</option>";
-						}
-						else
-						{
-							cad="<option value='"+respuesta_json[i].idSemestre+"'>"+respuesta_json[i].Numero_semestre+"</option>";
-						}
-						$('#semestres').append(cad);
-					}					
-					
-				}
-				else
-				{
-					$("#semestres").attr("disabled",true);
-					$('#semestres').empty();//Limpia el select	
-					cad="<option value='0'>No hay semestres asociados</option>";
-					$('#semestres').append(cad);
-				}
-			});
-		}
-	</script>
+	<title>Grupo</title>	
 	<!--Validaciones-->
 	<script type="text/javascript">
 		$(function(){
@@ -127,8 +25,9 @@
 						maxlength: 20,
 						digits: true
 					},
-					id_carrera: {
-						min: 1
+					cantidad_alumnos: {
+						required: true,
+						digits: true
 					},
 					id_plan: {
 						min: 1
@@ -146,11 +45,12 @@
 						maxlength: "<font color='red'>La clave debe tener máximo 20 dígitos, sin espacios</font>",
 						digits: "<font color='red'>Solo se aceptan números, sin espacios</font>"
 					},
-					id_carrera: {
-						min: "<font color='red'>Seleccione una carrera</font>"
+					cantidad_alumnos: {
+						required: "<font color='red'>Campo obligatorio</font>",						
+						digits: "<font color='red'>Solo se aceptan números, sin espacios</font>"
 					},
 					id_plan: {
-						min: "<font color='red'>Seleccione una plan</font>"
+						min: "<font color='red'>Seleccione un plan</font>"
 					}
 				},
 
@@ -170,6 +70,16 @@
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
 		<?php
+			if($var==1)
+			{
+				?>
+					<div class="alert alert-danger alert-dismissable">
+					  <button type="button" class="close" data-dismiss="alert">&times;</button>
+					  <strong>¡Error!</strong> Ya existe un grupo con la misma clave proporcionada.
+					</div>
+				<?php
+			}
+
 			if($idGrupo!=null)
 			{
 				?><legend>Editar grupo</legend><?php
@@ -200,32 +110,26 @@
 				<label for="generacion">Clave</label>
 				<input type="text" class="form-control required" id="clave" value="<?php echo $Clave ?>" placeholder="Clave del grupo" name="clave">
 				</br>
-				<label for="carrera">Carreras</label>
-				<select class="form-control required" id="carreras" onchange="getPlanes();" name="id_carrera">
-					<option value="0" selected="selected">Seleccione una opción</option>
+				<label for="cant_alumnos">Cantidad de alumnos</label>
+				<input type="text" class="form-control required" id="catidad_alumnos" value="<?php echo $cantidad_alumnos ?>" placeholder="Cantidad de alumnos en el grupo" name="cantidad_alumnos">
+				</br>
+
+				<label for="planes">Planes</label>
+				<select class="form-control required" id="planes" name="id_plan">
+					<option value="0" selected="selected">SELECCIONE UN PLAN</option>
 					<?php
-					foreach ($carreras as $i => $carreras)
-						if($idCarrera==$carreras->idCarrera)
+					foreach ($planes as $i => $planes)
+						if($idPlan==$planes->idPlan)
 						{
-							echo '<option value="'.$carreras->idCarrera.'" selected>'.$carreras->Nombre_carrera.'</option>';
+							echo '<option value="'.$planes->idPlan.'" selected>'.$planes->Nombre_plan.'</option>';
 						}
 						else
 						{
-							echo '<option value="'.$carreras->idCarrera.'">'.$carreras->Nombre_carrera.'</option>';
+							echo '<option value="'.$planes->idPlan.'">'.$planes->Nombre_plan.'</option>';
 						}						
 					?>
 				</select>
-
 				</br>
-				<label for="planes">Planes</label>
-				<select class="form-control required" id="planes" onchange="getSemestres();" name="id_plan"></select>
-
-				</br>
-				<label for="semestres">Semestres</label>
-				<select class="form-control" id="semestres" name="id_semestre"></select>
-
-				</br>
-
 				<!--Obtiene el turno que esta por defecto en la BD-->
 				<?php
 					$sel1 = "";

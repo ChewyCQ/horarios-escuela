@@ -134,5 +134,43 @@
 		      echo json_encode($row_set); //Se forma el array en un formato de json
 		    }
 		}
+		//Valida que la materia no este asociada a algun semestre
+		public function valida_materia_semestre($idMateria,$semestres)
+		{
+			
+			for($i=0; $i<count($semestres);$i++)
+			{	
+				$this->db->select('*');
+				$this->db->from('materia_semestre');			
+				$this->db->where(array('materia_semestre.idMateria' => $idMateria, 'idSemestre' => $semestres[$i]));
+				$resultado=$this->db->get();
+			}		
+			if($resultado->num_rows()>0)
+			{
+				return 1; //Retorna 1 si ya hay materias que estan asociadas a ese semestre
+			}
+			else
+			{
+				return 0; //Retorna 0 si no hay materias asociadas a ese semestre
+			}
+		}
+
+		//Valida que no haya un grupo con la misma clave
+		public function valida_grupo($clave)
+		{
+			$this->db->select('*');
+			$this->db->from('grupo');			
+			$this->db->where(array('grupo.Clave' => $clave));
+			$resultado=$this->db->get();
+					
+			if($resultado->num_rows()>0)
+			{
+				return 1; //Retorna 1 si ya hay un grupo que tiene la misma clave
+			}
+			else
+			{
+				return 0; //Retorna 0 si no hay grupos con la misma clave
+			}
+		}
 	}
 ?>
