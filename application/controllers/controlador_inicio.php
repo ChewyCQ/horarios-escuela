@@ -17,7 +17,7 @@ class Controlador_inicio extends CI_Controller {
 
 	public function index()
 	{
-		echo "loggeado";
+		$this->load->view('lobby');
 	}
 	public function verificar_sesion()
 	{

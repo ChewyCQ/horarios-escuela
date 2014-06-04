@@ -8,6 +8,21 @@ class Controlador_buscar extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->database('default');
 		$this->load->model('modelo_buscar');
+		$this->load->library('session');
+	}
+	public function index()
+	{
+		$this->verificar_sesion();
+	}
+
+	public function verificar_sesion()
+	{
+		$is_logged_in = $this->session->userdata('is_logged_in');
+
+		if (!isset($is_logged_in) || $is_logged_in != TRUE) {
+			redirect('login');
+			die();
+		}
 	}
 	//Obtiene a los maestros segun los caracteres ingresados
 	public function get_maestros()

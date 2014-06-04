@@ -6,8 +6,23 @@ class Csv extends CI_Controller {
     {
         parent::__construct();
         $this->load->helper(array('form','file','url'));
+        $this->load->library('session');
     }
 
+    public function index()
+    {
+        $this->verificar_sesion();
+    }
+
+    public function verificar_sesion()
+    {
+        $is_logged_in = $this->session->userdata('is_logged_in');
+
+        if (!isset($is_logged_in) || $is_logged_in != TRUE) {
+            redirect('login');
+            die();
+        }
+    }
     public function subir_csv_maestros()
     {
         if(file_exists('./subidos/maestros.csv'))

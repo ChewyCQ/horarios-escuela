@@ -11,11 +11,20 @@ class Controlador_registrar extends CI_Controller {
 		$this->load->database('default');
 		$this->load->library('form_validation','session'); //Limpia el formulario de inyecciones y sirve para las validaciones
 	}
-
+	
 	public function index()
 	{
-		$data = array('title' => "Ejemplo");
-		$this->load->view('prueba', $data);
+		$this->verificar_sesion();
+	}
+
+	public function verificar_sesion()
+	{
+		$is_logged_in = $this->session->userdata('is_logged_in');
+
+		if (!isset($is_logged_in) || $is_logged_in != TRUE) {
+			redirect('login');
+			die();
+		}
 	}
 	public function guarda_carrera()
 	{

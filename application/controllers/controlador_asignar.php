@@ -11,6 +11,21 @@ class Controlador_asignar extends CI_Controller
 		$this->load->model('modelo_consultas');
 		$this->load->model('modelo_inicio');
 		$this->load->database('default');
+		$this->load->library('session');
+	}
+	public function index()
+	{
+		$this->verificar_sesion();
+	}
+
+	public function verificar_sesion()
+	{
+		$is_logged_in = $this->session->userdata('is_logged_in');
+
+		if (!isset($is_logged_in) || $is_logged_in != TRUE) {
+			redirect('login');
+			die();
+		}
 	}
 	public function materia_semestre()
 	{
