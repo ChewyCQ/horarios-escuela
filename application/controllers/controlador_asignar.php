@@ -39,4 +39,10 @@ class Controlador_asignar extends CI_Controller
 		$this->load->view('asignar/vista_materia_semestre',$data);
 	}
 
+	public function maestro_materia()
+	{
+		$data = array('maestros' => $this->modelo_inicio->obtener_maestros());
+		$this->load->view('asignar/vista_maestro_materia',$data);
+	}
+
 }

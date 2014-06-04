@@ -54,7 +54,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list-alt"></span> Asignar <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Area de formación-Materia</a></li>
-                <li><a href="#">Maestro-Materia</a></li>
+                <li><a href="<?php echo site_url('controlador_asignar/maestro_materia'); ?>">Maestro-Materia</a></li>
                 <li><a href="<?php echo site_url('controlador_asignar/materia_semestre'); ?>">Materia-Semestre</a></li>
               </ul>
             </li>
