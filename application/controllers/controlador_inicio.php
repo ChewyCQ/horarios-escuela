@@ -8,15 +8,25 @@ class Controlador_inicio extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('url');
+		$this->load->library('session');
 		$this->load->model('modelo_inicio');
 		$this->load->model('modelo_consultas');
 		$this->load->database('default');
+		$this->verificar_sesion();
 	}
 
 	public function index()
 	{
-		$data = array('title' => "Ejemplo");
-		$this->load->view('prueba', $data /*FALSE*/);
+		echo "loggeado";
+	}
+	public function verificar_sesion()
+	{
+		$is_logged_in = $this->session->userdata('is_logged_in');
+
+		if (!isset($is_logged_in) || $is_logged_in != TRUE) {
+			redirect('login');
+			die();
+		}
 	}
 	public function maestro()
 	{
