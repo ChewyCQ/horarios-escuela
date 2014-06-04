@@ -65,7 +65,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuario <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Datos</a></li>
-                <li><a href="#">Cerrar Sesión</a></li>
+                <li><a href="<?php echo site_url('login/logout'); ?>">Cerrar Sesión</a></li>
               </ul>
             </li>
           </ul>
