@@ -7,11 +7,12 @@ class Csv extends CI_Controller {
         parent::__construct();
         $this->load->helper(array('form','file','url'));
         $this->load->library('session');
+        $this->verificar_sesion();
     }
 
     public function index()
     {
-        $this->verificar_sesion();
+        redirect('controlador_inicio');
     }
 
     public function verificar_sesion()

@@ -19,6 +19,7 @@ class Login extends CI_Controller {
 			$this->load->view('inicio_sesion');
 		}
 	}
+	
 	function validar_login()
 	{
 		$this->load->model('modelo_login');

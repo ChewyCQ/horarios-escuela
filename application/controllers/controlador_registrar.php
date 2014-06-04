@@ -6,15 +6,16 @@ class Controlador_registrar extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(array('form','file','url'));
+		$this->load->library('form_validation','session'); //Limpia el formulario de inyecciones y sirve para las validaciones
+		$this->load->database('default');
 		$this->load->model('modelo_registrar');
 		$this->load->model('modelo_consultas');
-		$this->load->database('default');
-		$this->load->library('form_validation','session'); //Limpia el formulario de inyecciones y sirve para las validaciones
+		$this->verificar_sesion();
 	}
 	
 	public function index()
 	{
-		$this->verificar_sesion();
+		redirect('controlador_inicio');
 	}
 
 	public function verificar_sesion()
