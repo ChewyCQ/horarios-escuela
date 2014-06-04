@@ -6,9 +6,10 @@
 	<meta name="description" content="">
 	<meta name="author" content="David Cuadra, Marlene Torres">
 	<link rel="shortcut icon" href="../../assets/ico/favicon.ico">
-
-	
-
+	<?php 
+		$this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate, no-transform, max-age=0, post-check=0, pre-check=0");
+		$this->output->set_header("Pragma: no-cache"); 
+	?>
 	<link href="<?php echo base_url().BOOTSTRAP_CSS?>" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo base_url().CSS ?>">
 
