@@ -16,12 +16,13 @@
 			            	);
             $this->db->insert('carrera',$datos); 
 		}
-		public function registrar_materia($materia,$tipo_materia,$especialidades)
+		public function registrar_materia($clave,$materia,$tipo_materia,$especialidades)
 		{
 			//La función preg_replace elimina todos los espacios en blanco si estos son mayores a 1 entre cada texto 
 			$materia=preg_replace('/\s+/', ' ', $materia);  
 			$materia=trim(mb_strtoupper($materia,'UTF-8'));
 			$datos = array(
+							'Clave_materia' => $clave,
 							'Nombre_materia' => $materia,
 							'Tipo_materia' => $tipo_materia
 							);
@@ -186,6 +187,32 @@
 				$nombre = '';
 			}
 			return $nombre;
+		}
+		public function registrar_maestro_puede_materia($idMaestro,$recomendadas_idMateria,$resto_idMateria)
+		{
+			if($recomendadas_idMateria!=null)
+			{
+				for($i=0; $i<count($recomendadas_idMateria);$i++)
+				{
+					$data = array(
+					'idMateria' => $recomendadas_idMateria[$i],
+					'idMaestro' => $idMaestro
+					);
+					$this->db->insert('maestro_puede_materia',$data); 
+				}
+			}
+			if($resto_idMateria!=null)
+			{
+				for($i=0; $i<count($resto_idMateria);$i++)
+				{
+					$data = array(
+					'idMateria' => $resto_idMateria[$i],
+					'idMaestro' => $idMaestro
+					);
+					$this->db->insert('maestro_puede_materia',$data); 
+				}
+			}
+			
 		}
 	}
 ?>

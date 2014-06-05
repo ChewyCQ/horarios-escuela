@@ -18,11 +18,12 @@
          $this->db->where('idEspecialidad', $id);
 			$this->db->update('especialidad', $data); 
 		}
-		public function actualiza_materia($nombre,$tipo,$especialidades,$materia_especialidad,$id)
+		public function actualiza_materia($clave,$nombre,$tipo,$especialidades,$materia_especialidad,$id)
 		{
          $nombre=preg_replace('/\s+/', ' ', $nombre);  
          $nombre=trim(mb_strtoupper($nombre,'UTF-8'));
          $data = array(
+            'Clave_materia' => $clave,
             'Nombre_materia' => $nombre,
             'Tipo_materia' => $tipo
          );

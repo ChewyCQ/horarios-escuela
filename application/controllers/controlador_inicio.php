@@ -65,14 +65,14 @@ class Controlador_inicio extends CI_Controller {
 		
 		if($consulta != FALSE)
 		{
-			$data = array('Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,
+			$data = array('Clave_materia' => $consulta->Clave_materia,'Nombre_materia' => $consulta->Nombre_materia,'Tipo_materia' => $consulta->Tipo_materia,
 						  'idMateria'=>$consulta->idMateria,
 						  'especialidades' => $this->modelo_consultas->obtener_especialidades_filtro($idMateria),
 						  'materiaEspecialidad' => $this->modelo_consultas->materia_especialidad($idMateria));
 		} 
 		else
 		{
-			$data = array('Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'',
+			$data = array('Clave_materia' => '','Nombre_materia' => '','Tipo_materia' => '','idMateria'=>'',
 						  'especialidades' => $this->modelo_inicio->obtener_especialidades(),'materia_especialidad'=>'');
 		}	
 		$this->load->view('registrar/vista_materia',$data);
@@ -302,7 +302,7 @@ class Controlador_inicio extends CI_Controller {
 	public function edita_materia_semestre()
 	{
 		$datos['materias']=$this->modelo_inicio->obtener_materias();
-		$this->load->view('editar/vista_edita_materia-semestre',$datos);
+		$this->load->view('editar/vista_edita_materia_semestre',$datos);
 	}
 
 	public function consulta_carrera_plan($idCarrera)
@@ -316,6 +316,21 @@ class Controlador_inicio extends CI_Controller {
     public function consulta_materias_semestre($idMateria)
 	{
 		echo json_encode($this->modelo_consultas->materia_semestre($idMateria)); //Codifica el resultado de la consulta a formato de json
+    }
+    public function consulta_maestro_materia()
+	{
+		$idMaestro=$this->input->get('id_maestro', TRUE);
+		echo json_encode($this->modelo_consultas->maestro_materia($idMaestro)); //Codifica el resultado de la consulta a formato de json
+    }
+    public function consulta_maestro_materia_resto()
+	{
+		$idMaestro=$this->input->get('id_maestro', TRUE);
+		echo json_encode($this->modelo_consultas->materias_sin_asociar($idMaestro)); //Codifica el resultado de la consulta a formato de json
+    }
+    public function consulta_semestre_carrera_plan()
+    {
+    	$idMateria=$this->input->get('id_materia', TRUE);
+    	echo json_encode($this->modelo_consultas->semestre_carrera_plan($idMateria)); //Codifica el resultado de la consulta a formato de json
     }
 }
 

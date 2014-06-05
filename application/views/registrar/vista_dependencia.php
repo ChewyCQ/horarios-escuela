@@ -106,7 +106,9 @@
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="panel panel-danger"> 
-								  <div class="panel-heading">Maestros asociados a este campo</div>
+								  <div class="panel-heading">
+								  	<h3 class="panel-title"><strong>Maestros asociados a este campo</strong></h3>
+								  </div>
 								  <div class="panel-body">
 								    <p>En esta tabla se muestran todos los maestros que están asociadas a la dependencia que se está editando, 
 								    si desea borrar un maestro solamente márquelo en su casilla correspondiente. 
@@ -142,7 +144,9 @@
 					}	
 				?>
 				<div class="panel panel-primary"> 
-				  <div class="panel-heading">Agregar maestros</div>
+				  <div class="panel-heading">
+				  	<h3 class="panel-title"><strong>Agregar maestros</strong></h3>
+				  </div>
 				  <div class="panel-body">
 				    <p>En esta tabla se muestran los maestros que se desea asociar a la dependencia.</p>
 				  </div>

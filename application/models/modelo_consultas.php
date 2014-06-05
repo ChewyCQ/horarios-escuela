@@ -174,6 +174,26 @@
 			}
 		}
 
+		//Obtiene los semestres que estan actualmente en la tabla semestre
+		public function semestre_carrera_plan($idMateria)
+		{
+			$resultado=$this->db->query("select DISTINCT * from carrera 
+										inner join plan on plan.idCarrera=carrera.idCarrera
+										inner join semestre on plan.idPlan=semestre.idPlan
+										where not exists 
+											(select 1 from especialidad_materia where 
+											 especialidad_materia.idEspecialidad = especialidad.idEspecialidad 
+											 and especialidad_materia.idMateria=".$idMateria.")
+										ORDER BY Numero_semestre ASC");
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
 		//Obtiene las materias que estan actualmente en la tabla materia
 		public function obtener_materias_semestre()
 		{
@@ -262,7 +282,7 @@
 		//Obtiene todas las especialidades excepto aquellas que ya esten asociadas con alguna materia
 		public function obtener_especialidades_filtro($idMateria)
 		{
-			$resultado=$this->db->query("select * from especialidad where not exists 
+			$resultado=$this->db->query("select DISTINCT * from especialidad where not exists 
 										(select 1 from especialidad_materia where 
 										 especialidad_materia.idEspecialidad = especialidad.idEspecialidad 
 										 and especialidad_materia.idMateria=".$idMateria.")");
@@ -278,7 +298,7 @@
 		//Obtiene todos los maestros excepto aquellos que ya esten asociados con alguna dependencia
 		public function obtener_maestros_filtro($idDependencia)
 		{
-			$resultado=$this->db->query("select * from maestro where not exists 
+			$resultado=$this->db->query("select DISTINCT * from maestro where not exists 
 										(select 1 from maestro_campo_clinico where 
 										 maestro_campo_clinico.idMaestro = maestro.idMaestro
 										 and maestro_campo_clinico.idDependencia=".$idDependencia.") 
@@ -345,8 +365,56 @@
 			{
 				return FALSE;
 			}
-
+		}
+		//Consulta todas las materias que se le pueden recomendar al maestro
+		public function maestro_materia($idMaestro)
+		{
+			//Selecciona todas la materias que estan recomendadas para el maestro, excepto aquellas que ya esten asciadas 
+			//dentro de la tabla maestro_puede_materia
+			$resultado=$this->db->query("select DISTINCT materia.idMateria,materia.Nombre_materia,materia.Clave_materia,materia.Tipo_materia
+										 from maestro inner join especialidad on especialidad.idEspecialidad=maestro.idEspecialidad
+										 and maestro.idMaestro=".$idMaestro."
+										 inner join especialidad_materia on especialidad_materia.idEspecialidad=especialidad.idEspecialidad
+										 inner join materia on materia.idMateria=especialidad_materia.idMateria 
+										 where not exists 
+										 	(select * 
+											 from maestro inner join maestro_puede_materia on maestro_puede_materia.idMaestro=maestro.idMaestro
+											 where maestro.idMaestro=".$idMaestro." and maestro_puede_materia.idMateria=materia.idMateria)  
+										 ORDER BY Nombre_materia ASC");			
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
 		}
 
+		//Obtengo todas las demás materias que se pueden asociar al maestro y que no se han relacionado
+		public function materias_sin_asociar($idMaestro)
+		{
+			$resultado=$this->db->query("select DISTINCT materia.idMateria,materia.Nombre_materia,materia.Clave_materia,materia.Tipo_materia 
+										 		from materia
+												where not exists 
+													(select * from maestro 										 
+													inner join especialidad on especialidad.idEspecialidad=maestro.idEspecialidad
+													inner join especialidad_materia on especialidad_materia.idEspecialidad=especialidad.idEspecialidad
+													where maestro.idMaestro=".$idMaestro." 
+													and especialidad_materia.idMateria=materia.idMateria)
+												and 
+													materia.idMateria not in 
+													(select maestro_puede_materia.idMateria from maestro_puede_materia
+													where maestro_puede_materia.idMaestro=".$idMaestro.")
+												ORDER BY Nombre_materia ASC");			
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}						
+		}
 	}
 ?>
