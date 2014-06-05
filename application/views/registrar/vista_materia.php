@@ -17,6 +17,11 @@
 						required: true,
 						maxlength: 150,
 						solo_letras:true
+					},
+					clave_materia: {
+						required: true,
+						maxlength: 8,
+						tipo_siglema: true
 					}
 				},
 				messages:{
@@ -24,8 +29,13 @@
 						required: "<font color='red'>Campo obligatorio</font>",
 						maxlength: "<font color='red'>El nombre de la materia debe tener un máximo de 150 caracteres</font>",
 						solo_letras: "<font color='red'>Solo se aceptan letras</font>"
+					},
+					clave_materia: {
+						required: "<font color='red'>Campo obligatorio</font>",
+						maxlength: "<font color='red'>El siglema debe tener un máximo de 8 caracteres</font>",
+						tipo_siglema: "<font color='red'>Solo se permiten letras, números y un guion. Ejemplo(CAEP-00)</font>"
 					}
-				},
+				}
 
 			});
 		});
@@ -83,7 +93,11 @@
 					<form id="form" action="<?php echo site_url('controlador_registrar/guarda_materia');?>" method="post">
 	  				<?php
 	  			}		
-	  		?>	  		
+	  		?>
+	  		<label for="clave">Siglema/Clave</label>
+			<input type="text" class="form-control required" id="clave_materia" placeholder="Siglema del módulo" 
+			name="clave_materia"  value="<?php echo $Clave_materia ?>">
+			</br>	  		
 	  		<label for="nombre">Nombre de la materia</label>
 			<input type="text" class="form-control required" id="nombre_materia" placeholder="Nombre materia" 
 			name="nombre_materia"  value="<?php echo $Nombre_materia ?>">
@@ -128,7 +142,9 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="panel panel-danger"> 
-							  <div class="panel-heading">Especialidades asociadas a la materia</div>
+							  <div class="panel-heading">
+							  	<h3 class="panel-title"><strong>Especialidades asociadas a la materia</strong></h3>
+							  </div>
 							  <div class="panel-body">
 							    <p>En esta tabla se muestran todas las especialidades que están asociadas a la materia que se está editando, 
 							    si desea borrar una especialidad solamente márquela en su casilla correspondiente. 
@@ -164,9 +180,11 @@
 				}	
 			?>
 			<div class="panel panel-primary"> 
-			  <div class="panel-heading">Agregar especialidades</div>
+			  <div class="panel-heading">
+			 	 <h3 class="panel-title"><strong>Asociar áreas de formación a la materia</strong></h3>
+			  </div>
 			  <div class="panel-body">
-			    <p>En esta tabla se muestran las especialidades que se desea asociar a la materia.</p>
+			    <p>En esta tabla se muestran las áreas de formación/especialidades que se desea asociar a la materia.</p>
 			  </div>
 				<table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
 				   
@@ -183,7 +201,7 @@
 					  </select>
 				</div>
 				<div class="col-lg-3" align="right">
-					<button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar especialidad <span class='glyphicon glyphicon-plus-sign'></span></button>
+					<button type="button" class="btn btn-info" title="Agregar" onclick="agrega_fila();">Agregar área <span class='glyphicon glyphicon-plus-sign'></span></button>
 				 </div>
 			</div>
 			</br>

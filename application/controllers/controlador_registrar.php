@@ -34,7 +34,7 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_materia()
 	{
-		$this->modelo_registrar->registrar_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
+		$this->modelo_registrar->registrar_materia($this->input->post('clave_materia'),$this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'));
 		$this->index();		
 	}
 	public function guarda_materia_semestre()
@@ -163,7 +163,17 @@ class Controlador_registrar extends CI_Controller {
 		$escuela['Nombre'] = $this->input->post('nombre_escuela');
 		$this->load->model('modelo_registrar');
 		$this->modelo_registrar->registrar_escuela($escuela);
-		redirect('controlador_inicio');
+		$this->index();
+	}
+	public function guarda_maestro_puede_materia()
+	{	
+		$recomendadas_idMateria=$this->input->post('materias_recomendacion');
+		$resto_idMateria=$this->input->post('materias_resto');
+		if($recomendadas_idMateria!=NULL or $resto_idMateria!=NULL)
+		{
+			$this->modelo_registrar->registrar_maestro_puede_materia($this->input->post('id_maestro'),$recomendadas_idMateria,$resto_idMateria);
+			$this->index();
+		}
 	}
 
 

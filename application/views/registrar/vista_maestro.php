@@ -59,7 +59,7 @@
 					email: {
 						email: "<font color='red'>Sólo se aceptan correos electrónicos, sin espacios</font><label></label>"
 					}
-				},
+				}
 
 			});
 		});

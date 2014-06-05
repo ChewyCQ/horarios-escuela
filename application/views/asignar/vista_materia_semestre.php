@@ -16,7 +16,6 @@
 			$('#form').validate({
 				rules:{
 					horas_escuela: {
-						required: true,
 						digits: true
 					},
 					horas_campo: {
@@ -25,7 +24,6 @@
 				},
 				messages:{
 					horas_escuela: {
-						required: "<font color='red'>Campo obligatorio</font>",
 						digits: "<font color='red'>Sólo se aceptan números, sin espacios</font><label></label>"
 					},
 					horas_campo: {
@@ -35,6 +33,50 @@
 
 			});
 		});
+	</script>
+
+	<!--Llenado de la tabla-->
+	<script>
+		$(document).on('ready',function(){
+			//Cuando no hay datos que guardar, desactivo el botón de guardar
+			$("#guarda").attr("disabled",true);
+		});
+		//Obtiene los datos y los va agregando a la tabla
+		function getDatos()
+		{
+			id_maestro=$('#maestros').val();
+			$.getJSON("<?php echo site_url('controlador_inicio/consulta_semestre_carrera_plan/');?>?id_materia="+id_maestro,function(respuesta_json)
+			{
+				$('#tabla').empty();//Limpia la tabla				
+				//Activo el botón guardar
+				//$("#guarda").attr("disabled",false);
+				//Respuesta de la consulta
+				if(respuesta_json!=false)
+				{						
+					//Agregar el encabezado de la tabla
+					cad2="<thead><tr><th><center>Plan</center></th><th><center>Carrera</center></th><th><center>Semestre</center></th><th width='40px'></th></tr></thead>";
+					$('#tabla').append(cad2);					
+					//Agregar los resultados en el resto de la tabla
+					cad="";
+					for (var i=0;i<respuesta_json.length;i++)
+					{
+						var cad="<tr><td><center>"
+						+respuesta_json[i].Nombre_plan  
+						+"</center></td><td>"+respuesta_json[i].Nombre_carrera
+						+"</center></td><td>"+respuesta_json[i].Numero_semestre
+						+"</td><td><center>"
+						+"<input type='checkbox' value="+respuesta_json[i].idSemestre+" name='materias_semestre[]' class='grupo'>"
+						+"</center></td></tr>";						
+						$('#tabla').append(cad);
+					}						
+				}
+				else
+				{	
+					//Cuando no hay datos que guardar, desactivo el botón de guardar
+					//$("#guarda").attr("disabled",true);
+				}				
+			});
+		}
 	</script>
 </head>
 <body>
@@ -83,7 +125,7 @@
 				<div class="row">
 					</br>
 					<div class="col-xs-12">
-						<table class="table table-striped table-bordered table-responsive table-condensed table-hover">
+						<table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">
 							<thead>
 							<tr>		  						
 		  						<th><center>Plan</center></th>

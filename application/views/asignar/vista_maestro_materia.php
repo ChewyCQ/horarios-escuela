@@ -10,33 +10,136 @@
 	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/nuevas-funciones.js"></script>
 <head>
 	<title>Asignar maestro-materia</title>
+	<!--Llenado de la tabla-->
+	<script>
+		$(document).on('ready',function(){
+			//Cuando no hay datos que guardar, desactivo el botón de guardar
+			$("#guarda").attr("disabled",true);
+		});
+		//Obtiene los datos y los va agregando a la tabla
+		function getDatos()
+		{
+			id_maestro=$('#maestros').val();
+			$.getJSON("<?php echo site_url('controlador_inicio/consulta_maestro_materia/');?>?id_maestro="+id_maestro,function(respuesta_json)
+			{
+				$('#tabla').empty();//Limpia la tabla				
+				//Activo el botón guardar
+				$("#guarda").attr("disabled",false);
+				//Respuesta de la consulta
+				if(respuesta_json!=false)
+				{						
+					//Agregar el encabezado de la tabla
+					cad2="<thead><tr><th><center>Siglema</center></th><th><center>Módulo</center></th><th width='40px'>Agregar</th></tr></thead>";
+					$('#tabla').append(cad2);					
+					//Agregar los resultados en el resto de la tabla
+					cad="";
+					for (var i=0;i<respuesta_json.length;i++)
+					{
+						var cad="<tr><td><center>"
+						+respuesta_json[i].Clave_materia
+						+"</center></td><td>"+respuesta_json[i].Nombre_materia
+						+"</td><td><center>"
+						+"<input type='checkbox' value="+respuesta_json[i].idMateria+" name='materias_recomendacion[]' class='grupo'>"
+						+"</center></td></tr>";						
+						$('#tabla').append(cad);
+					}						
+				}
+				else
+				{	
+					//Cuando no hay datos que guardar, desactivo el botón de guardar
+					$("#guarda").attr("disabled",true);
+				}				
+			});
+			getDatos_dos(); //Mando llamar el método para que llene la segunda tabla
+		}
+
+		//Obtiene los datos y los va agregando a la tabla_dos
+		function getDatos_dos()
+		{
+			id_maestro=$('#maestros').val();
+			$.getJSON("<?php echo site_url('controlador_inicio/consulta_maestro_materia_resto/');?>?id_maestro="+id_maestro,function(respuesta_json)
+			{
+				$('#tabla_dos').empty();//Limpia la tabla				
+				//Activo el botón guardar
+				$("#guarda").attr("disabled",false);
+				//Respuesta de la consulta
+				if(respuesta_json!=false)
+				{						
+					//Agregar el encabezado de la tabla
+					cad2="<thead><tr><th><center>Siglema</center></th><th><center>Módulo</center></th><th width='40px'>Agregar</th></tr></thead>";
+					$('#tabla_dos').append(cad2);					
+					//Agregar los resultados en el resto de la tabla
+					cad="";
+					for (var i=0;i<respuesta_json.length;i++)
+					{
+						var cad="<tr><td><center>"
+						+respuesta_json[i].Clave_materia
+						+"</center></td><td>"+respuesta_json[i].Nombre_materia
+						+"</td><td><center>"
+						+"<input type='checkbox' value="+respuesta_json[i].idMateria+" name='materias_resto[]' class='grupo'>"
+						+"</center></td></tr>";						
+						$('#tabla_dos').append(cad);
+					}						
+				}
+				else
+				{	
+					//Cuando no hay datos que guardar, desactivo el botón de guardar
+					$("#guarda").attr("disabled",true);
+				}
+				
+			});
+		}
+
+		//Función para limpiar las cajas de texto y los combos, llamada por el botón de reset
+		function Limpia()
+		{
+			$('#tabla').empty();//Limpia la tabla	
+			$('#tabla_dos').empty();//Limpia la tabla
+			$("#guarda").attr("disabled",true);	
+		}
+	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">	
 		<!--Form group de los semestres-->
 		<div class="form-group">			
-			<form id="form" action="<?php echo site_url('controlador_registrar/guarda_materia_semestre');?>" method="post">
+			<form id="form" action="<?php echo site_url('controlador_registrar/guarda_maestro_puede_materia');?>" method="post">
 				<h4 class="text-center"><strong>ASIGNAR MAESTRO-MATERIA</strong></h4>
 				<label for="nombre">Maestros</label>
-				<select class="form-control" name="id_maestro">
+				<select class="form-control required" id="maestros" onchange="getDatos();" name="id_maestro">
+					<option value="0" selected="selected">SELECCIONE UN MAESTRO</option>
 					<?php
 						foreach ($maestros as $maestros)
-							echo '<option value="'.$maestros->idMaestro.'">'.$maestros->Nombre.'</option>';							
+							echo '<option value="'.$maestros->idMaestro.'">'.$maestros->Nombre.'</option>';		
 					?>
 				</select>
-				<div class="row">
-					</br>
-					<div class="col-xs-12">						
-
-					</div>
+				</br>
+				<div class="panel panel-warning"> 
+				  <div class="panel-heading">
+				 	 <h3 class="panel-title"><strong>Módulos recomendados para el prestador de servicios profesionales</strong></h3>
+				  </div>
+				  	<div class="panel-body">
+				    	<p>En esta tabla se muestran todos los módulos que se recomiendan para que los imparta el prestador de servicios profesionales, 
+				    	   la selección de los módulos se seleccionan dependiendo de su especialidad.</p>
+				  	</div>
+					<table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">					
+					</table>
 				</div>
-				
-				<br/>	
-				<br/>	
+
+				<div class="panel panel-success"> 
+				  <div class="panel-heading">
+				 	 <h3 class="panel-title"><strong>Resto de los módulos</strong></h3>
+				  </div>
+				  	<div class="panel-body">
+				    	<p>En esta tabla se muestran todos los módulos disponibles para ser asignados al prestador de servicios profesionales.</p>
+				  	</div>
+					<table id="tabla_dos" name="tabla_dos" class="table table-striped table-bordered table-responsive table-condensed table-hover">					
+					</table>
+				</div>	
 				<div align="right">
-					<button type="submit" class="btn btn-primary btn-lg" title="Guardar"><span class='glyphicon glyphicon-floppy-save'></span></button>
-					<button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario"><span class='glyphicon glyphicon-refresh'></span></button>											
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>
+					<button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario" onclick="Limpia();"><span class='glyphicon glyphicon-refresh'></span></button>											
 					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
 				</div>
 			</form>

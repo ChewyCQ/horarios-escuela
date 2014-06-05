@@ -35,7 +35,7 @@ class Controlador_actualizar extends CI_Controller {
 	public function actualiza_materia()
 	{
 		$idMateria=$this->input->get('id', TRUE);
-		$this->modelo_actualizar->actualiza_materia($this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'),$this->input->post('materia_especialidad'),$idMateria);
+		$this->modelo_actualizar->actualiza_materia($this->input->post('clave_materia'),$this->input->post('nombre_materia'),$this->input->post('tipo_materia'),$this->input->post('especialidades'),$this->input->post('materia_especialidad'),$idMateria);
 		$this->index();
 	}
 	public function actualiza_semestre()

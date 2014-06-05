@@ -46,18 +46,25 @@
                 <li><a href="<?php echo site_url('controlador_inicio/edita_grupo'); ?>">Grupo</a></li>
                 <!-- <li><a href="<?php #echo site_url('controlador_inicio/edita_alumno'); ?>">Alumno</a></li> -->
                 <li><a href="<?php echo site_url('controlador_inicio/edita_dependencia'); ?>">Dependencias (CC)</a></li>
-                <li><a href="<?php echo site_url('controlador_inicio/edita_ciclo'); ?>">Ciclo escolar</a></li>
-                <li><a href="<?php echo site_url('controlador_inicio/edita_materia_semestre'); ?>">Matria-Semestre</a></li>
+                <li><a href="<?php echo site_url('controlador_inicio/edita_ciclo'); ?>">Ciclo escolar</a></li>                
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-list-alt"></span> Asignar <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Area de formación-Materia</a></li>
+                <!-- <li><a href="#">Area de formación-Materia</a></li> -->
                 <li><a href="<?php echo site_url('controlador_asignar/maestro_materia'); ?>">Maestro-Materia</a></li>
                 <li><a href="<?php echo site_url('controlador_asignar/materia_semestre'); ?>">Materia-Semestre</a></li>
               </ul>
             </li>
+
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-remove"></span> Eliminar asignaciones <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo site_url('controlador_inicio/edita_materia_semestre'); ?>">Matria-Semestre</a></li>
+              </ul>
+            </li>
+
             <li><a href="#"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

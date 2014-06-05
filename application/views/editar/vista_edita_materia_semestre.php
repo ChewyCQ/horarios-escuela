@@ -38,13 +38,12 @@
 	<!--Llenado de la tabla-->
 	<script>
 		$(document).on('ready',function(){
-			//getPlanes(); //Al iniciar la carga de la vista muestra los resultados dependiendo del que este seleccionado
 			$("#horas_escuela").attr("disabled",true);
 			$("#horas_campo").attr("disabled",true);
 			//Cuando no hay datos que guardar, desactivo el botón de guardar
 			$("#guarda").attr("disabled",true);
 		});
-		//Función para cargar el select de los planes, dependiedo de la carrera que se seleccione
+		//Obtiene los datos y los va agregando a la tabla
 		function getDatos()
 		{
 			id_materia=$('#materias').val();	
@@ -118,7 +117,7 @@
   			<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_materia_semestre');?>" method="post">		
 				<label for="materia">Materias</label>
 				<select class="form-control required" id="materias" onchange="getDatos();" name="id_materia">
-					<option value="0" selected="selected">Seleccione una opción</option>
+					<option value="0" selected="selected">SELECCIONE UNA MATERIA</option>
 					<?php
 					foreach ($materias as $i => $materias)
 						echo '<option value="'.$materias->idMateria.'">'.$materias->Nombre_materia.'</option>';	
@@ -126,19 +125,19 @@
 				</select>	
 				</br>
 				<div class="panel panel-danger"> 
-				  <div class="panel-heading">Elimina relaciones de Materia-Semestre</div>
+				  <div class="panel-heading">
+				  	<h3 class="panel-title"><strong>Elimina asignaciones de Materia-Semestre</strong></h3>
+				  </div>
 				  <div class="panel-body">
 				    <p>En esta tabla se muestran los semestres que estan asociados a la materia.</p>
 				  </div>
-					<table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">					
-					   
-					</thead>
+					<table id="tabla" name="tabla" class="table table-striped table-bordered table-responsive table-condensed table-hover">				
 					</table>
 				</div>	
 
 				<div class="panel panel-info">
 					<div class="panel-heading">
-				    	<h3 class="panel-title">Editar horas de la materia</h3>
+				    	<h3 class="panel-title"><strong>Editar horas de la materia</strong></h3>
 				  	</div>
 				  	<div class="panel-body">
 				    	<label for="horas">Horas a la semana en la escuela</label>
