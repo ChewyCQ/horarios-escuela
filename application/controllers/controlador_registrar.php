@@ -6,7 +6,7 @@ class Controlador_registrar extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper(array('form','file','url'));
-		$this->load->library('form_validation','session'); //Limpia el formulario de inyecciones y sirve para las validaciones
+		$this->load->library('form_validation'); //Limpia el formulario de inyecciones y sirve para las validaciones
 		$this->load->database('default');
 		$this->load->model('modelo_registrar');
 		$this->load->model('modelo_consultas');

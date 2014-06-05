@@ -4,7 +4,7 @@
 <html lang="es">
 	<?php $this->load->view('comunes/header'); ?>
 <head>
-	<title>Login</title>
+	<title>Pagina principal</title>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>

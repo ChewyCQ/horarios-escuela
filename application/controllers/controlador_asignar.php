@@ -8,7 +8,7 @@ class Controlador_asignar extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->library('session');
+		// $this->load->library('session');
 		$this->load->database('default');
 		$this->load->model('modelo_consultas');
 		$this->load->model('modelo_inicio');

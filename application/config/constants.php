@@ -32,7 +32,9 @@ define('BOOTSTRAP_CSS', "assets/bootstrap/css/bootstrap.css");
 define('BOOTSTRAP_JS', "assets/bootstrap/js/bootstrap.js");
 define('FPDF', "assets/fpdf/fpdf.php");
 define('CSS', "assets/css.css");
-define('JQUERY', "assets/jquery.js");
+define('JQUERY', "assets/jquery.min.js");
+define('JQUERY_UI', "assets/jquery_ui/js/jquery-ui-1.10.4.custom.js");
+define('JQUERY_UI_CSS', "assets/jquery_ui/css/smoothness/jquery-ui-1.10.4.custom.css");
 define('JQUERY_BOOTSTRAP', "assets/bootstrap/js/jquery.min.js");
 define('SCRIPTS', "assets/scripts.js");
 

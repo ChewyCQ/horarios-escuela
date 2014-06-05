@@ -6,7 +6,7 @@ class Csv extends CI_Controller {
     {
         parent::__construct();
         $this->load->helper(array('form','file','url'));
-        $this->load->library('session');
+        // $this->load->library('session');
         $this->verificar_sesion();
     }
 
@@ -17,6 +17,7 @@ class Csv extends CI_Controller {
 
     public function verificar_sesion()
     {
+        $this->load->library('session');
         $is_logged_in = $this->session->userdata('is_logged_in');
 
         if (!isset($is_logged_in) || $is_logged_in != TRUE) {

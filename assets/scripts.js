@@ -45,3 +45,11 @@ function elimina_fila(boton)
 {
 	$(boton).parent().parent().remove();
 }
+$(function() {
+	$('#sortMe').sortable({
+		update: function(event, ui){
+			var postData = $(this).sortable('serialize');
+			console.log(postData);
+		}
+	});
+});

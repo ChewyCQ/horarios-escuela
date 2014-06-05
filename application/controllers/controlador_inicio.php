@@ -8,7 +8,7 @@ class Controlador_inicio extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->library('session');
+		// $this->load->library('session');
 		$this->load->model('modelo_inicio');
 		$this->load->model('modelo_consultas');
 		$this->load->database('default');
@@ -214,6 +214,10 @@ class Controlador_inicio extends CI_Controller {
 			$data = array('Periodo' => '','semestre'=>'','Anio'=>'','idPeriodo'=>'');
 		}	
 		$this->load->view('registrar/vista_periodo',$data);
+	}
+	public function horario()
+	{
+		$this->load->view('horario');
 	}
 	// public function validar_ciclo()
 	// {

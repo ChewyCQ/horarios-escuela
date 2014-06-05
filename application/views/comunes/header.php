@@ -12,6 +12,7 @@
 	?>
 	<link href="<?php echo base_url().BOOTSTRAP_CSS?>" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo base_url().CSS ?>">
+	<link rel="stylesheet" href="<?php echo base_url().JQUERY_UI_CSS ?>">
 
 </head>
 

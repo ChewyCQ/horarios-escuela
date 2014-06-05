@@ -6,7 +6,7 @@ class Controlador_buscar extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->library('session');
+		// $this->load->library('session');
 		$this->load->database('default');
 		$this->load->model('modelo_buscar');
 		$this->verificar_sesion();

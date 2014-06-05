@@ -58,7 +58,7 @@
                 <li><a href="<?php echo site_url('controlador_asignar/materia_semestre'); ?>">Materia-Semestre</a></li>
               </ul>
             </li>
-            <li><a href="#"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>
+            <li><a href="<?php echo site_url('controlador_inicio/horario'); ?>"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li class="dropdown">
