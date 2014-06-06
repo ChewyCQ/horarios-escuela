@@ -46,10 +46,14 @@ function elimina_fila(boton)
 	$(boton).parent().parent().remove();
 }
 $(function() {
-	$('#sortMe').sortable({
+	$('#horario').sortable({
 		update: function(event, ui){
 			var postData = $(this).sortable('serialize');
 			console.log(postData);
+
+			$.post('guardar_horario', {list: postData}, function(o) {
+				console.log(o);
+			}, 'json');
 		}
 	});
 });

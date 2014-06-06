@@ -215,10 +215,6 @@ class Controlador_inicio extends CI_Controller {
 		}	
 		$this->load->view('registrar/vista_periodo',$data);
 	}
-	public function horario()
-	{
-		$this->load->view('horario');
-	}
 	// public function validar_ciclo()
 	// {
 	// 	$periodo['Anio'] = $this->input->post('anio');

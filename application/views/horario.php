@@ -3,30 +3,47 @@
 <?php $this->load->view('comunes/header'); ?>
 <head>
 	<title>Horarios</title>
-	<style type="text/css" media="screen">
-		#sortMe{
-			border: 1px solid silver;
-		}
-		#sortMe div {
-			margin: 5px;
-			padding: 10px;
-			background: #E5E5E5;
-		}
-	</style>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
   		
-		<div id="wrap">
-			<div id="sortMe">
-				<div id="item_1">Prueba 1</div>
-				<div id="item_2">Prueba 2</div>
-				<div id="item_3">Prueba 3</div>
-				<div id="item_4">Prueba 4</div>
-				<div id="item_5">Prueba 5</div>
+  		<div id="tabla_horario">
+  		</div>
+	  			
+			<div id="dias">
+				<div>Asignación</div>
+				<div>Lunes</div>
+				<div>Martes</div>
+				<div>Miercoles</div>
+				<div>Jueves</div>
+				<div>Viernes</div>
+				<div>Sabado</div>
+				<div>Domingo</div>
 			</div>
-		</div>
+
+			<div id="horas">
+				<div>7:00</div>
+				<div>7:50</div>
+				<div>8:40</div>
+				<div>9:30</div>
+				<div>10:00</div>
+				<div>10:40</div>
+				<div>11:30</div>
+				<div>12:20</div>
+				<div>13:10</div>
+				<div>14:00</div>
+			</div>
+
+			<!-- <div id="wrap"> -->
+			<div id="horario">
+				<?php 
+					foreach ($materias as $materia) {
+						echo "<div id='{$materia['idMateria']}' title='{$materia['Clave_materia']}'>{$materia['Nombre_materia']}</div>";
+					}
+				?>
+			</div>
+			<!-- </div> -->
 
 		<?php $this->load->view('comunes/footer'); ?>  
 		<script src="<?php echo base_url().SCRIPTS ?>"></script>
