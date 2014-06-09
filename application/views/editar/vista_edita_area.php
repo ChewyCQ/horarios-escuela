@@ -6,19 +6,14 @@
 <head>
 	<title>Editar áreas</title>
 
-	<!--DataTable-->
-	<link href="<?php echo base_url()?>assets/datatable/css/jquery.dataTables.css" rel="stylesheet">
-	<script type="text/javascript" src="<?php echo base_url()?>assets/datatable/js/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/datatable/js/jquery.dataTables.js"></script>
-	<!--Para los botones de exportar-->
-	<link href="<?php echo base_url()?>assets/TableTools/css/dataTables.tableTools.css" rel="stylesheet">	
-	<script type="text/javascript" src="<?php echo base_url()?>assets/TableTools/js/dataTables.tableTools.js"></script>
+	<!--Para cargar los script, usados para generar la tabla y poner botones de exportar-->
+	<?php $this->load->view('comunes/tabla_exportar_editar'); ?>
 
 	<script type="text/javascript" language="javascript" class="init">
 		$(document).ready(function() {
 			$('#tabla').DataTable({
 				"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}],
-				dom: 'T<"clear">lfrtip',
+				dom: 'T<"clear">lfrtip', //Para colocar que exporte en pdf o xls
 				tableTools: {
 					"sSwfPath": "<?php echo base_url()?>assets/TableTools/swf/copy_csv_xls_pdf.swf",
 					"aButtons": 

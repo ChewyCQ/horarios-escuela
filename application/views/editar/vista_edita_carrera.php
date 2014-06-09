@@ -6,13 +6,31 @@
 <head>
 	<title>Editar carreras</title>
 
-	<link href="<?php echo base_url()?>assets/datatable/css/jquery.dataTables.css" rel="stylesheet">
-	<script type="text/javascript" src="<?php echo base_url()?>assets/datatable/js/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/datatable/js/jquery.dataTables.js"></script>
+	<!--Para cargar los script, usados para generar la tabla y poner botones de exportar-->
+	<?php $this->load->view('comunes/tabla_exportar_editar'); ?>
 
 	<script type="text/javascript" language="javascript" class="init">
 		$(document).ready(function() {
-			$('#tabla').dataTable({"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}]});
+			$('#tabla').dataTable({
+				"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}],
+				dom: 'T<"clear">lfrtip', //Para colocar que exporte en pdf o xls
+				tableTools: {
+					"sSwfPath": "<?php echo base_url()?>assets/TableTools/swf/copy_csv_xls_pdf.swf",
+					"aButtons": 
+					[
+		                {
+		                    "sExtends": "xls",
+		                    "sButtonText": "<img src='<?php echo base_url()?>assets/TableTools/images/excel.png'  width='32' height='32' border=0 />",
+		                    "mColumns": [0]
+		                },
+		                {
+		                    "sExtends": "pdf",
+		                    "sButtonText": "<img src='<?php echo base_url()?>assets/TableTools/images/pdf2.png'  width='32' height='32' border=0 />",
+		                   	"mColumns": [0]
+		                }
+		            ]
+				}
+			});
 		} );
 		//{"aoColumnDefs": [{ "bSortable": false, "aTargets": [1]}]} Desactiva el descendente o ascendente en la columna especificada
 	</script>
