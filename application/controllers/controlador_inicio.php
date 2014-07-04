@@ -328,6 +328,11 @@ class Controlador_inicio extends CI_Controller {
     	$idMateria=$this->input->get('id_materia', TRUE);
     	echo json_encode($this->modelo_consultas->semestre_carrera_plan($idMateria)); //Codifica el resultado de la consulta a formato de json
     }
+    public function consulta_materia_semestre()
+    {
+    	$idMateria=$this->input->get('id_materia', TRUE);
+    	echo json_encode($this->modelo_consultas->semestres_sin_asociar($idMateria)); //Codifica el resultado de la consulta a formato de json
+    }
 }
 
 /* End of file inicio.php */

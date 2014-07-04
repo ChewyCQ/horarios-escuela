@@ -165,8 +165,6 @@
 			$this->db->join('semestre', 'plan.idPlan = semestre.idPlan', 'INNER');
 			$this->db->order_by("Numero_semestre", "asc"); 
 			$resultado=$this->db->get();
-			
-			//$resultado= $this->db->get_where('',array('Numero_semestre' => '3'));
 
 			if($resultado->num_rows()>0)
 			{
@@ -407,6 +405,27 @@
 													(select maestro_puede_materia.idMateria from maestro_puede_materia
 													where maestro_puede_materia.idMaestro=".$idMaestro.")
 												ORDER BY Nombre_materia ASC");			
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}						
+		}
+
+		//Obtengo todos los semestres que no estan asociados ya a una materia
+		public function semestres_sin_asociar($idMateria)
+		{
+			$resultado=$this->db->query("select DISTINCT plan.Nombre_plan,carrera.Nombre_carrera,semestre.Numero_semestre,semestre.idSemestre
+										 		from carrera inner join plan on plan.idCarrera=carrera.idCarrera
+										 					 inner join semestre on plan.idPlan=semestre.idPlan	
+										 		where not exists 
+													(select 1 from materia_semestre where 
+													 materia_semestre.idSemestre = semestre.idSemestre
+													 and materia_semestre.idMateria=".$idMateria.")																								
+												ORDER BY Numero_semestre ASC");	
 			if($resultado->num_rows()>0)
 			{
 				return $resultado->result();

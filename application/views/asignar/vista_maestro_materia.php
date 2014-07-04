@@ -20,37 +20,45 @@
 		function getDatos()
 		{
 			id_maestro=$('#maestros').val();
-			$.getJSON("<?php echo site_url('controlador_inicio/consulta_maestro_materia/');?>?id_maestro="+id_maestro,function(respuesta_json)
+			if(id_maestro==0)
 			{
-				$('#tabla').empty();//Limpia la tabla				
-				//Activo el botón guardar
-				$("#guarda").attr("disabled",false);
-				//Respuesta de la consulta
-				if(respuesta_json!=false)
-				{						
-					//Agregar el encabezado de la tabla
-					cad2="<thead><tr><th><center>Siglema</center></th><th><center>Módulo</center></th><th width='40px'>Agregar</th></tr></thead>";
-					$('#tabla').append(cad2);					
-					//Agregar los resultados en el resto de la tabla
-					cad="";
-					for (var i=0;i<respuesta_json.length;i++)
-					{
-						var cad="<tr><td><center>"
-						+respuesta_json[i].Clave_materia
-						+"</center></td><td>"+respuesta_json[i].Nombre_materia
-						+"</td><td><center>"
-						+"<input type='checkbox' value="+respuesta_json[i].idMateria+" name='materias_recomendacion[]' class='grupo'>"
-						+"</center></td></tr>";						
-						$('#tabla').append(cad);
-					}						
-				}
-				else
-				{	
-					//Cuando no hay datos que guardar, desactivo el botón de guardar
-					$("#guarda").attr("disabled",true);
-				}				
-			});
-			getDatos_dos(); //Mando llamar el método para que llene la segunda tabla
+				$('#tabla').empty();//Limpia la tabla	
+				$('#tabla_dos').empty();//Limpia la tabla
+			}
+			else
+			{
+				$.getJSON("<?php echo site_url('controlador_inicio/consulta_maestro_materia/');?>?id_maestro="+id_maestro,function(respuesta_json)
+				{
+					$('#tabla').empty();//Limpia la tabla				
+					//Activo el botón guardar
+					$("#guarda").attr("disabled",false);
+					//Respuesta de la consulta
+					if(respuesta_json!=false)
+					{						
+						//Agregar el encabezado de la tabla
+						cad2="<thead><tr><th><center>Siglema</center></th><th><center>Módulo</center></th><th width='40px'>Agregar</th></tr></thead>";
+						$('#tabla').append(cad2);					
+						//Agregar los resultados en el resto de la tabla
+						cad="";
+						for (var i=0;i<respuesta_json.length;i++)
+						{
+							var cad="<tr><td><center>"
+							+respuesta_json[i].Clave_materia
+							+"</center></td><td>"+respuesta_json[i].Nombre_materia
+							+"</td><td><center>"
+							+"<input type='checkbox' value="+respuesta_json[i].idMateria+" name='materias_recomendacion[]' class='grupo'>"
+							+"</center></td></tr>";						
+							$('#tabla').append(cad);
+						}						
+					}
+					else
+					{	
+						//Cuando no hay datos que guardar, desactivo el botón de guardar
+						$("#guarda").attr("disabled",true);
+					}	
+				});
+				getDatos_dos(); //Mando llamar el método para que llene la segunda tabla
+			}			
 		}
 
 		//Obtiene los datos y los va agregando a la tabla_dos
