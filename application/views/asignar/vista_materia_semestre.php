@@ -40,6 +40,7 @@
 		$(document).on('ready',function(){
 			//Cuando no hay datos que guardar, desactivo el botón de guardar
 			$("#guarda").attr("disabled",true);
+			getDatos();
 		});
 		//Obtiene los datos y los va agregando a la tabla
 		function getDatos()
@@ -70,7 +71,7 @@
 							+respuesta_json[i].Nombre_plan
 							+"</center></td><td>"+respuesta_json[i].Nombre_carrera
 							+"</td><td>"+respuesta_json[i].Numero_semestre+"</td><td><center>"
-							+"<input type='checkbox' value="+respuesta_json[i].idSemestre+" name='materias_recomendacion[]' class='grupo'>"
+							+"<input type='checkbox' value="+respuesta_json[i].idSemestre+" name='semestres[]' class='grupo'>"
 							+"</center></td></tr>";						
 							$('#tabla').append(cad);
 						}						
@@ -126,10 +127,22 @@
 				<h4 class="text-center"><strong>ASIGNAR MATERIA-SEMESTRE</strong></h4>
 				<label for="nombre">Nombre de la materia</label>
 				<select class="form-control required" id="materias" onchange="getDatos();" name="id_materia">
-					<option value="0" selected="selected">SELECCIONE UNA MATERIA</option>
+					<?php
+						if($id_materia==null){
+						   ?> 
+						   <option value="0" selected="selected">SELECCIONE UNA MATERIA</option>
+						   <?php
+						}
+					?>					
 					<?php
 						foreach ($materias as $materias)
-							echo '<option value="'.$materias->idMateria.'">'.$materias->Nombre_materia.'</option>';		
+							if($id_materia==$materias->idMateria)
+							{
+								echo '<option value="'.$materias->idMateria.'" selected>'.$materias->Nombre_materia.'</option>';								
+							}
+							else{
+								echo '<option value="'.$materias->idMateria.'">'.$materias->Nombre_materia.'</option>';
+							}					
 					?>
 				</select>
 
