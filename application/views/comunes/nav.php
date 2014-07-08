@@ -62,6 +62,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-remove"></span> Eliminar asignaciones <b class="caret"></b></a>
               <ul class="dropdown-menu">
+                <li><a href="<?php echo site_url('controlador_inicio/edita_maestro_materia'); ?>">Maestro-Materia</a></li>
                 <li><a href="<?php echo site_url('controlador_inicio/edita_materia_semestre'); ?>">Matria-Semestre</a></li>
               </ul>
             </li>

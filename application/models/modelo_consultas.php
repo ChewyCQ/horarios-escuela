@@ -389,6 +389,25 @@
 			}
 		}
 
+		//Consulta para obtener los datos de la tabla maestro_puede_materia
+		public function maestro_puede_materia($idMaestro)
+		{
+			$this->db->select('materia.Nombre_materia,materia.Clave_materia,materia.idMateria');
+			$this->db->from('maestro_puede_materia');
+			$this->db->join('maestro', 'maestro.idMaestro=maestro_puede_materia.idMaestro', 'INNER');
+			$this->db->join('materia', 'materia.idMateria=maestro_puede_materia.idMateria', 'INNER');
+			$this->db->where(array('maestro_puede_materia.idMaestro' => $idMaestro));
+			$resultado=$this->db->get();
+			if($resultado->num_rows()>0)
+			{
+				return $resultado->result();
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+
 		//Obtengo todas las demás materias que se pueden asociar al maestro y que no se han relacionado
 		public function materias_sin_asociar($idMaestro)
 		{

@@ -9,7 +9,9 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 
-	
+	<br/>
+	<br/>
+	<img src="<?php echo base_url()?>assets/img/logo.png" class="img-responsive center-block">
 	
 	<?php $this->load->view('comunes/footer'); ?>
 </body>

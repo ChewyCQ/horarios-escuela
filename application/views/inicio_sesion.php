@@ -16,8 +16,15 @@
 			);
 		?>
 		<?php echo form_open('login/validar_login', $forma); ?>
+			<br/>
+			<br/>
+			<br/>	
+			<br/>
+			<br/>
+			<br/>			
 			<h2 class="form-signin-heading">Favor de iniciar sesión</h2>
 			<input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario" required autofocus>
+			<br/>
 			<input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Contraseña" required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
 		</form>

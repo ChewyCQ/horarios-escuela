@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/additional-methods.js"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/nuevas-funciones.js"></script>
 <head>
-	<title>Materias-Semestre</title>
+	<title>Elimina Materias-Semestre</title>
 	<!--Validaciones-->
 	<script type="text/javascript">
 		$(function(){
@@ -114,7 +114,8 @@
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">	
   		<div class="form-group">
-  			<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_materia_semestre');?>" method="post">		
+  			<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_materia_semestre');?>" method="post">	
+  				<h4 class="text-center"><strong>ELIMINAR MATERIA-SEMESTRE</strong></h4>	
 				<label for="materia">Materias</label>
 				<select class="form-control required" id="materias" onchange="getDatos();" name="id_materia">
 					<option value="0" selected="selected">SELECCIONE UNA MATERIA</option>

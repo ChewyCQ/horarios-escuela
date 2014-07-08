@@ -300,7 +300,11 @@ class Controlador_inicio extends CI_Controller {
 		$datos['materias']=$this->modelo_inicio->obtener_materias();
 		$this->load->view('editar/vista_edita_materia_semestre',$datos);
 	}
-
+	public function edita_maestro_materia()
+	{
+		$datos['maestros']=$this->modelo_inicio->obtener_maestros();
+		$this->load->view('editar/vista_edita_maestro_materia',$datos);
+	}
 	public function consulta_carrera_plan($idCarrera)
 	{
 		echo json_encode($this->modelo_consultas->carrera_plan($idCarrera)); //Codifica el resultado de la consulta a formato de json
@@ -332,6 +336,11 @@ class Controlador_inicio extends CI_Controller {
     {
     	$idMateria=$this->input->get('id_materia', TRUE);
     	echo json_encode($this->modelo_consultas->semestres_sin_asociar($idMateria)); //Codifica el resultado de la consulta a formato de json
+    }
+    public function consulta_maestro_puede_materia()
+    {
+    	$idMaestro=$this->input->get('id_maestro', TRUE);
+    	echo json_encode($this->modelo_consultas->maestro_puede_materia($idMaestro)); //Codifica el resultado de la consulta a formato de json
     }
 }
 
