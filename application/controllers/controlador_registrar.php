@@ -39,6 +39,7 @@ class Controlador_registrar extends CI_Controller {
 	}
 	public function guarda_materia_semestre()
 	{
+		$this->load->model('modelo_inicio');
 		if($this->input->post('semestres')!=null)
 		{
 			$this->load->model('modelo_buscar');			
@@ -51,7 +52,7 @@ class Controlador_registrar extends CI_Controller {
 			else //Si no retorna 0, retorna 1 y significa que esa materia ya esta asociada a algun semestre seleccionado
 			{
 				$data = array('semestres'=>$this->modelo_consultas->obtener_semestre_carrera_plan(),
-					  'materias'=>$this->modelo_consultas->obtener_materias_semestre(),
+					  'materias'=>$this->modelo_inicio->obtener_materias(),
 					  'var' => 2,
 					  'id_materia' => '',
 					  'horas_escuela' => '',
@@ -68,15 +69,14 @@ class Controlador_registrar extends CI_Controller {
 			$horas_campo=$this->input->post('horas_campo');
 			
 			$data = array('semestres'=>$this->modelo_consultas->obtener_semestre_carrera_plan(),
-						  'materias'=>$this->modelo_consultas->obtener_materias_semestre(),
+						  'materias'=>$this->modelo_inicio->obtener_materias(),
 						  'var' => 1,
 						  'id_materia' => $id_materia,
 						  'horas_escuela' => $horas_escuela,
 						  'horas_campo' => $horas_campo
 						  );
 			$this->load->view('asignar/vista_materia_semestre',$data);
-		}
-		
+		}		
 	}
 	public function guarda_plan()
 	{
@@ -173,6 +173,16 @@ class Controlador_registrar extends CI_Controller {
 		{
 			$this->modelo_registrar->registrar_maestro_puede_materia($this->input->post('id_maestro'),$recomendadas_idMateria,$resto_idMateria);
 			$this->index();
+		}
+		else
+		{
+			$this->load->model('modelo_inicio');
+			$id_maestro=$this->input->post('id_maestro');
+			$data = array('maestros' => $this->modelo_inicio->obtener_maestros(),
+					  'var' =>1,
+					  'id_maestro' => $id_maestro
+					  );
+			$this->load->view('asignar/vista_maestro_materia',$data);
 		}
 	}
 

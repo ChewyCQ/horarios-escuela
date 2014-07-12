@@ -30,7 +30,7 @@ class Controlador_asignar extends CI_Controller
 	public function materia_semestre()
 	{
 		$data = array('semestres'=>$this->modelo_consultas->obtener_semestre_carrera_plan(),
-					  'materias'=>$this->modelo_consultas->obtener_materias_semestre(),
+					  'materias'=>$this->modelo_inicio->obtener_materias(),
 					  'var' => 0,
 					  'id_materia' => '',
 					  'horas_escuela' => '',
@@ -41,7 +41,10 @@ class Controlador_asignar extends CI_Controller
 
 	public function maestro_materia()
 	{
-		$data = array('maestros' => $this->modelo_inicio->obtener_maestros());
+		$data = array('maestros' => $this->modelo_inicio->obtener_maestros(),
+					  'var' =>0,
+					  'id_maestro' =>''
+					  );
 		$this->load->view('asignar/vista_maestro_materia',$data);
 	}
 	public function horario()

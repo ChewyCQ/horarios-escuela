@@ -6,7 +6,8 @@
     <!--Para usar las validaciones-->
     <script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/Jqueryvalidation.js"></script>
-	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/additional-methods.js"></script>
+	<script 
+	type="text/javascript" src="<?php echo base_url()?>assets/validaciones/additional-methods.js"></script>
 	<script type="text/javascript" src="<?php echo base_url()?>assets/validaciones/nuevas-funciones.js"></script>
 <head>
 	<title>Asignar meterias-semestres</title>
@@ -83,17 +84,8 @@
 					}	
 				});
 			}			
-		}
-
-		//Función para limpiar las cajas de texto y los combos, llamada por el botón de reset
-		function Limpia()
-		{
-			$('#tabla').empty();//Limpia la tabla	
-			$('#tabla_dos').empty();//Limpia la tabla
-			$("#guarda").attr("disabled",true);	
-		}
+		}		
 	</script>
-
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
@@ -127,11 +119,17 @@
 				<h4 class="text-center"><strong>ASIGNAR MATERIA-SEMESTRE</strong></h4>
 				<label for="nombre">Nombre de la materia</label>
 				<select class="form-control required" id="materias" onchange="getDatos();" name="id_materia">
-					<?php
+					<?php						
 						if($id_materia==null){
 						   ?> 
-						   <option value="0" selected="selected">SELECCIONE UNA MATERIA</option>
+						   <option value="0" selected="true">SELECCIONE UNA MATERIA</option>						  
 						   <?php
+						}
+						else
+						{
+							?> 
+						   <option value="0">SELECCIONE UNA MATERIA</option>
+							<?php
 						}
 					?>					
 					<?php
@@ -166,8 +164,7 @@
 				<br/>	
 				<br/>	
 				<div align="right">
-					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>
-					<button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario" onclick="Limpia();"><span class='glyphicon glyphicon-refresh'></span></button>											
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>										
 					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
 				</div>
 			</form>

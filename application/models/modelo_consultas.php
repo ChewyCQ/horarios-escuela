@@ -192,22 +192,6 @@
 				return FALSE;
 			}
 		}
-		//Obtiene las materias que estan actualmente en la tabla materia
-		public function obtener_materias_semestre()
-		{
-			//La consulta muestra todas las materias que no esten actualmente ligadas a ningun semestre, que no esten en la tabla materia_semestre
-			//$materias=$this->db->query("select * from materia where not exists (select 1 from materia_semestre where materia_semestre.idMateria = materia.idMateria)");
-			$materias = $this->db->get('materia');
-			if($materias->num_rows()>0)
-			{
-				return $materias->result();
-			}
-			else
-			{
-				return false;
-			}
-		}
-
 		//Obtiene los semestres que estan actualmente en la tabla semestre
 		public function carrera_plan($idCarrera)
 		{

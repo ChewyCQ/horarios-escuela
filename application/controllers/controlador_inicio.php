@@ -297,12 +297,20 @@ class Controlador_inicio extends CI_Controller {
 	}
 	public function edita_materia_semestre()
 	{
-		$datos['materias']=$this->modelo_inicio->obtener_materias();
+		$datos = array('materias'=>$this->modelo_inicio->obtener_materias(),
+					   'var' => '',
+					   'id_materia' => '',
+					   'horas_escuela' => '',
+					   'horas_campo' => ''
+					 );
 		$this->load->view('editar/vista_edita_materia_semestre',$datos);
 	}
 	public function edita_maestro_materia()
 	{
-		$datos['maestros']=$this->modelo_inicio->obtener_maestros();
+		$datos = array('maestros'=>$this->modelo_inicio->obtener_maestros(),
+						  'id_maestro' => '',
+						  'var' => ''
+						  );
 		$this->load->view('editar/vista_edita_maestro_materia',$datos);
 	}
 	public function consulta_carrera_plan($idCarrera)

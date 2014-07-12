@@ -128,7 +128,25 @@ class Controlador_actualizar extends CI_Controller {
 	}
 	public function actualiza_materia_semestre()
 	{
-		$this->modelo_actualizar->actualiza_materia_semestre($this->input->post('materia_semestre'),$this->input->post('horas_escuela'),$this->input->post('horas_campo'),$this->input->post('id_materia'));
-		$this->index();
+		$this->load->model('modelo_inicio');
+		if($this->input->post('materia_semestre')!=null)
+		{
+			$this->modelo_actualizar->actualiza_materia_semestre($this->input->post('materia_semestre'),$this->input->post('horas_escuela'),$this->input->post('horas_campo'),$this->input->post('id_materia'));
+			$this->index();
+		}
+		else
+		{
+			$id_materia=$this->input->post('id_materia');
+			$horas_escuela=$this->input->post('horas_escuela');
+			$horas_campo=$this->input->post('horas_campo');
+			
+			$data = array('materias'=>$this->modelo_inicio->obtener_materias(),
+						  'var' => 1,
+						  'id_materia' => $id_materia,
+						  'horas_escuela' => $horas_escuela,
+						  'horas_campo' => $horas_campo
+						  );
+			$this->load->view('editar/vista_edita_materia_semestre',$data);
+		}		
 	}
 }

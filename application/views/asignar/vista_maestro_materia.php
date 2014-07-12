@@ -15,6 +15,7 @@
 		$(document).on('ready',function(){
 			//Cuando no hay datos que guardar, desactivo el botón de guardar
 			$("#guarda").attr("disabled",true);
+			getDatos();
 		});
 		//Obtiene los datos y los va agregando a la tabla
 		function getDatos()
@@ -50,11 +51,6 @@
 							+"</center></td></tr>";						
 							$('#tabla').append(cad);
 						}						
-					}
-					else
-					{	
-						//Cuando no hay datos que guardar, desactivo el botón de guardar
-						$("#guarda").attr("disabled",true);
 					}	
 				});
 				getDatos_dos(); //Mando llamar el método para que llene la segunda tabla
@@ -89,37 +85,54 @@
 						$('#tabla_dos').append(cad);
 					}						
 				}
-				else
-				{	
-					//Cuando no hay datos que guardar, desactivo el botón de guardar
-					$("#guarda").attr("disabled",true);
-				}
 				
 			});
-		}
-
-		//Función para limpiar las cajas de texto y los combos, llamada por el botón de reset
-		function Limpia()
-		{
-			$('#tabla').empty();//Limpia la tabla	
-			$('#tabla_dos').empty();//Limpia la tabla
-			$("#guarda").attr("disabled",true);	
 		}
 	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
-	<div class="container">	
+	<div class="container">
+		<?php
+			if($var==1)
+			{
+				?>
+					<div class="alert alert-danger alert-dismissable">
+					  <button type="button" class="close" data-dismiss="alert">&times;</button>
+					  <strong>¡Error!</strong> Complete correctamente el registro, seleccione los módulos que desea asociar al prestador de servicios profesionales.
+					</div>
+				<?php
+			}
+		?>		
 		<!--Form group de los semestres-->
 		<div class="form-group">			
 			<form id="form" action="<?php echo site_url('controlador_registrar/guarda_maestro_puede_materia');?>" method="post">
 				<h4 class="text-center"><strong>ASIGNAR MAESTRO-MATERIA</strong></h4>
 				<label for="nombre">Maestros</label>
 				<select class="form-control required" id="maestros" onchange="getDatos();" name="id_maestro">
-					<option value="0" selected="selected">SELECCIONE UN MAESTRO</option>
+					<?php
+						
+						if($id_maestro==null){
+						   ?> 
+						   <option value="0" selected="true">SELECCIONE UN MAESTRO</option>						  
+						   <?php
+						}
+						else
+						{
+							?> 
+						   <option value="0">SELECCIONE UN MAESTRO</option>
+							<?php
+						}
+					?>						
 					<?php
 						foreach ($maestros as $maestros)
-							echo '<option value="'.$maestros->idMaestro.'">'.$maestros->Nombre.'</option>';		
+							if($id_maestro==$maestros->idMaestro)
+							{
+								echo '<option value="'.$maestros->idMaestro.'" selected>'.$maestros->Nombre.'</option>';								
+							}
+							else{
+								echo '<option value="'.$maestros->idMaestro.'">'.$maestros->Nombre.'</option>';	
+							}					
 					?>
 				</select>
 				</br>
@@ -146,8 +159,7 @@
 					</table>
 				</div>	
 				<div align="right">
-					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>
-					<button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario" onclick="Limpia();"><span class='glyphicon glyphicon-refresh'></span></button>											
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>										
 					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
 				</div>
 			</form>

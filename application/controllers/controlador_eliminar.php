@@ -26,9 +26,21 @@ class Controlador_eliminar extends CI_Controller {
 		}
 	}
 
-	public function elimina_maestro_puede_materia($idMater)
+	public function elimina_maestro_puede_materia()
 	{
-		$this->modelo_eliminar->elimina_maestro_puede_materia($this->input->post('id_maestro'),$this->input->post('materias'));
-		$this->index();
+		if($this->input->post('materias')!=null)
+		{
+			$this->modelo_eliminar->elimina_maestro_puede_materia($this->input->post('id_maestro'),$this->input->post('materias'));
+			$this->index();
+		}
+		else
+		{
+			$this->load->model('modelo_inicio');
+			$data = array('maestros'=>$this->modelo_inicio->obtener_maestros(),
+						  'id_maestro' => $this->input->post('id_maestro'),
+						  'var' => 1
+						  );
+			$this->load->view('editar/vista_edita_maestro_materia',$data);			
+		}
 	}
 }

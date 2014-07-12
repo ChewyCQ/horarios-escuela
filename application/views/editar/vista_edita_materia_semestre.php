@@ -42,6 +42,7 @@
 			$("#horas_campo").attr("disabled",true);
 			//Cuando no hay datos que guardar, desactivo el botón de guardar
 			$("#guarda").attr("disabled",true);
+			getDatos();
 		});
 		//Obtiene los datos y los va agregando a la tabla
 		function getDatos()
@@ -94,34 +95,49 @@
 				
 			});
 		}
-
-		//Función para limpiar las cajas de texto y los combos, llamada por el botón de reset
-		function Limpia()
-		{
-			$('#tabla').empty();//Limpia la tabla
-			//Limpiar las cajas de texto
-			$("#horas_escuela").attr("value",'');
-			$("#horas_campo").attr("value",'');
-			//Desactivar las cajas de texto
-			$("#horas_escuela").attr("disabled",true);
-			$("#horas_campo").attr("disabled",true);
-			//Cuando no hay datos que guardar, desactivo el botón de guardar
-			$("#guarda").attr("disabled",true);
-		}
 	</script>
 </head>
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">	
+		<?php
+			if($var==1)
+			{
+				?>
+					<div class="alert alert-danger alert-dismissable">
+					  <button type="button" class="close" data-dismiss="alert">&times;</button>
+					  <strong>¡Error!</strong> Complete correctamente el registro, seleccione los semestres que desea eliminar del módulo.
+					</div>
+				<?php
+			}
+		?>
   		<div class="form-group">
   			<form id="form" action="<?php echo site_url('controlador_actualizar/actualiza_materia_semestre');?>" method="post">	
   				<h4 class="text-center"><strong>ELIMINAR MATERIA-SEMESTRE</strong></h4>	
 				<label for="materia">Materias</label>
 				<select class="form-control required" id="materias" onchange="getDatos();" name="id_materia">
-					<option value="0" selected="selected">SELECCIONE UNA MATERIA</option>
+					<?php						
+						if($id_materia==null){
+						   ?> 
+						   <option value="0" selected="true">SELECCIONE UNA MATERIA</option>						  
+						   <?php
+						}
+						else
+						{
+							?> 
+						   <option value="0">SELECCIONE UNA MATERIA</option>
+							<?php
+						}
+					?>					
 					<?php
-					foreach ($materias as $i => $materias)
-						echo '<option value="'.$materias->idMateria.'">'.$materias->Nombre_materia.'</option>';	
+						foreach ($materias as $materias)
+							if($id_materia==$materias->idMateria)
+							{
+								echo '<option value="'.$materias->idMateria.'" selected>'.$materias->Nombre_materia.'</option>';								
+							}
+							else{
+								echo '<option value="'.$materias->idMateria.'">'.$materias->Nombre_materia.'</option>';
+							}					
 					?>
 				</select>	
 				</br>
@@ -150,8 +166,7 @@
 				</div>
 				<br/>
 				<div align="right">
-					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>
-					<button type="reset" class="btn btn-success btn-lg" title="Limpiar formulario" onclick="Limpia();" ><span class='glyphicon glyphicon-refresh'></span></button>				
+					<button type="submit" class="btn btn-primary btn-lg" title="Guardar" id="guarda"><span class='glyphicon glyphicon-floppy-save'></span></button>			
 					<button type="button" class="btn btn-danger btn-lg" title="Cancelar" onclick="window.location.href='<?php echo site_url('controlador_inicio/index');?>'"><span class='glyphicon glyphicon-floppy-remove'></span></button>
 				</div>
 			</form>
