@@ -14,17 +14,18 @@
 				);
 		?>
 
-		<?php echo form_open('controlador_asignar/escoger_grupo_del_periodo', $form); ?>
+		<?php echo form_open('controlador_asignar/horario', $form); ?>
+			<?php echo form_hidden('id_periodo', $periodo['idPeriodo']); ?>
 			<fieldset>
 				<legend>Ciclo escolar a asignar horarios</legend>
 
 				<div class="form-group">
-					<label class="col-md-4 control-label" for="id_periodo">Periodos escolares del año</label>
+					<label class="col-md-4 control-label" for="id_grupo">Grupos del periodo: <?php echo $periodo['Periodo'] ?></label>
 					<div class="col-md-3">
-						<select id="id_periodo" name="id_periodo" class="form-control">
+						<select id="id_grupo" name="id_grupo" class="form-control">
 							<?php 
-							foreach ($periodos as $periodo) {
-								echo "<option value='{$periodo['idPeriodo']}'>{$periodo['Periodo']}</option>";
+							foreach ($grupos as $grupo) {
+								echo "<option value='{$grupo['idGrupo']}'>{$grupo['Clave']}</option>";
 							}
 							?>
 						</select>

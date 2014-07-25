@@ -49,35 +49,27 @@ class Controlador_asignar extends CI_Controller
 	}
 	public function horario()
 	{
-		// echo "<pre>";
-		// echo "Post ";
-		// print_r($this->input->post());
-		// echo "</pre>";
+		$post = $this->input->post();
 
 		$this->load->model('modelo_horario');
 
-		$periodo = $this->modelo_horario->get_periodo($this->input->post('id_periodo'));
+		$data['id_grupo'] = $post['id_grupo'];
 
-		// echo "<pre>";
-		// echo "Periodo ";
-		// print_r($periodo);
-		// echo "</pre>";
-
-		$data['grupo'] = $this->modelo_horario->get_datos_grupo($this->input->post('id_grupo'));
+		// Periodo
+		$periodo = $this->modelo_horario->get_periodo_by_id($post['id_periodo']);
+		$data['periodo'] = $periodo;
+		// Grupo
+		$data['grupo'] = $this->modelo_horario->get_grupo_by_id($post['id_grupo']);
 		$data['grupo']['semestre'] = $this->semestre_grupo($data['grupo']['Generacion'],$periodo);
+		// Materias
+		$data['materias'] = $this->modelo_horario->get_materias_del_semestre($data['grupo']['idPlan'], $data['grupo']['semestre']);
+		// Maestros
+		$data['maestros'] = $this->modelo_horario->get_maestros_activos();
+		// Horarios?
 
 		// echo "<pre>";
-		// echo "Grupo ";
-		// print_r($data['grupo']);
-		// echo "</pre>";
-
-		$data['materias'] = $this->modelo_horario->get_materias_del_grupo(
-			$this->input->post('id_grupo'), 
-			$this->semestre_grupo($data['grupo']['Generacion'],$periodo)			
-			);
-
-		// echo "<pre>";
-		// print_r($data['materias']);
+		// echo "Data\n";
+		// print_r($data);
 		// echo "</pre>";
 
 		$this->load->view('horario',$data);
@@ -92,15 +84,23 @@ class Controlador_asignar extends CI_Controller
 	function escoger_periodo()
 	{
 		$this->load->model('modelo_horario');
-		$data['periodos'] = $this->modelo_horario->get_periodos_vigentes();
+
+		$data['periodos'] = $this->modelo_horario->get_periodos_del_anio(date('Y'));
 		$data['grupos'] = $this->modelo_horario->get_grupos_vigentes();
 
-		// echo "<pre>";
-		// print_r($data['grupos']);
-		// echo "</pre>";
-
-
 		$this->load->view('asignar/vista_escoger_periodo', $data);
+
+	}
+	function escoger_grupo_del_periodo()
+	{
+		$this->load->model('modelo_horario');
+
+		$periodo = $this->modelo_horario->get_periodo_by_id($this->input->post('id_periodo'));
+		$data['id_periodo'] = $periodo['idPeriodo'];
+		$data['periodo'] = $periodo;
+		$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($periodo['Anio'], $periodo['semestre']);
+
+		$this->load->view('asignar/vista_escoger_grupo', $data);
 
 	}
 	/**
