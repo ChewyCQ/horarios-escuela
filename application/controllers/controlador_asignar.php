@@ -67,19 +67,76 @@ class Controlador_asignar extends CI_Controller
 		$data['maestros'] = $this->modelo_horario->get_maestros_activos();
 		// Horarios?
 
-		// echo "<pre>";
-		// echo "Data\n";
-		// print_r($data);
-		// echo "</pre>";
+		echo "<meta charset='utf-8'><pre>";
+		echo "Data\n";
+		print_r($data);
+		echo "</pre>";
 
-		$this->load->view('horario',$data);
+		$this->load->view('asignar/vista_asignar_horario',$data);
 	}
 	function guardar_horario()
 	{
-		parse_str($this->input->post('list'), $salida);
 		echo "<pre>";
-		print_r($salida);
+		print_r($this->input->post());
 		echo "</pre>";
+
+		$this->load->model('modelo_horario');
+
+		// Extraer datos
+		$post = $this->input->post();
+		$horarios = array();
+		$id_periodo = $post['id_periodo'];
+		$id_grupo = $post['id_grupo'];
+		foreach ($post as $key => $value) {
+			if (strrpos($key, "maestro") !== FALSE) {
+				$id_materia = explode("_", $key)[2];
+				$maestro_materia[] = array(
+					'id_maestro' => $value,
+					'id_materia' => $id_materia);
+			} elseif (strrpos($key, "hora") !== FALSE) {
+				$aux = explode("_", $key);
+				$dia = $aux[1];
+				$hora = $aux[2];
+				$horarios[] =  array(
+					'dia' => $this->_adaptar_dia($dia),
+					'id_materia' => $value,
+					'hora' => $this->_adaptar_hora($hora,$post['turno']));
+			}
+		}
+		// agrupar datos
+		$horario_clase = array();
+		$num_horarios;
+		foreach ($horarios as $horario) {
+			foreach ($maestro_materia as $mm) {
+				if ($mm['id_materia'] == $horario['id_materia']) {
+					$aux2['idMaestro'] = $mm['id_maestro'];
+				}
+			}
+			$aux2['idPeriodo'] = $id_periodo;
+			$aux2['idMateria'] = $horario['id_materia'];
+			$aux2['idGrupo'] = $id_grupo;
+			$aux2['idhorario_dia'] = $this->modelo_horario->get_horario_dia($horario['hora'], $horario['dia'])['idhorario_dia'];
+			$horario_clase[] = $aux2;
+		}
+		echo "<pre>";
+		echo "maestro_materia\n";
+		print_r($maestro_materia);
+		echo "Horario\n";
+		print_r($horarios);
+		echo "horario_clase\n";
+		print_r($horario_clase);
+		echo "</pre>";
+	}
+	public function _adaptar_hora($hora, $turno)
+	{
+		$hora_matutino = array("7:00","7:50","8:40","9:30","10:00","10:40","11:30","12:20","13:10","14:00");
+		$hora_vespertino = array("14:00","14:50","15:40","16:30","17:20","17:50","18:40","19:30","20:20","21:10");
+		return ($turno == 1) ? $hora_matutino[$hora] : $hora_vespertino[$hora];
+	}
+	public function _adaptar_dia($num_dia)
+	{
+		$dia = array("lunes", "martes", "miercoles", "jueves", "viernes");
+		return $dia[$num_dia];
 	}
 	function escoger_periodo()
 	{

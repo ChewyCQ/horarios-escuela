@@ -93,6 +93,16 @@ class Modelo_horario extends CI_Model {
 		$query = $this->db->get('maestro');
 		return $query->result_array();
 	}
+
+	public function get_horario_dia($hora, $dia)
+	{
+		echo "buscando horario de hora: {$hora} dia: {$dia}<br/>";
+		$this->db->join('horario_clase', 'horario_clase.idhorario_clase = horario_dia.idhorario_clase');
+		$this->db->where('hora_inicio = ', $hora);
+		$this->db->where('iddia_semana = ', $dia);
+		$query = $this->db->get('horario_dia', 1);
+		return $query->row_array();
+	}
 }
 
 /* End of file modelo_horario.php */

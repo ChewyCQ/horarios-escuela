@@ -40,11 +40,13 @@ function agrega_fila()
 	var cad="<tr><td><input name='especialidades[]' value='"+id+"' type='hidden'>"+opcion_seleccionada+"</td><td width='40px'><button type='button' onclick='elimina_fila(this);' class='btn btn-primary btn-sm' title='Eliminar'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";
 	$('#tabla').append(cad);
 }
+
 // Evento que selecciona la fila y la elimina 
 function elimina_fila(boton)
 {
 	$(boton).parent().parent().remove();
 }
+
 $(function() {
 	$('#horario').sortable({
 		update: function(event, ui){
