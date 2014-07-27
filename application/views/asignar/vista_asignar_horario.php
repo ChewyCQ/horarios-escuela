@@ -7,7 +7,7 @@
 <body>
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
-		<legend>Horario del grupo <?php echo $grupo['Clave']; ?> para el semestre<?php echo $grupo['semestre']; ?></legend>
+		<legend>Horario del grupo <?php echo $grupo['Clave']; ?> para el semestre <?php echo $grupo['semestre']; ?></legend>
 		<!-- Datos del grupo-->
 		<div>
 			
@@ -110,6 +110,7 @@
 				); ?>
 			<?php echo form_submit($submit); ?><br/><br/>
 		</div>
+		</form>
 
 		<?php $this->load->view('comunes/footer'); ?>  
 		<script src="<?php echo base_url(SCRIPTS) ?>"></script>

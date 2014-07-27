@@ -90,6 +90,7 @@ class Modelo_horario extends CI_Model {
 	public function get_maestros_activos()
 	{
 		$this->db->where('activo = ', 1);
+		$this->db->order_by('Nombre', 'desc');
 		$query = $this->db->get('maestro');
 		return $query->result_array();
 	}
@@ -102,6 +103,48 @@ class Modelo_horario extends CI_Model {
 		$this->db->where('iddia_semana = ', $dia);
 		$query = $this->db->get('horario_dia', 1);
 		return $query->row_array();
+	}
+
+	public function insert_clases($clases)
+	{
+		$this->borrar_clases(
+			$clases[0]['idPeriodo'],
+			$clases[0]['idGrupo']);
+		foreach ($clases as $clase) {
+			$this->db->insert('clase', $clase); 
+		}
+	}
+
+	public function borrar_clases($id_periodo, $id_grupo)
+	{
+		$this->db->where(array('idPeriodo' => $id_periodo,'idGrupo' => $id_grupo));
+		$this->db->delete('clase');
+	}
+
+	public function get_clases_where($valores)
+	{
+		$this->db->where($valores);
+		$this->db->join('maestro', 'maestro.idMaestro = clase.idMaestro', 'left');
+		$this->db->join('materia', 'materia.idMateria = clase.idMateria', 'left');
+		$this->db->join('horario_dia', 'horario_dia.idhorario_dia = clase.idhorario_dia', 'left');
+		$this->db->join('horario_clase', 'horario_clase.idhorario_clase = horario_dia.idhorario_clase', 'left');
+		$query = $this->db->get('clase');
+		return $query->result_array();
+	}
+
+	public function get_maestro_materia_clase($id_periodo, $id_grupo)
+	{
+		$this->db->distinct();
+		$this->db->select('Clave_materia, maestro.Nombre, materia.Nombre_materia, Horas_semana_escuela, Horas_semana_campo_clinico');
+		$this->db->where(array('idPeriodo' => $id_periodo,'idGrupo' => $id_grupo));
+		$this->db->join('maestro', 'maestro.idMaestro = clase.idMaestro', 'left');
+		$this->db->join('materia', 'materia.idMateria = clase.idMateria', 'left');
+		$this->db->join('materia_semestre', 'materia.idMateria = materia_semestre.idMateria', 'left');
+		$this->db->group_by('materia.idMateria');
+		$this->db->order_by('materia.idMateria', 'asc');
+		$query = $this->db->get('clase');
+		// echo $this->db->last_query();
+		return $query->result_array();
 	}
 }
 

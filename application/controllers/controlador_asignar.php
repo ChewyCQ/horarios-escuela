@@ -67,18 +67,18 @@ class Controlador_asignar extends CI_Controller
 		$data['maestros'] = $this->modelo_horario->get_maestros_activos();
 		// Horarios?
 
-		echo "<meta charset='utf-8'><pre>";
-		echo "Data\n";
-		print_r($data);
-		echo "</pre>";
+		// echo "<meta charset='utf-8'><pre>";
+		// echo "Data\n";
+		// print_r($data);
+		// echo "</pre>";
 
 		$this->load->view('asignar/vista_asignar_horario',$data);
 	}
 	function guardar_horario()
 	{
-		echo "<pre>";
-		print_r($this->input->post());
-		echo "</pre>";
+		// echo "<pre>Guardar:\n";
+		// print_r($this->input->post());
+		// echo "</pre>";
 
 		$this->load->model('modelo_horario');
 
@@ -104,7 +104,7 @@ class Controlador_asignar extends CI_Controller
 			}
 		}
 		// agrupar datos
-		$horario_clase = array();
+		$horarios_clases = array();
 		$num_horarios;
 		foreach ($horarios as $horario) {
 			foreach ($maestro_materia as $mm) {
@@ -116,16 +116,20 @@ class Controlador_asignar extends CI_Controller
 			$aux2['idMateria'] = $horario['id_materia'];
 			$aux2['idGrupo'] = $id_grupo;
 			$aux2['idhorario_dia'] = $this->modelo_horario->get_horario_dia($horario['hora'], $horario['dia'])['idhorario_dia'];
-			$horario_clase[] = $aux2;
+			if ($aux2['idMateria'] != 0) {
+				$horarios_clases[] = $aux2;
+			}
 		}
-		echo "<pre>";
-		echo "maestro_materia\n";
-		print_r($maestro_materia);
-		echo "Horario\n";
-		print_r($horarios);
-		echo "horario_clase\n";
-		print_r($horario_clase);
-		echo "</pre>";
+		// echo "<pre>";
+		// echo "maestro_materia\n";
+		// print_r($maestro_materia);
+		// echo "Horario\n";
+		// print_r($horarios);
+		// echo "horarios_clases\n";
+		// print_r($horarios_clases);
+		// echo "\n</pre>";
+		$this->modelo_horario->insert_clases($horarios_clases);
+		redirect("/controlador_asignar/ver_horario/{$id_periodo}/{$id_grupo}");
 	}
 	public function _adaptar_hora($hora, $turno)
 	{
@@ -137,6 +141,21 @@ class Controlador_asignar extends CI_Controller
 	{
 		$dia = array("lunes", "martes", "miercoles", "jueves", "viernes");
 		return $dia[$num_dia];
+	}
+	public function ver_horario($id_periodo, $id_grupo)
+	{
+		$this->load->model('modelo_horario');
+		$data['clases'] = $this->modelo_horario->get_clases_where(array('idPeriodo'=>$id_periodo, 'idGrupo'=>$id_grupo));
+		$data['grupo'] = $this->modelo_horario->get_datos_grupo($id_grupo);
+		$data['periodo'] = $this->modelo_horario->get_periodo_by_id($id_periodo);
+		$data['maestro_materia'] = $this->modelo_horario->get_maestro_materia_clase($id_periodo, $id_grupo);
+		$data['grupo']['semestre'] = $this->semestre_grupo($data['grupo']['Generacion'],$this->modelo_horario->get_periodo_by_id($id_periodo));
+
+		// echo "<pre>";
+		// echo "Data\n";
+		// print_r($data);
+		// echo "</pre>";
+		$this->load->view('vista_ver_horario', $data);
 	}
 	function escoger_periodo()
 	{
