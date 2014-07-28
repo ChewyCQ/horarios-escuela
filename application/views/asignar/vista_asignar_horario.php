@@ -13,7 +13,7 @@
 		<div id="advertencias" class="bs-callout bs-callout-danger">
 			<h4>Advertencias</h4>
 			<?php foreach ($advertencias['rojas'] as $roja): ?>
-			<p class="bg-danger"><?php echo "El maestro <strong>{$roja[0]['maestro']}</strong> ya esta asignado los <strong>{$roja[0]['dia']}</strong> a las <strong>{$roja[0]['hora']}</strong> con el grupo <strong>{$roja[0]['grupo']}</strong>"; ?></p>
+			<p class="bg-danger"><?php echo "El maestr@ <strong>{$roja[0]['maestro']}</strong> ya esta asignad@ los <strong>{$roja[0]['dia']}</strong> a las <strong>{$roja[0]['hora']}</strong> con el grupo <strong>{$roja[0]['grupo']}</strong>"; ?></p>
 			<?php endforeach ?>
 		</div>
 		<?php endif ?>
@@ -60,7 +60,7 @@
 							<option value="0">Receso</option>
 							<?php foreach ($materias as $materia): ?>
 								<option value="<?php echo $materia['idMateria']; ?>" <?php 
-									if ($valores[$var] == $materia['idMateria']) {
+									if (isset($valores[$var]) AND $valores[$var] == $materia['idMateria']) {
 									echo 'selected="selected"';
 								} ?> >
 								<?php echo $materia['Nombre_materia']; ?></option>
@@ -75,7 +75,7 @@
 							<option value="0">&nbsp;</option>
 							<?php foreach ($materias as $materia): ?>
 								<option value="<?php echo $materia['idMateria'] ?>" <?php 
-									if ($valores[$var] == $materia['idMateria']) {
+									if (isset($valores[$var]) AND $valores[$var] == $materia['idMateria']) {
 									echo 'selected="selected"';
 								} ?>><?php echo $materia['Nombre_materia']; ?></option>
 							<?php endforeach ?>
@@ -111,7 +111,7 @@
 							<option value="">&nbsp;</option>
 							<?php foreach ($maestros as $maestro): ?>
 								<option value="<?php echo $maestro['idMaestro'] ?>" <?php 
-									if ($valores[$var] == $maestro['idMaestro']) {
+									if (isset($valores[$var]) AND $valores[$var] == $maestro['idMaestro']) {
 									echo 'selected="selected"';
 								} ?>><?php echo $maestro['Nombre'] ?></option>
 							<?php endforeach ?>
