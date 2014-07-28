@@ -9,9 +9,14 @@
 	<div class="container">
 		<legend>Horario del grupo <?php echo $grupo['Clave']; ?> para el semestre <?php echo $grupo['semestre']; ?></legend>
 		<!-- Datos del grupo-->
-		<div>
-			
+		<?php if ( ! empty($advertencias)): ?>
+		<div id="advertencias" class="bs-callout bs-callout-danger">
+			<h4>Advertencias</h4>
+			<?php foreach ($advertencias['rojas'] as $roja): ?>
+			<p class="bg-danger"><?php echo "El maestro <strong>{$roja[0]['maestro']}</strong> ya esta asignado los <strong>{$roja[0]['dia']}</strong> a las <strong>{$roja[0]['hora']}</strong> con el grupo <strong>{$roja[0]['grupo']}</strong>"; ?></p>
+			<?php endforeach ?>
 		</div>
+		<?php endif ?>
 	</div>
 
 	<div>
@@ -50,20 +55,29 @@
 						<!-- receso -->
 						<?php if ($j == 3): ?> 
 							<?php for ($i=0; $i < 5; $i++) : ?>
-							<td><select name="<?php echo "hora_{$i}_{$j}" ?>" class="form-control">
+							<?php $var = "hora_{$i}_{$j}"; ?>
+							<td><select name="<?php echo $var; ?>" class="form-control">
 							<option value="0">Receso</option>
 							<?php foreach ($materias as $materia): ?>
-								<option value="<?php echo $materia['idMateria'] ?>"><?php echo $materia['Nombre_materia']; ?></option>
+								<option value="<?php echo $materia['idMateria']; ?>" <?php 
+									if ($valores[$var] == $materia['idMateria']) {
+									echo 'selected="selected"';
+								} ?> >
+								<?php echo $materia['Nombre_materia']; ?></option>
 							<?php endforeach ?>
 								</select></td>
 							<?php endfor; ?>
 							<?php continue; ?>
 						<?php endif ?>
 						<?php for ($i=0; $i < 5; $i++) : ?>
+						<?php $var = "hora_{$i}_{$j}"; ?>
 						<td><select name="<?php echo "hora_{$i}_{$j}" ?>" class="form-control">
 							<option value="0">&nbsp;</option>
 							<?php foreach ($materias as $materia): ?>
-								<option value="<?php echo $materia['idMateria'] ?>"><?php echo $materia['Nombre_materia']; ?></option>
+								<option value="<?php echo $materia['idMateria'] ?>" <?php 
+									if ($valores[$var] == $materia['idMateria']) {
+									echo 'selected="selected"';
+								} ?>><?php echo $materia['Nombre_materia']; ?></option>
 							<?php endforeach ?>
 						</select></td>
 						<?php endfor; ?>
@@ -92,10 +106,14 @@
 						<td><?php echo $materia['Nombre_materia']; ?></td>
 						<td><?php echo $materia['Clave_materia']; ?></td>
 						<td><?php echo ($materia['Horas_semana_escuela'] + $materia['Horas_semana_campo_clinico']); ?></td>
-						<td><select name="<?php echo "maestro_idmat_{$materia['idMateria']}" ?>" class="form-control">
-							<option value="0">&nbsp;</option>
+						<?php $var = "maestro_idmat_{$materia['idMateria']}"; ?>
+						<td><select name="<?php echo $var; ?>" class="form-control" required>
+							<option value="">&nbsp;</option>
 							<?php foreach ($maestros as $maestro): ?>
-								<option value="<?php echo $maestro['idMaestro'] ?>"><?php echo $maestro['Nombre'] ?></option>
+								<option value="<?php echo $maestro['idMaestro'] ?>" <?php 
+									if ($valores[$var] == $maestro['idMaestro']) {
+									echo 'selected="selected"';
+								} ?>><?php echo $maestro['Nombre'] ?></option>
 							<?php endforeach ?>
 						</select></td>
 					</tr>

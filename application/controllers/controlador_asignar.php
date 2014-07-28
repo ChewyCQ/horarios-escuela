@@ -4,6 +4,7 @@
  */
 class Controlador_asignar extends CI_Controller 
 {
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -87,7 +88,10 @@ class Controlador_asignar extends CI_Controller
 		$horarios = array();
 		$id_periodo = $post['id_periodo'];
 		$id_grupo = $post['id_grupo'];
+		$valores = array();
 		foreach ($post as $key => $value) {
+			// echo "<br> key = {$key} value = {$value}<br>";
+			$valores[$key] = $value;
 			if (strrpos($key, "maestro") !== FALSE) {
 				$id_materia = explode("_", $key)[2];
 				$maestro_materia[] = array(
@@ -120,6 +124,25 @@ class Controlador_asignar extends CI_Controller
 				$horarios_clases[] = $aux2;
 			}
 		}
+		// validar
+		$advertencias = array();
+		$num_rojas = 0;
+		foreach ($horarios_clases as $horario_clase) {
+			$maestro_ocupado = $this->modelo_horario->maestro_ocupado_en_horario(
+				$horario_clase['idMaestro'],
+				$horario_clase['idPeriodo'],
+				$horario_clase['idGrupo'],
+				$horario_clase['idhorario_dia']);
+			if ($maestro_ocupado != FALSE) {
+				// advertencias rojas
+				// echo "<pre>";
+				// print_r($maestro_ocupado);
+				// echo "</pre>";
+				$advertencias['rojas'][] = $maestro_ocupado;
+			} 
+			// advertencias amarillas
+		}
+
 		// echo "<pre>";
 		// echo "maestro_materia\n";
 		// print_r($maestro_materia);
@@ -128,8 +151,42 @@ class Controlador_asignar extends CI_Controller
 		// echo "horarios_clases\n";
 		// print_r($horarios_clases);
 		// echo "\n</pre>";
-		$this->modelo_horario->insert_clases($horarios_clases);
-		redirect("/controlador_asignar/ver_horario/{$id_periodo}/{$id_grupo}");
+
+		if ( empty($advertencias['rojas'])) {
+			// guardar
+			$advertencias = NULL;
+			$this->modelo_horario->insert_clases($horarios_clases);
+			redirect("/controlador_asignar/ver_horario/{$id_periodo}/{$id_grupo}");
+		} else {
+			// regresar
+
+			$data['advertencias'] = $advertencias;
+			// echo "<pre>Advertencias: \n";
+			// print_r($advertencias);
+			// echo "</pre>";
+
+			$data['valores'] = $valores;
+			$data['id_grupo'] = $id_grupo;
+			// Periodo
+			$data['periodo'] = $this->modelo_horario->get_periodo_by_id($id_periodo);
+			// Grupo
+			$data['grupo'] = $this->modelo_horario->get_grupo_by_id($id_grupo);
+			$data['grupo']['semestre'] = $this->semestre_grupo($data['grupo']['Generacion'],$data['periodo']);
+			// Materias
+			$data['materias'] = $this->modelo_horario->get_materias_del_semestre($data['grupo']['idPlan'], $data['grupo']['semestre']);
+			// Maestros
+			$data['maestros'] = $this->modelo_horario->get_maestros_activos();
+			// echo "<pre>Data:\n";
+			// print_r($data);
+			// echo "</pre>";
+
+			$this->load->view('asignar/vista_asignar_horario',$data);
+		}
+		
+
+		// ver
+		// $this->modelo_horario->insert_clases($horarios_clases);
+		// redirect("/controlador_asignar/ver_horario/{$id_periodo}/{$id_grupo}");
 	}
 	public function _adaptar_hora($hora, $turno)
 	{
@@ -148,6 +205,7 @@ class Controlador_asignar extends CI_Controller
 		$data['clases'] = $this->modelo_horario->get_clases_where(array('idPeriodo'=>$id_periodo, 'idGrupo'=>$id_grupo));
 		$data['grupo'] = $this->modelo_horario->get_datos_grupo($id_grupo);
 		$data['periodo'] = $this->modelo_horario->get_periodo_by_id($id_periodo);
+		$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($data['periodo']['Anio'],$data['periodo']['semestre']);
 		$data['maestro_materia'] = $this->modelo_horario->get_maestro_materia_clase($id_periodo, $id_grupo);
 		$data['grupo']['semestre'] = $this->semestre_grupo($data['grupo']['Generacion'],$this->modelo_horario->get_periodo_by_id($id_periodo));
 
@@ -155,7 +213,12 @@ class Controlador_asignar extends CI_Controller
 		// echo "Data\n";
 		// print_r($data);
 		// echo "</pre>";
-		$this->load->view('vista_ver_horario', $data);
+		$this->load->view('ver/vista_ver_horario', $data);
+	}
+	public function ver_horario_otro_grupo()
+	{
+		$post = $this->input->post();
+		redirect("controlador_asignar/ver_horario/{$post['id_periodo']}/{$post['id_grupo']}");
 	}
 	function escoger_periodo()
 	{
@@ -165,6 +228,21 @@ class Controlador_asignar extends CI_Controller
 		$data['grupos'] = $this->modelo_horario->get_grupos_vigentes();
 
 		$this->load->view('asignar/vista_escoger_periodo', $data);
+
+	}
+	function escoger_periodo_a_ver()
+	{
+		$post = $this->input->post();
+		if (isset($post['id_periodo'])) {
+			redirect("controlador_asignar/escoger_grupo_del_periodo_a_ver/{$post['id_periodo']}");
+			die();
+		}
+		$this->load->model('modelo_horario');
+
+		$data['periodos'] = $this->modelo_horario->get_periodos();
+		$data['grupos'] = $this->modelo_horario->get_grupos_vigentes();
+
+		$this->load->view('ver/vista_escoger_periodo', $data);
 
 	}
 	function escoger_grupo_del_periodo()
@@ -177,6 +255,27 @@ class Controlador_asignar extends CI_Controller
 		$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($periodo['Anio'], $periodo['semestre']);
 
 		$this->load->view('asignar/vista_escoger_grupo', $data);
+
+	}
+	function escoger_grupo_del_periodo_a_ver($id_periodo=NULL)
+	{
+		$this->load->model('modelo_horario');
+		if (isset($id_periodo)) {
+			$data['periodo'] = $this->modelo_horario->get_periodo_by_id($id_periodo);
+			if (isset($data['periodo'])) {
+				$data['id_periodo'] = $data['periodo']['idPeriodo'];
+				$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($data['periodo']['Anio'], $data['periodo']['semestre']);
+				$this->load->view('ver/vista_escoger_grupo_horario', $data);
+			} else {
+				echo "Periodo no encontrado";
+				redirect('controlador_asignar/escoger_periodo_a_ver');
+			}
+		} else {
+			$post = $this->input->post();
+			if (isset($post['id_grupo'])) {
+				redirect("/controlador_asignar/ver_horario/{$post['id_periodo']}/{$post['id_grupo']}");
+			}
+		}
 
 	}
 	/**

@@ -67,7 +67,7 @@
               </ul>
             </li>
 
-            <li><a href="#"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>
+            <li><a href="<?php echo site_url('controlador_asignar/escoger_periodo_a_ver') ?>"><span class="glyphicon glyphicon-search"></span> Ver Horarios</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           	<li class="dropdown">

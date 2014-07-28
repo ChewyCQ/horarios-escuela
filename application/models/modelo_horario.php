@@ -90,14 +90,14 @@ class Modelo_horario extends CI_Model {
 	public function get_maestros_activos()
 	{
 		$this->db->where('activo = ', 1);
-		$this->db->order_by('Nombre', 'desc');
+		$this->db->order_by('Nombre', 'asc');
 		$query = $this->db->get('maestro');
 		return $query->result_array();
 	}
 
 	public function get_horario_dia($hora, $dia)
 	{
-		echo "buscando horario de hora: {$hora} dia: {$dia}<br/>";
+		// echo "buscando horario de hora: {$hora} dia: {$dia}<br/>";
 		$this->db->join('horario_clase', 'horario_clase.idhorario_clase = horario_dia.idhorario_clase');
 		$this->db->where('hora_inicio = ', $hora);
 		$this->db->where('iddia_semana = ', $dia);
@@ -145,6 +145,42 @@ class Modelo_horario extends CI_Model {
 		$query = $this->db->get('clase');
 		// echo $this->db->last_query();
 		return $query->result_array();
+	}
+
+	public function maestro_ocupado_en_horario($idMaestro, $idPeriodo, $idGrupo, $idhorario_dia)
+	{
+		$where = array('clase.idMaestro' => $idMaestro, 'idPeriodo' => $idPeriodo, 'clase.idhorario_dia' => $idhorario_dia);
+		$this->db->distinct();
+		$this->db->select('maestro.Nombre as maestro, grupo.Clave as grupo, materia.Nombre_materia as materia, horario_dia.iddia_semana as dia, hora_inicio as hora');
+		$this->db->join('maestro', 'maestro.idMaestro = clase.idMaestro', 'left');
+		$this->db->join('materia', 'materia.idMateria = clase.idMateria', 'left');
+		$this->db->join('grupo', 'grupo.idGrupo = clase.idGrupo', 'left');
+		$this->db->join('horario_dia', 'horario_dia.idhorario_dia = clase.idhorario_dia', 'left');
+		$this->db->join('horario_clase', 'horario_dia.idhorario_clase = horario_clase.idhorario_clase', 'left');
+		$this->db->group_by('horario_clase.idhorario_clase');
+		$this->db->where('clase.idGrupo !=', $idGrupo);
+		$this->db->where($where);
+		$query = $this->db->get('clase');
+		if ($query->num_rows > 0) {
+			return $query->result_array();
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function maestro_puede_materia($idMaestro, $idMateria)
+	{
+		$where = array('idMaestro' => $idMaestro, 'idMateria' => $idMateria);
+		$this->db->join('maestro', 'maestro.idMaestro = clase.idMaestro', 'left');
+		$this->db->join('maestro_puede_materia', 'maestro_puede_materia.idMaestro = maestro.idMaestro', 'left');
+		$this->db->join('materia', 'maestro_puede_materia.idMateria = materia.idMateria', 'left');
+		$this->db->where($where);
+		$query = $this->db->get('clase');
+		if ($query->num_rows > 0) {
+			return $query->result_array();
+		} else {
+			return FALSE;
+		}
 	}
 }
 

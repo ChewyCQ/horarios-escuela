@@ -8,7 +8,10 @@
 	<?php $this->load->view('comunes/nav'); ?>
 	<div class="container">
 		<legend>Horario del grupo <?php echo $grupo['Clave']; ?> para el semestre <?php echo $grupo['semestre']; ?></legend>
-		
+		<!-- Datos del grupo-->
+		<div>
+			
+		</div>
 	</div>
 
 	<div>
@@ -90,15 +93,23 @@
 			</table>
 		</div>
 		<!-- Otros grupos del periodo-->
-		<div>
-			<?php echo form_open('controlador_asignar/ver_horario_otro_grupo'); ?>
-				<?php echo form_hidden('id_periodo', $periodo["idPeriodo"]); ?>
-				<select name="id_grupo" class="form-control">
-					<option value=""></option>
-				</select>
-				<?php $submit = array('value' => "Seleccionar",'class' => "btn btn-primary", ); ?>
-				<?php form_submit(); ?>
-			</form>
+		<div class="container">
+			<div class="form-group">
+				<legend>Otros grupos del periodo</legend>
+				<?php echo form_open('controlador_asignar/ver_horario_otro_grupo'); ?>
+					<?php echo form_hidden('id_periodo', $periodo['idPeriodo']); ?>
+					<label class="col-md-4 control-label" for="grupo">Grupos del periodo</label>
+					<div class="col-md-4">
+					<select id="grupo" name="id_grupo" class="form-control">
+						<?php foreach ($grupos as $grupo): ?>
+							<option value="<?php echo $grupo['idGrupo']; ?>"><?php echo $grupo['Clave']; ?></option>
+						<?php endforeach ?>
+					</select>
+					</div>
+					<?php $submit = array('value' => "Seleccionar",'class' => "btn btn-primary", ); ?>
+					<?php echo form_submit($submit); ?>
+				</form>
+			</div>
 		</div>
 		<br/><br/>
 
