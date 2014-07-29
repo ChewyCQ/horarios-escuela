@@ -106,8 +106,9 @@
 						<?php endforeach ?>
 					</select>
 					</div>
-					<?php $submit = array('value' => "Seleccionar",'class' => "btn btn-primary", ); ?>
+					<?php $submit = array('value' => "Seleccionar",'class' => "btn btn-primary", ); ?>					
 					<?php echo form_submit($submit); ?>
+					<a class="btn btn-primary" title="Imprimir Horario" href="<?php echo site_url("controlador_asignar/imprimir_horario");?>" target="_blank">Imprimir</a>
 				</form>
 			</div>
 		</div>
