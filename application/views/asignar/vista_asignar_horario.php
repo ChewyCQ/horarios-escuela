@@ -41,21 +41,30 @@
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
+						<?php $primer_dia = 2; ?>
+						<?php $ultimo_dia = 3; ?>
+						<?php if ( ! (($grupo['idCarrera'] == 1 AND $grupo['semestre'] == 5) OR ($grupo['idCarrera'] == 1 AND $grupo['semestre'] == 6))): ?>
 						<th>Lunes</th>
 						<th>Martes</th>
+						<?php $primer_dia = 0; ?>
+						<?php endif ?>
 						<th>Miercoles</th>
 						<th>Jueves</th>
+						<?php if ( ! (($grupo['idCarrera'] == 1 AND $grupo['semestre'] == 3) OR ($grupo['idCarrera'] == 1 AND $grupo['semestre'] == 4))): ?>
 						<th>Viernes</th>
+						<?php $ultimo_dia = 4; ?>
+						<?php endif ?>
 					</tr>
 				</thead>
 				<tbody>
-					<?php for ($j=0; $j < 9; $j++) : ?>
+					<?php for ($j=0; $j < 9; $j++) : ?><!-- Horas -->
 					<tr>
 						<td><?php echo $horas[$j]."-".$horas[$j+1] ; ?></td>
-						<!-- receso -->
 						<?php if ($j == 3): ?> 
-							<?php for ($i=0; $i < 5; $i++) : ?>
+						<!-- receso -->
+							<?php for ($i=$primer_dia; $i <= $ultimo_dia; $i++) : ?><!-- Dias -->
 							<?php $var = "hora_{$i}_{$j}"; ?>
+							
 							<td><select name="<?php echo $var; ?>" class="form-control">
 							<option value="0">Receso</option>
 							<?php foreach ($materias as $materia): ?>
@@ -68,8 +77,10 @@
 								</select></td>
 							<?php endfor; ?>
 							<?php continue; ?>
-						<?php endif ?>
-						<?php for ($i=0; $i < 5; $i++) : ?>
+						<?php endif ?><!-- receso -->
+
+						<?php for ($i=$primer_dia; $i <= $ultimo_dia; $i++) : ?>
+
 						<?php $var = "hora_{$i}_{$j}"; ?>
 						<td><select name="<?php echo "hora_{$i}_{$j}" ?>" class="form-control">
 							<option value="0">&nbsp;</option>

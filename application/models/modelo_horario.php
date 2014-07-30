@@ -48,6 +48,8 @@ class Modelo_horario extends CI_Model {
 
 	function get_grupo_by_id($id_grupo)
 	{
+		$this->db->join('plan', 'grupo.idPlan = plan.idPlan', 'left');
+		$this->db->join('carrera', 'plan.idCarrera = carrera.idCarrera', 'left');
 		$this->db->where('idGrupo =', $id_grupo);
 		$query = $this->db->get('grupo');
 		return $query->row_array();
