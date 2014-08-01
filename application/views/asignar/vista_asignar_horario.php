@@ -10,10 +10,15 @@
 		<legend>Horario del grupo <?php echo $grupo['Clave']; ?> para el semestre <?php echo $grupo['semestre']; ?></legend>
 		<!-- Datos del grupo-->
 		<?php if ( ! empty($advertencias)): ?>
-		<div id="advertencias" class="bs-callout bs-callout-danger">
+		<div id="advertencias" class="bg-warning">
 			<h4>Advertencias</h4>
 			<?php foreach ($advertencias['rojas'] as $roja): ?>
+			<?php if (is_array($roja)): ?>
 			<p class="bg-danger"><?php echo "El maestr@ <strong>{$roja[0]['maestro']}</strong> ya esta asignad@ los <strong>{$roja[0]['dia']}</strong> a las <strong>{$roja[0]['hora']}</strong> con el grupo <strong>{$roja[0]['grupo']}</strong>"; ?></p>
+			<?php else: ?>
+			<p class="bg-warning"><?php echo $roja; ?></p>
+			<?php endif ?>
+
 			<?php endforeach ?>
 		</div>
 		<?php endif ?>
@@ -21,6 +26,8 @@
 
 	<div>
 		<?php 
+			$dia = array("lunes","martes","miercoles","jueves","viernes");
+			$horas2 = array("07:00","07:50","08:40","09:30","10:00","10:40","11:30","12:20","13:10","14:00");
 			if ($grupo['turno'] == 1) {
 				$horas = array("7:00","7:50","8:40","9:30","10:00","10:40","11:30","12:20","13:10","14:00");
 			} else {
@@ -30,7 +37,9 @@
 		<?php $hidden = array(
 			'id_periodo' => $periodo['idPeriodo'],
 			'id_grupo' => $grupo['idGrupo'],
-			'turno' => $grupo['turno']
+			'turno' => $grupo['turno'],
+			'semestre' => $grupo['semestre'],
+			'id_plan' => $grupo['idPlan']
 			); ?>
 		<?php echo form_open('controlador_asignar/guardar_horario'); ?>
   		<?php echo form_hidden($hidden); ?>
@@ -40,7 +49,8 @@
 				<caption>Horario</caption>
 				<thead>
 					<tr>
-						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th> -->
+						<th>Hora</th>
 						<?php $primer_dia = 2; ?>
 						<?php $ultimo_dia = 3; ?>
 						<?php if ( ! (($grupo['idCarrera'] == 1 AND $grupo['semestre'] == 5) OR ($grupo['idCarrera'] == 1 AND $grupo['semestre'] == 6))): ?>
@@ -85,10 +95,14 @@
 						<td><select name="<?php echo "hora_{$i}_{$j}" ?>" class="form-control">
 							<option value="0">&nbsp;</option>
 							<?php foreach ($materias as $materia): ?>
-								<option value="<?php echo $materia['idMateria'] ?>" <?php 
-									if (isset($valores[$var]) AND $valores[$var] == $materia['idMateria']) {
-									echo 'selected="selected"';
-								} ?>><?php echo $materia['Nombre_materia']; ?></option>
+								<option value="<?php echo $materia['idMateria'] ?>" 
+								<?php if (isset($valores[$var]) AND $valores[$var] == $materia['idMateria']): ?>
+									selected="selected"
+								<?php endif ?>
+								<?php if (isset($clases[$dia[$i]][$horas2[$j]]) AND $clases[$dia[$i]][$horas2[$j]] == $materia['idMateria']): ?>
+									selected="selected"
+								<?php endif ?>
+								><?php echo $materia['Nombre_materia']; ?></option>
 							<?php endforeach ?>
 						</select></td>
 						<?php endfor; ?>
@@ -121,10 +135,15 @@
 						<td><select name="<?php echo $var; ?>" class="form-control" required>
 							<option value="">&nbsp;</option>
 							<?php foreach ($maestros as $maestro): ?>
-								<option value="<?php echo $maestro['idMaestro'] ?>" <?php 
-									if (isset($valores[$var]) AND $valores[$var] == $maestro['idMaestro']) {
-									echo 'selected="selected"';
-								} ?>><?php echo $maestro['Nombre'] ?></option>
+								<option value="<?php echo $maestro['idMaestro'] ?>" 
+								<?php if (isset($valores[$var]) AND $valores[$var] == $maestro['idMaestro']): ?>
+									selected="selected"
+								<?php endif ?>
+								<?php if (isset($materia_maestro[$materia['idMateria']]) AND $materia_maestro[$materia['idMateria']] == $maestro['idMaestro'] ): ?>
+									selected="selected"
+								<?php endif ?>
+								>
+								<?php echo $maestro['Nombre'] ?></option>
 							<?php endforeach ?>
 						</select></td>
 					</tr>

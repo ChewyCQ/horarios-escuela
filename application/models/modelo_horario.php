@@ -40,6 +40,27 @@ class Modelo_horario extends CI_Model {
 		} else {
 			$this->db->where('Generacion >=', $anio - 2);
 		}
+		$this->db->group_by('grupo.idGrupo');
+		$this->db->order_by('Nombre_carrera','desc');
+		$this->db->order_by('Generacion','desc');
+		$query = $this->db->get('grupo');
+		return $query->result_array();
+	}
+
+	/**
+	 * Retorna los grupos del periodo con horario asignado.
+	 */
+	public function get_grupos_del_periodo_con_horarios($anio, $semestre)
+	{
+		$this->db->join('plan','grupo.idPlan = plan.idPlan');
+		$this->db->join('carrera','carrera.idCarrera = plan.idCarrera');
+		$this->db->join('clase', 'clase.idGrupo = grupo.idGrupo', 'inner');
+		if ($semestre == 0) {
+			$this->db->where('Generacion >=', $anio - 3);
+		} else {
+			$this->db->where('Generacion >=', $anio - 2);
+		}
+		$this->db->group_by('grupo.idGrupo');
 		$this->db->order_by('Nombre_carrera','desc');
 		$this->db->order_by('Generacion','desc');
 		$query = $this->db->get('grupo');
@@ -183,6 +204,33 @@ class Modelo_horario extends CI_Model {
 		} else {
 			return FALSE;
 		}
+	}
+
+	public function materia_horas($idPlan, $semestre)
+	{
+		$this->db->select('materia.idMateria, Nombre_materia, Horas_semana_escuela, Horas_semana_campo_clinico');
+		$this->db->join('materia_semestre', 'materia.idMateria = materia_semestre.idMateria', 'left');
+		$this->db->join('semestre', 'semestre.idSemestre = materia_semestre.idSemestre', 'left');
+		$this->db->join('plan', 'plan.idPlan = semestre.idPlan', 'left');
+		// $this->db->join('grupo', 'grupo.idPlan = plan.idPlan', 'left');
+		$this->db->where(array('semestre.idPlan' => $idPlan, 'semestre.Numero_semestre' => $semestre));
+		$query = $this->db->get('materia');
+		$aux = array();
+		$n = 0;
+		if ($query->num_rows() > 0) {
+			foreach ($query->result_array() as $row) {
+				$aux[$row['idMateria']]['Horas_semana_escuela'] = $row['Horas_semana_escuela'];
+				$aux[$row['idMateria']]['Horas_semana_campo_clinico'] = $row['Horas_semana_campo_clinico'];
+			}
+		}
+		return $aux;
+	}
+
+	public function get_materia($idMateria)
+	{
+		$this->db->where('idMateria = ', $idMateria);
+		$query = $this->db->get('materia', 1);
+		return $query->row_array();
 	}
 }
 

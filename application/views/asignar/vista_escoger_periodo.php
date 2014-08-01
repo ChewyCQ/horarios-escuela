@@ -14,7 +14,7 @@
 				);
 		?>
 
-		<?php echo form_open('controlador_asignar/escoger_grupo_del_periodo', $form); ?>
+		<?php echo form_open('controlador_asignar/escoger_grupo_del_periodo_a_asignar', $form); ?>
 			<fieldset>
 				<legend>Ciclo escolar a asignar horarios</legend>
 

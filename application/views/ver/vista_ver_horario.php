@@ -34,7 +34,8 @@
 				<caption>Horario</caption>
 				<thead>
 					<tr>
-						<th>&nbsp;</th>
+						<!-- <th>&nbsp;</th> -->
+						<th>Hora</th>
 						<th>Lunes</th>
 						<th>Martes</th>
 						<th>Miercoles</th>
@@ -95,10 +96,10 @@
 		<!-- Otros grupos del periodo-->
 		<div class="container">
 			<div class="form-group">
-				<legend>Otros grupos del periodo</legend>
+				<legend>Otros grupos del periodo con horario asignado</legend>
 				<?php echo form_open('controlador_asignar/ver_horario_otro_grupo'); ?>
 					<?php echo form_hidden('id_periodo', $periodo['idPeriodo']); ?>
-					<label class="col-md-4 control-label" for="grupo">Grupos del periodo</label>
+					<label class="col-md-4 control-label" for="grupo">Grupos</label>
 					<div class="col-md-4">
 					<select id="grupo" name="id_grupo" class="form-control">
 						<?php foreach ($grupos as $grupo): ?>

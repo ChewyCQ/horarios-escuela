@@ -55,6 +55,10 @@ class Controlador_asignar extends CI_Controller
 	{
 		$post = $this->input->post();
 
+		// echo "<pre>";
+		// print_r($post);
+		// echo "</pre>";
+
 		$this->load->model('modelo_horario');
 
 		$data['id_grupo'] = $post['id_grupo'];
@@ -69,7 +73,14 @@ class Controlador_asignar extends CI_Controller
 		$data['materias'] = $this->modelo_horario->get_materias_del_semestre($data['grupo']['idPlan'], $data['grupo']['semestre']);
 		// Maestros
 		$data['maestros'] = $this->modelo_horario->get_maestros_activos();
-		// Horarios?
+		// Horarios actuales
+		$clases = $this->modelo_horario->get_clases_where(array('idPeriodo'=>$post['id_periodo'], 'idGrupo'=>$post['id_grupo']));
+		$clase_aux = array();
+		$num_clase = 0;
+		foreach ($clases as $clase) {
+			$data['clases'][$clase['iddia_semana']][substr($clase['hora_inicio'], 0, 5)] = $clase['idMateria'];
+			$data['materia_maestro'][$clase['idMateria']] = $clase['idMaestro'];
+		}
 
 		// echo "<meta charset='utf-8'><pre>";
 		// echo "Data\n";
@@ -130,6 +141,8 @@ class Controlador_asignar extends CI_Controller
 		// validar
 		$advertencias = array();
 		$num_rojas = 0;
+		$materias_horas_programa = $this->modelo_horario->materia_horas($post['id_plan'], $post['semestre']);
+		$materias_horas_horario = array();
 		foreach ($horarios_clases as $horario_clase) {
 			$maestro_ocupado = $this->modelo_horario->maestro_ocupado_en_horario(
 				$horario_clase['idMaestro'],
@@ -137,14 +150,35 @@ class Controlador_asignar extends CI_Controller
 				$horario_clase['idGrupo'],
 				$horario_clase['idhorario_dia']);
 			if ($maestro_ocupado != FALSE) {
-				// advertencias rojas
-				// echo "<pre>";
-				// print_r($maestro_ocupado);
-				// echo "</pre>";
 				$advertencias['rojas'][] = $maestro_ocupado;
-			} 
+			}
+			if (isset($materias_horas_horario[$horario_clase['idMateria']])) {
+				$materias_horas_horario[$horario_clase['idMateria']] += 1;
+			} else {
+				$materias_horas_horario[$horario_clase['idMateria']] = 1;
+			}
+			
+
 			// advertencias amarillas
 		}
+		// advertencias rojas del cumplimiento de horas
+		foreach ($materias_horas_programa as $key => $value) {
+			if ( ! isset($materias_horas_horario[$key])) {
+				$advertencias['rojas'][] = "El modulo <strong>{$this->modelo_horario->get_materia($key)['Nombre_materia']}</strong> no esta asignado.";
+				continue;
+			}
+			if ($materias_horas_horario[$key] != $materias_horas_programa[$key]) {
+				// echo "<br>No coincidio: {$materias_horas_horario[$key]} con {$materias_horas_programa[$key]['Horas_semana_escuela']}<br>";
+				$advertencias['rojas'][] = "El modulo <strong>{$this->modelo_horario->get_materia($key)['Nombre_materia']}</strong> deberia tener <strong>{$materias_horas_programa[$key]['Horas_semana_escuela']}</strong> horas, tiene <strong>{$materias_horas_horario[$key]}</strong>.";
+			}
+		}
+
+		// echo "<pre>Horas programa\n";
+		// print_r($materias_horas_programa);
+		// echo "</pre>";
+		// echo "<pre>Horas horario\n";
+		// print_r($materias_horas_horario);
+		// echo "</pre>";
 
 		// echo "<pre>";
 		// echo "maestro_materia\n";
@@ -158,6 +192,9 @@ class Controlador_asignar extends CI_Controller
 		if ( empty($advertencias['rojas'])) {
 			// guardar
 			$advertencias = NULL;
+			// echo "<pre>Horario\n";
+			// print_r($horarios_clases);
+			// echo "</pre>";
 			$this->modelo_horario->insert_clases($horarios_clases);
 			redirect("/controlador_asignar/ver_horario/{$id_periodo}/{$id_grupo}");
 		} else {
@@ -208,7 +245,7 @@ class Controlador_asignar extends CI_Controller
 		$data['clases'] = $this->modelo_horario->get_clases_where(array('idPeriodo'=>$id_periodo, 'idGrupo'=>$id_grupo));
 		$data['grupo'] = $this->modelo_horario->get_datos_grupo($id_grupo);
 		$data['periodo'] = $this->modelo_horario->get_periodo_by_id($id_periodo);
-		$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($data['periodo']['Anio'],$data['periodo']['semestre']);
+		$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo_con_horarios($data['periodo']['Anio'],$data['periodo']['semestre']);
 		$data['maestro_materia'] = $this->modelo_horario->get_maestro_materia_clase($id_periodo, $id_grupo);
 		$data['grupo']['semestre'] = $this->semestre_grupo($data['grupo']['Generacion'],$this->modelo_horario->get_periodo_by_id($id_periodo));
 
@@ -248,7 +285,8 @@ class Controlador_asignar extends CI_Controller
 		$this->load->view('ver/vista_escoger_periodo', $data);
 
 	}
-	function escoger_grupo_del_periodo()
+
+	function escoger_grupo_del_periodo_a_asignar()
 	{
 		$this->load->model('modelo_horario');
 
@@ -256,6 +294,10 @@ class Controlador_asignar extends CI_Controller
 		$data['id_periodo'] = $periodo['idPeriodo'];
 		$data['periodo'] = $periodo;
 		$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($periodo['Anio'], $periodo['semestre']);
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 
 		$this->load->view('asignar/vista_escoger_grupo', $data);
 
@@ -267,10 +309,10 @@ class Controlador_asignar extends CI_Controller
 			$data['periodo'] = $this->modelo_horario->get_periodo_by_id($id_periodo);
 			if (isset($data['periodo'])) {
 				$data['id_periodo'] = $data['periodo']['idPeriodo'];
-				$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo($data['periodo']['Anio'], $data['periodo']['semestre']);
+				$data['grupos'] = $this->modelo_horario->get_grupos_del_periodo_con_horarios($data['periodo']['Anio'], $data['periodo']['semestre']);
 				$this->load->view('ver/vista_escoger_grupo_horario', $data);
 			} else {
-				echo "Periodo no encontrado";
+				// echo "Periodo no encontrado";
 				redirect('controlador_asignar/escoger_periodo_a_ver');
 			}
 		} else {
